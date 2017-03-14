@@ -11,7 +11,7 @@ class EntityControllerFactory implements FactoryInterface {
 
 
         /* @var $grid \CdiDataGrid\Grid */
-        $grid = $container->build("CdiDatagridDoctrine", ["customOptionsKey" => "ZfMetal\Generator_Entity"]);
+        $grid = $container->build("zf-metal-datagrid-doctrine", ["customOptionsKey" => "ZfMetal_Generator_Entity_Entity"]);
         $grid->setTemplate("ajax");
         $grid->setId("Grid_Entity");
         $em = $container->get('doctrine.entitymanager.orm_zf_metal_generator');

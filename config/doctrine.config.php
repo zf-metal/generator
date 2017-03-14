@@ -11,7 +11,7 @@ return [
             'orm_zf_metal_generator' => array(
                 'driverClass' => 'Doctrine\DBAL\Driver\PDOSqlite\Driver',
                 'params' => array(
-                    'path' => __DIR__ . '/../../../../data/zf-metal-generator/generator.db',
+                    'path' => __DIR__.'/../data/zf-metal-generator/generator.db',
                 )
             )
         ),
@@ -33,7 +33,7 @@ return [
                 'metadata_cache' => 'array',
                 'query_cache' => 'array',
                 'result_cache' => 'array',
-                'driver' => 'drv_ZfMetal\Generator', // This driver will be defined later
+                'driver' => 'drv_zfmetal_generator', // This driver will be defined later
                 'generate_proxies' => true,
                 'proxy_dir' => 'data/DoctrineORMModule/Proxy',
                 'proxy_namespace' => 'DoctrineORMModule\Proxy',
@@ -41,14 +41,14 @@ return [
             )
         ),
         'driver' => array(
-            'ZfMetal\Generator_entity' => array(
+            'zfmetal_generator_entity' => array(
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
                 'paths' => array(__DIR__ . '/../src/Entity')
             ),
-            'drv_ZfMetal\Generator' => array(
+            'drv_zfmetal_generator' => array(
                 'class' => "Doctrine\ORM\Mapping\Driver\DriverChain",
                 'drivers' => array(
-                    'ZfMetal\Generator\Entity' => 'ZfMetal\Generator_entity',
+                    'ZfMetal\Generator\Entity' => 'zfmetal_generator_entity',
                 ),
             ),
         ),

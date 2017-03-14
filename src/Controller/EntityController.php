@@ -15,11 +15,11 @@ class EntityController extends AbstractActionController {
     /**
      * Description
      * 
-     * @var \CdiDataGrid\Grid 
+     * @var \ZfMetal\Datagrid\Grid
      */
     protected $grid;
 
-    function __construct(\Doctrine\ORM\EntityManager $em, \CdiDataGrid\Grid $grid) {
+    function __construct(\Doctrine\ORM\EntityManager $em, \ZfMetal\Datagrid\Grid $grid) {
         $this->em = $em;
         $this->grid = $grid;
     }
@@ -55,7 +55,7 @@ class EntityController extends AbstractActionController {
                 ->from('ZfMetal\Generator\Entity\Entity', 'u')
                 ->where("u.module = :moduleId")
                 ->setParameter("moduleId", $moduleId);
-        $source = new \CdiDataGrid\Source\DoctrineSource($this->getEm(), "ZfMetal\Generator\Entity\Entity", $query);
+        $source = new \ZfMetal\Datagrid\Source\DoctrineSource($this->getEm(), "ZfMetal\Generator\Entity\Entity", $query);
         $this->grid->setSource($source);
 
         ##################################################

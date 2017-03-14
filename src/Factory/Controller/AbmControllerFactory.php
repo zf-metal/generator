@@ -23,7 +23,7 @@ class AbmControllerFactory implements FactoryInterface {
         $fullName = str_replace('\\', "_", $entity->getFullname());
 
         /* @var $grid \CdiDataGrid\Grid */
-        $grid = $container->build("CdiDatagridDoctrine", ["customOptionsKey" => $fullName]);
+        $grid = $container->build("zf-metal-datagrid-doctrine", ["customOptionsKey" => $fullName]);
         $grid->setTemplate("ajax");
         $grid->setId("Grid_" . $fullName);
         $em = $container->get('doctrine.entitymanager.orm_default');

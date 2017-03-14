@@ -2,7 +2,7 @@
 
 return [
     //Entity
-    "ZfMetal_Generator_Entity" => [
+    "ZfMetal_Generator_Entity_Entity" => [
         "sourceConfig" => [
             "type" => "doctrine",
             "doctrineOptions" => [

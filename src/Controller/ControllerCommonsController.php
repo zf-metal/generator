@@ -15,11 +15,11 @@ class ControllerCommonsController extends AbstractActionController {
     /**
      * Description
      * 
-     * @var \CdiDataGrid\Grid 
+     * @var \ZfMetal\Datagrid\Grid
      */
     protected $grid;
 
-    function __construct(\Doctrine\ORM\EntityManager $em, \CdiDataGrid\Grid $grid) {
+    function __construct(\Doctrine\ORM\EntityManager $em, \ZfMetal\Datagrid\Grid $grid) {
         $this->em = $em;
         $this->grid = $grid;
     }

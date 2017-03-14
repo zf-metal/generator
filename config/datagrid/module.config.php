@@ -1,12 +1,12 @@
 <?php
 
 return [
-    //Entity
-    "ZfMetal\Generator_Action" => [
+    //MODULE
+    "ZfMetal_Generator_Module" => [
         "sourceConfig" => [
             "type" => "doctrine",
             "doctrineOptions" => [
-                "entityName" => "\ZfMetal\Generator\Entity\Action",
+                "entityName" => "\ZfMetal\Generator\Entity\Module",
                 "entityManager" => "doctrine.entitymanager.orm_zf_metal_generator"
             ]
         ],
@@ -21,13 +21,27 @@ return [
                 "displayName" => "Actualizado",
                 "format" => "Y-m-d H:i:s"
             ],
-            "description" => [
+            "entities" => [
                 "hidden" => true
             ],
-            "controller" => [
-                "hidden" => true,
-                "type" => "relational"
+             "controllers" => [
+                "hidden" => true
             ],
+            "path" => [
+                "hidden" => true
+            ],
+            "author" => [
+                "hidden" => true
+            ],
+            "license" => [
+                "hidden" => true
+            ],
+            "link" => [
+                "hidden" => true
+            ],
+            "admin" => [
+                "tdClass" => "text-center"
+            ]
         ],
         "crudConfig" => [
             "enable" => true,

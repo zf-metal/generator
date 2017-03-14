@@ -1,14 +1,14 @@
 <?php
 
 $setting = array_merge(
-        include 'cdi-datagrid-custom/cdidatagrid.config.php',
-        include 'cdi-datagrid-custom/module.cdigrid.config.php', 
-        include 'cdi-datagrid-custom/entity.cdigrid.config.php', 
-        include 'cdi-datagrid-custom/property.cdigrid.config.php',
-        include 'cdi-datagrid-custom/route.cdigrid.config.php',
-        include 'cdi-datagrid-custom/controller.cdigrid.config.php',
-        include 'cdi-datagrid-custom/action.cdigrid.config.php',
-         include 'cdi-datagrid-custom/controller_commons.cdigrid.config.php'
+        include 'datagrid/datagrid.config.php',
+        include 'datagrid/module.config.php', 
+        include 'datagrid/entity.config.php', 
+        include 'datagrid/property.config.php',
+        include 'datagrid/route.config.php',
+        include 'datagrid/controller.config.php',
+        include 'datagrid/action.config.php',
+         include 'datagrid/controller_commons.config.php'
 );
 
 return $setting;

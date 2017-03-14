@@ -11,7 +11,7 @@ return [
             'orm_zf_metal_generator' => array(
                 'driverClass' => 'Doctrine\DBAL\Driver\PDOSqlite\Driver',
                 'params' => array(
-                    'path' => __DIR__ . '/../../../../data/zf-metal-generator\generator.db',
+                    'path' => __DIR__ . '/../../../../data/zf-metal-generator/generator.db',
                 )
             )
         ),

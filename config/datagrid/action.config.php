@@ -2,11 +2,11 @@
 
 return [
     //Entity
-    "ZfMetal\Generator_Property" => [
+    "ZfMetal_Generator_Action" => [
         "sourceConfig" => [
             "type" => "doctrine",
             "doctrineOptions" => [
-                "entityName" => "\ZfMetal\Generator\Entity\Property",
+                "entityName" => "\ZfMetal\Generator\Entity\Action",
                 "entityManager" => "doctrine.entitymanager.orm_zf_metal_generator"
             ]
         ],
@@ -21,43 +21,12 @@ return [
                 "displayName" => "Actualizado",
                 "format" => "Y-m-d H:i:s"
             ],
-            "absolutepath" => [
-                "hidden" => true
-            ],
-            "webpath" => [
-                "hidden" => true
-            ],
             "description" => [
                 "hidden" => true
             ],
-            "label" => [
-                "hidden" => true
-            ],
-            "exclude" => [
-                "hidden" => true
-            ],
-            "entity" => [
-                "hidden" => true
-            ],
-            "beNullable" => [
-                "displayName" => "Null",
-            ],
-            "beUnique" => [
-                "displayName" => "Unique",
-            ],
-            "hidden" => [
-                "hidden" => true
-            ],
-            "mandatory" => [
-                "hidden" => true
-            ],
-            "tostring" => [
-                "hidden" => true
-            ],
-            "primarykey" => [
-                "hidden" => true
-            ], "autoincrement" => [
-                "hidden" => true
+            "controller" => [
+                "hidden" => true,
+                "type" => "relational"
             ],
         ],
         "crudConfig" => [

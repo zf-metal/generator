@@ -13,7 +13,7 @@ class ControllerCommonsControllerFactory implements FactoryInterface {
         /* @var $grid \CdiDataGrid\Grid */
         $grid = $container->build("CdiDatagridDoctrine", ["customOptionsKey" => "ZfMetal\Generator_ControllerCommons"]);
         $grid->setTemplate("ajax");
-        $grid->setId("CdiGrid_ControllerCommons");
+        $grid->setId("Grid_ControllerCommons");
         $em = $container->get('doctrine.entitymanager.orm_zf_metal_generator');
         return new \ZfMetal\Generator\Controller\ControllerCommonsController($em, $grid);
     }

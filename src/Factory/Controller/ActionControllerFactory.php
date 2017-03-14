@@ -13,7 +13,7 @@ class ActionControllerFactory implements FactoryInterface {
         /* @var $grid \CdiDataGrid\Grid */
         $grid = $container->build("CdiDatagridDoctrine", ["customOptionsKey" => "ZfMetal\Generator_Action"]);
         $grid->setTemplate("ajax");
-        $grid->setId("CdiGrid_Action");
+        $grid->setId("Grid_Action");
         $em = $container->get('doctrine.entitymanager.orm_zf_metal_generator');
         return new \ZfMetal\Generator\Controller\ActionController($em, $grid);
     }

@@ -25,7 +25,7 @@ class AbmControllerFactory implements FactoryInterface {
         /* @var $grid \CdiDataGrid\Grid */
         $grid = $container->build("CdiDatagridDoctrine", ["customOptionsKey" => $fullName]);
         $grid->setTemplate("ajax");
-        $grid->setId("CdiGrid_" . $fullName);
+        $grid->setId("Grid_" . $fullName);
         $em = $container->get('doctrine.entitymanager.orm_default');
         return new \ZfMetal\Generator\Controller\AbmController($em, $grid);
     }

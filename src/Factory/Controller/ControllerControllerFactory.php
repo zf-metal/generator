@@ -13,7 +13,7 @@ class ControllerControllerFactory implements FactoryInterface {
         /* @var $grid \CdiDataGrid\Grid */
         $grid = $container->build("CdiDatagridDoctrine", ["customOptionsKey" => "ZfMetal\Generator_Controller"]);
         $grid->setTemplate("ajax");
-        $grid->setId("CdiGrid_Controller");
+        $grid->setId("Grid_Controller");
         $em = $container->get('doctrine.entitymanager.orm_zf_metal_generator');
         return new \ZfMetal\Generator\Controller\ControllerController($em, $grid);
     }

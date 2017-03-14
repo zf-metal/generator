@@ -2,32 +2,17 @@
 
 return [
     //Entity
-    "ZfMetal\Generator_Route" => [
+    "ZfMetal_Generator_ControllerCommons" => [
         "sourceConfig" => [
             "type" => "doctrine",
             "doctrineOptions" => [
-                "entityName" => "\ZfMetal\Generator\Entity\Route",
+                "entityName" => "\ZfMetal\Generator\Entity\ControllersCommons",
                 "entityManager" => "doctrine.entitymanager.orm_zf_metal_generator"
             ]
         ],
         "columnsConfig" => [
-            "childs" => [
-                "hidden" => true
-            ],
-            "parent" => [
-                "type" => "relational"
-            ],
-            "module" => [
-                "type" => "relational",
-                "hidden" => true
-            ],
             "controller" => [
-                "type" => "relational"
-            ],
-            "action" => [
-                "type" => "relational"
-            ],
-            "type" => [
+                "hidden" => true,
                 "type" => "relational"
             ],
         ],

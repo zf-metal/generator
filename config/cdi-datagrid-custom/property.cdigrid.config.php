@@ -1,0 +1,80 @@
+<?php
+
+return [
+    //Entity
+    "ZfMetal\Generator_Property" => [
+        "sourceConfig" => [
+            "type" => "doctrine",
+            "doctrineOptions" => [
+                "entityName" => "\ZfMetal\Generator\Entity\Property",
+                "entityManager" => "doctrine.entitymanager.orm_zf_metal_generator"
+            ]
+        ],
+        "columnsConfig" => [
+            "createdAt" => [
+                "type" => "date",
+                "displayName" => "Creado",
+                "format" => "Y-m-d H:i:s"
+            ],
+            "updatedAt" => [
+                "type" => "date",
+                "displayName" => "Actualizado",
+                "format" => "Y-m-d H:i:s"
+            ],
+            "absolutepath" => [
+                "hidden" => true
+            ],
+            "webpath" => [
+                "hidden" => true
+            ],
+            "description" => [
+                "hidden" => true
+            ],
+            "label" => [
+                "hidden" => true
+            ],
+            "exclude" => [
+                "hidden" => true
+            ],
+            "entity" => [
+                "hidden" => true
+            ],
+            "beNullable" => [
+                "displayName" => "Null",
+            ],
+            "beUnique" => [
+                "displayName" => "Unique",
+            ],
+            "hidden" => [
+                "hidden" => true
+            ],
+            "mandatory" => [
+                "hidden" => true
+            ],
+            "tostring" => [
+                "hidden" => true
+            ],
+            "primarykey" => [
+                "hidden" => true
+            ], "autoincrement" => [
+                "hidden" => true
+            ],
+        ],
+        "crudConfig" => [
+            "enable" => true,
+            "add" => [
+                "enable" => true,
+            ],
+            "edit" => [
+                "enable" => true,
+            ],
+            "del" => [
+                "enable" => true,
+            ],
+            "view" => [
+                "enable" => true,
+            ],
+        ],
+    ],
+];
+

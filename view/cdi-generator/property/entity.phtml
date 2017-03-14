@@ -1,0 +1,34 @@
+<?php echo $this->CdiGrid($this->grid); ?>
+<script>
+
+    jQuery(function () {
+
+        changetype();
+
+    });
+
+
+    function changetype() {
+        var types = jQuery("[name='type'").val();
+
+        if (types == "file") {
+            jQuery("#row_absolutepath").show();
+            jQuery("#row_webpath").show();
+        } else {
+            jQuery("#row_absolutepath").hide();
+            jQuery("#row_webpath").hide();
+        }
+
+        if (types == "oneToOne" || types == "manyToOne" || types == "oneToMany") {
+            jQuery("#row_length").hide();
+            jQuery("#row_relatedEntity").show();
+        } else {
+
+            jQuery("#row_length").show();
+            jQuery("#row_relatedEntity").hide();
+        }
+
+    }
+
+</script>
+

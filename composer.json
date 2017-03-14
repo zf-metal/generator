@@ -1,0 +1,46 @@
+{
+    "name": "zf-metal/generator",
+    "description": "Zend Framework 3 Module that provides code generator (Entity,Controllers,Menu,Routes,Forms)",
+    "type": "library",
+    "license": "MIT",
+    "version": "1.0.0",
+    "keywords": [
+        "code",
+        "generator",
+        "zf3",
+        "module",
+        "Zend Framework 3",
+        "entity",
+        "routes",
+        "forms"
+    ],
+    "authors": [  {
+            "name": "Cristian Incarnato",
+            "email": "cincarnato@gmail.com",
+            "homepage": "http://cincarnato.com.ar/",
+            "role": "Desarrollador"
+        },
+         {
+            "name": "Alejandro Furgeri",
+            "email": "alecitoman@gmail.com",
+            "homepage": "http://afurgeri.com.ar/",
+            "role": "Desarrollador"
+        }
+    ],
+    "minimum-stability": "dev",
+    "config": {
+        "process-timeout": 5000
+    },
+    "require": {
+        "php": ">=5.5",
+        "zf-metal/datagrid": "dev-master",
+        "doctrine/doctrine-orm-module": "^1.0",
+        "gedmo/doctrine-extensions": "^2.4.24",
+        "swissengine/doctrine-module-extension": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "ZfMetal\\Generator\\": "src/"
+        }
+    }
+}

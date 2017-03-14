@@ -1,0 +1,30 @@
+<style>
+    a {
+        text-decoration: none ! important; 
+    }
+
+    a .panel-hover:hover{
+        text-decoration: none ! important; 
+        opacity: 0.9;
+
+    }
+
+    a .panel-primary.panel-hover:hover{
+        border: 1px solid  #039 ! important; 
+    }
+</style>
+
+<div class="col-lg-3 col-md-4 col-sm-6">
+    <a href="/generator/module">
+
+        <div class="panel panel-primary panel-hover">
+            <div class="panel-heading">
+                <h4 class="panel-title"><?php echo $this->translate('Modulos'); ?></h4>
+            </div>
+            <div class="panel-body">
+                <?php echo $this->translate('Generar Modulos completos con entidades, controladores, formularios, menus.'); ?>
+            </div>
+
+        </div>
+    </a>
+</div>

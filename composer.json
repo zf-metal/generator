@@ -34,6 +34,7 @@
     "require": {
         "php": ">=5.5",
         "zf-metal/datagrid": "dev-master",
+         "zf-metal/commons": "dev-master",
         "doctrine/doctrine-orm-module": "^1.0",
         "gedmo/doctrine-extensions": "^2.4.24",
         "swissengine/doctrine-module-extension": "dev-master"

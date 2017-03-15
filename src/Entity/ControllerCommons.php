@@ -40,10 +40,8 @@ class ControllerCommons extends \ZfMetal\Generator\Entity\AbstractEntity {
      * @Annotation\Type("DoctrineModule\Form\Element\ObjectSelect")
      * @Annotation\Options({
      * "label":"Entity:",
-     * "description":"Select entity asociated to Controller",
      * "empty_option": "",
-     * "target_class":"ZfMetal\Generator\Entity\Entity",
-     * "property": "name"})
+     * "target_class":"ZfMetal\Generator\Entity\Entity"})
      * @ORM\ManyToOne(targetEntity="ZfMetal\Generator\Entity\Entity")
      * @ORM\JoinColumn(name="entity_id", referencedColumnName="id", onDelete="CASCADE")
      */
@@ -54,7 +52,7 @@ class ControllerCommons extends \ZfMetal\Generator\Entity\AbstractEntity {
      * @ORM\Column(type="boolean", unique=false, nullable=true, name="entity_repository")
      * @Annotation\Type("Zend\Form\Element\Checkbox")
      * @Annotation\Attributes({"type":"checkbox"})
-     * @Annotation\Options({"label":"EntityRepository:","description":"Inject entityRepository to Controller"})
+     * @Annotation\Options({"label":"EntityRepository"})
      * @Annotation\AllowEmpty({"true"})
      */
     protected $entityRepository;
@@ -64,7 +62,7 @@ class ControllerCommons extends \ZfMetal\Generator\Entity\AbstractEntity {
      * @ORM\Column(type="boolean", unique=false, nullable=true, name="entity_manager")
      * @Annotation\Type("Zend\Form\Element\Checkbox")
      * @Annotation\Attributes({"type":"checkbox"})
-     * @Annotation\Options({"label":"EntityManager:","description":"Inject entityManager to Controller"})
+     * @Annotation\Options({"label":"EntityManager"})
      * @Annotation\AllowEmpty({"true"})
      */
     protected $entityManager;
@@ -72,55 +70,54 @@ class ControllerCommons extends \ZfMetal\Generator\Entity\AbstractEntity {
     
     /**
      * @var string
-     * @ORM\Column(type="boolean", unique=false, nullable=true, name="list")
+     * @ORM\Column(type="boolean", unique=false, nullable=true, name="list_action")
      * @Annotation\Type("Zend\Form\Element\Checkbox")
      * @Annotation\Attributes({"type":"checkbox"})
-     * @Annotation\Options({"label":"CRUD-LIST:","description":"Inject Action List to Controller"})
+     * @Annotation\Options({"label":"list"})
      * @Annotation\AllowEmpty({"true"})
      */
-    protected $list;
+    protected $listAction;
     
       /**
      * @var string
-     * @ORM\Column(type="boolean", unique=false, nullable=true, name="create")
+     * @ORM\Column(type="boolean", unique=false, nullable=true, name="create_action")
      * @Annotation\Type("Zend\Form\Element\Checkbox")
      * @Annotation\Attributes({"type":"checkbox"})
-     * @Annotation\Options({"label":"CRUD-CREATE:","description":"Inject Action Create to Controller"})
+     * @Annotation\Options({"label":"create"})
      * @Annotation\AllowEmpty({"true"})
      */
-    protected $create;
+    protected $createAction;
     
     
          /**
      * @var string
-     * @ORM\Column(type="boolean", unique=false, nullable=true, name="edit")
+     * @ORM\Column(type="boolean", unique=false, nullable=true, name="edit_action")
      * @Annotation\Type("Zend\Form\Element\Checkbox")
      * @Annotation\Attributes({"type":"checkbox"})
-     * @Annotation\Options({"label":"CRUD-EDIT:","description":"Inject Action Edit to Controller"})
+     * @Annotation\Options({"label":"edit"})
      * @Annotation\AllowEmpty({"true"})
      */
-    protected $edit;
+    protected $editAction;
     
          /**
      * @var string
-     * @ORM\Column(type="boolean", unique=false, nullable=true, name="delete")
+     * @ORM\Column(type="boolean", unique=false, nullable=true, name="delete_action")
      * @Annotation\Type("Zend\Form\Element\Checkbox")
      * @Annotation\Attributes({"type":"checkbox"})
-     * @Annotation\Options({"label":"CRUD-DELETE:","description":"Inject Action Delete to Controller"})
+     * @Annotation\Options({"label":"delete"})
      * @Annotation\AllowEmpty({"true"})
      */
-    protected $delete;
+    protected $deleteAction;
     
          /**
      * @var string
-     * @ORM\Column(type="boolean", unique=false, nullable=true, name="view")
+     * @ORM\Column(type="boolean", unique=false, nullable=true, name="view_action")
      * @Annotation\Type("Zend\Form\Element\Checkbox")
      * @Annotation\Attributes({"type":"checkbox"})
-     * @Annotation\Options({"label":"CRUD-VIEW:","description":"Inject Action View to Controller"})
+     * @Annotation\Options({"label":"view"})
      * @Annotation\AllowEmpty({"true"})
      */
-    protected $view;
-    
+    protected $viewAction;
     function getId() {
         return $this->id;
     }
@@ -141,24 +138,24 @@ class ControllerCommons extends \ZfMetal\Generator\Entity\AbstractEntity {
         return $this->entityManager;
     }
 
-    function getList() {
-        return $this->list;
+    function getListAction() {
+        return $this->listAction;
     }
 
-    function getCreate() {
-        return $this->create;
+    function getCreateAction() {
+        return $this->createAction;
     }
 
-    function getEdit() {
-        return $this->edit;
+    function getEditAction() {
+        return $this->editAction;
     }
 
-    function getDelete() {
-        return $this->delete;
+    function getDeleteAction() {
+        return $this->deleteAction;
     }
 
-    function getView() {
-        return $this->view;
+    function getViewAction() {
+        return $this->viewAction;
     }
 
     function setId($id) {
@@ -181,26 +178,25 @@ class ControllerCommons extends \ZfMetal\Generator\Entity\AbstractEntity {
         $this->entityManager = $entityManager;
     }
 
-    function setList($list) {
-        $this->list = $list;
+    function setListAction($listAction) {
+        $this->listAction = $listAction;
     }
 
-    function setCreate($create) {
-        $this->create = $create;
+    function setCreateAction($createAction) {
+        $this->createAction = $createAction;
     }
 
-    function setEdit($edit) {
-        $this->edit = $edit;
+    function setEditAction($editAction) {
+        $this->editAction = $editAction;
     }
 
-    function setDelete($delete) {
-        $this->delete = $delete;
+    function setDeleteAction($deleteAction) {
+        $this->deleteAction = $deleteAction;
     }
 
-    function setView($view) {
-        $this->view = $view;
+    function setViewAction($viewAction) {
+        $this->viewAction = $viewAction;
     }
 
 
-    
 }

@@ -1,1 +1,21 @@
-<?php echo $this->Grid($this->grid); ?>
+<?php echo $this->flashCurrent(); ?>
+
+<div class="row">
+<div class="col-lg-6 col-md-8 col-sm-12 col-xs-12">
+    <?php
+    echo $this->renderForm($this->form, 
+            \ZfMetal\Commons\Constant\Form::VERTICAL, 
+            \ZfMetal\Commons\Constant\Form::ONE_COLUMNS);
+    ?>
+</div>
+</div>
+
+<script>
+    function submitCommons() {
+        $.post('/generator/module/controller/commons/<?php echo $this->controllerId; ?>',
+                $('#ControllerCommons').serialize(),
+                function (data) {
+                    $("#modalContent").html(data);
+                });
+    }
+</script>

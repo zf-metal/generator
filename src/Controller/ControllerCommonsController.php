@@ -43,10 +43,32 @@ class ControllerCommonsController extends AbstractActionController {
         return $this->em;
     }
 
-    public function controllerAction() {      
-        $form = $this->formBuilder()->getForm('ZfMetal\Generator\Entity\ControllerCommons');
+    public function controllerAction() {
 
-        $view = new ViewModel(array('form' => $form));
+        $controllerId = $this->params("controllerId");
+        $controllerCommons = $this->getEm()->getRepository("ZfMetal\Generator\Entity\ControllerCommons")->findOneBy(['controller' => $controllerId]);
+         
+        if (!$controllerCommons) {
+            $controllerCommons = new \ZfMetal\Generator\Entity\ControllerCommons();
+          }
+
+        //Generate Form
+        $form = $this->formBuilder($this->getEm(), 'ZfMetal\Generator\Entity\ControllerCommons');
+        $form->bind($controllerCommons);
+
+        
+        //Custom Form
+        $form->remove('controller');
+        $form->add(['name' => 'controller', 'attributes' => ['type' => 'hidden']]);
+        $form->get("controller")->setValue($controllerId);
+        $form->setAttribute('class', 'form-vertical');
+        $form->setAttribute('action', 'javascript:submitCommons()');
+        
+        //Process Form
+        $this->formProcess($this->getEm(), $form);
+
+
+        $view = new ViewModel(array('form' => $form, 'controllerId' => $controllerId));
         $view->setTerminal(true);
         return $view;
     }

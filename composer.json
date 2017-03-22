@@ -14,13 +14,13 @@
         "routes",
         "forms"
     ],
-    "authors": [  {
+    "authors": [{
             "name": "Cristian Incarnato",
             "email": "cincarnato@gmail.com",
             "homepage": "http://cincarnato.com.ar/",
             "role": "Desarrollador"
         },
-         {
+        {
             "name": "Alejandro Furgeri",
             "email": "alecitoman@gmail.com",
             "homepage": "http://afurgeri.com.ar/",
@@ -34,7 +34,8 @@
     "require": {
         "php": ">=5.5",
         "zf-metal/datagrid": "dev-master",
-         "zf-metal/commons": "dev-master",
+        "zf-metal/commons": "dev-master",
+        "zendframework/zend-code": "^3.0",
         "doctrine/doctrine-orm-module": "^1.0",
         "gedmo/doctrine-extensions": "^2.4.24",
         "swissengine/doctrine-module-extension": "dev-master"

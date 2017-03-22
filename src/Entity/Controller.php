@@ -44,10 +44,8 @@ class Controller extends \ZfMetal\Generator\Entity\AbstractEntity {
      * @ORM\Column(type="string", length=100, unique=true, nullable=false, name="name")
      */
     protected $name;
-    
-    
-    
-        /**
+
+    /**
      * @var string
      * @Annotation\Type("Zend\Form\Element\Textarea")
      * @Annotation\Options({"label":"Description:"})
@@ -56,18 +54,35 @@ class Controller extends \ZfMetal\Generator\Entity\AbstractEntity {
      */
     protected $description;
 
-    
-    
-        /**
+    /**
      * @var 
      * @ORM\OneToMany(targetEntity="ZfMetal\Generator\Entity\Action", mappedBy="controller")
      */
     protected $actions;
 
+    /**
+     * @Annotation\Type("Zend\Form\Element\Hidden")
+     * @ORM\OneToOne(targetEntity="ZfMetal\Generator\Entity\ControllerCommons", mappedBy="controller")
+     * @var \ZfMetal\Generator\Entity\ControllerCommons
+     */
+    protected $commons;
+
     public function __construct() {
         $this->actions = new ArrayCollection();
     }
     
+    function getClass() {
+        return "\\".$this->getModule()->getName() . "\Entity\\" . $this->name;
+    }
+
+    function getCommons() {
+        return $this->commons;
+    }
+
+    function setCommons($commons) {
+        $this->commons = $commons;
+    }
+
     function getEntity() {
         return $this->entity;
     }
@@ -76,7 +91,6 @@ class Controller extends \ZfMetal\Generator\Entity\AbstractEntity {
         $this->entity = $entity;
     }
 
-        
     function getActions() {
         return $this->actions;
     }
@@ -85,7 +99,6 @@ class Controller extends \ZfMetal\Generator\Entity\AbstractEntity {
         $this->actions = $actions;
     }
 
-        
     function getId() {
         return $this->id;
     }
@@ -109,7 +122,7 @@ class Controller extends \ZfMetal\Generator\Entity\AbstractEntity {
     function setName($name) {
         $this->name = $name;
     }
-    
+
     function getDescription() {
         return $this->description;
     }
@@ -118,8 +131,4 @@ class Controller extends \ZfMetal\Generator\Entity\AbstractEntity {
         $this->description = $description;
     }
 
-
-
-
-    
 }

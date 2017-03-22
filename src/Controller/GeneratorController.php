@@ -28,13 +28,12 @@ class GeneratorController extends AbstractActionController {
         $entity = $this->getEm()->getRepository("ZfMetal\Generator\Entity\Entity")->find($entityId);
 
         $entityGenerator = new \ZfMetal\Generator\Generator\EntityGenerator($entity);
-        $entityGenerator->setOverwrite(true);
-        $entityGenerator->generate();
+        $entityGenerator->prepare();
+        $entityGenerator->pushFile(true);
 
         $repositoryGenerator = new \ZfMetal\Generator\Generator\RepositoryGenerator($entity);
-        $repositoryGenerator->setOverwrite(false);
-        $repositoryGenerator->generate();
-
+        $repositoryGenerator->prepare();
+        $repositoryGenerator->pushFile(true);
 
         $view = new \Zend\View\Model\ViewModel([
             "entityGenerator" => $entityGenerator,
@@ -47,15 +46,22 @@ class GeneratorController extends AbstractActionController {
     public function controllerAction() {
         $controllerId = $this->params("controllerId");
         $controller = $this->getEm()->getRepository("ZfMetal\Generator\Entity\Controller")->find($controllerId);
-
+        $module = $controller->getModule();
+        
         $controllerGenerator = new \ZfMetal\Generator\Generator\ControllerGenerator($controller);
-        $controllerGenerator->setOverwrite(true);
-        $controllerGenerator->generate();
+        $controllerGenerator->prepare();
+        $controllerGenerator->pushFile(true);
 
 
         $controllerFactoryGenerator = new \ZfMetal\Generator\Generator\ControllerFactoryGenerator($controller);
-        $controllerFactoryGenerator->setOverwrite(true);
-        $controllerFactoryGenerator->generate();
+        $controllerFactoryGenerator->prepare();
+        $controllerFactoryGenerator->pushFile(true);
+        
+        $controllerCollection = $this->getEm()->getRepository("ZfMetal\Generator\Entity\Controller")->findByModule($module->getId());
+
+        $controllerConfigGenerator = new \ZfMetal\Generator\Generator\Config\ControllerConfigGenerator($module,$controllerCollection);
+        $controllerConfigGenerator->prepare();
+        $controllerConfigGenerator->pushFile(true);
 
         $view = new \Zend\View\Model\ViewModel([
             "controllerGenerator" => $controllerGenerator,

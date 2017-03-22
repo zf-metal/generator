@@ -7,24 +7,24 @@ namespace ZfMetal\Generator\Generator;
  *
  * @author Cristian Incarnato <cristian.cdi@gmail.com>
  */
-class ControllerGenerator extends AbstractClassGenerator {
+class ModuleOptionsGenerator extends AbstractClassGenerator {
 
     //CONSTS
     const CLASS_PREFIX = "";
-    const CLASS_SUBFFIX = "Controller";
+    const CLASS_SUBFFIX = "Options";
     const NAMESPACE_PREFIX = "";
-    const NAMESPACE_SUBFFIX = "\Controller";
-    const RELATIVE_PATH = "/src/Controller/";
+    const NAMESPACE_SUBFFIX = "\Options";
+    const RELATIVE_PATH = "/src/Options/";
 
     //BASE NAMES
     public function getBaseName() {
-        return $this->getController()->getName();
+        return "Module";
     }
 
     public function getBaseNamespace() {
-        return $this->getController()->getModule()->getName();
+        return $this->getModule()->getName();
     }
-
+    //..
     //CLASS METHODS
 
     public function getClassExtends() {

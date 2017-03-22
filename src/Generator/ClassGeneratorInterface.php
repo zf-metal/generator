@@ -8,55 +8,47 @@ namespace ZfMetal\Generator\Generator;
  */
 interface ClassGeneratorInterface {
 
-    /**
-     * Class Prefix
-     */
+    //CONSTS
     const CLASS_PREFIX = "";
-
-    /**
-     * Class Subffix
-     */
     const CLASS_SUBFFIX = "";
-
-    /**
-     * Namespace Prefix
-     */
     const NAMESPACE_PREFIX = "";
-
-    /**
-     * Namespace Subffix
-     */
     const NAMESPACE_SUBFFIX = "";
 
-    /**
-     * PATH Subffix
-     */
-    const PATH_SUBFFIX = "";
+    //BASE NAMES
+    public function getBaseName();
 
-    /**
-     * USES
-     * 
-     * Remember: [ ["class" => "THE_CLASS", "alias" => "THE_ALIAS"] ]
-     * 
-     * @type array
-     */
-    const USES = [];
+    public function getBaseNamespace();
 
-    /**
-     * getTags
-     * 
-     * Remember, return: [ ["class" => "THE_CLASS", "alias" => "THE_ALIAS"] ]
-     * 
-     * @return array
-     */
-    public function getTags();
+    //CLASS METHODS
+    
+    public function getClassArray();
 
     public function getClassName();
 
-    public function getNamespaceName();
+    public function getClassNamespace();
 
-    public function getExtendsName();
+    public function getClassFlags();
 
+    public function getClassExtends();
+
+    public function getClassInterfaces();
+
+    public function getClassProperties();
+
+    public function getClassMethods();
+
+    public function getClassDockBlock();
+
+    public function getClassFileGenerator();
+
+    public function getClassTags();
+
+    public function getClassUses();
+
+    //MODULE
+     public function getModule();
+    
+    //NORMAL CLASS TAGS
     public function getAuthor();
 
     public function getLicense();
@@ -67,7 +59,10 @@ interface ClassGeneratorInterface {
 
     public function getLongDescription();
 
-    public function getPath();
+    public function getRelativePath();
 
-    public function generate();
+
+    //PREPARE
+    public function prepare();
+
 }

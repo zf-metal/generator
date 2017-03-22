@@ -8,87 +8,48 @@ namespace ZfMetal\Generator\Generator;
  * @author Cristian Incarnato <cristian.cdi@gmail.com>
  */
 class ControllerFactoryGenerator extends AbstractClassGenerator {
-    //INIT ClassGeneratorInterface
 
-    /**
-     * Prefix
-     */
+    //CONSTS
     const CLASS_PREFIX = "";
-
-    /**
-     * Subffix
-     */
     const CLASS_SUBFFIX = "ControllerFactory";
-
-    /**
-     * Namespace Prefix
-     */
     const NAMESPACE_PREFIX = "";
-
-    /**
-     * Namespace Subffix
-     */
     const NAMESPACE_SUBFFIX = "\Factory\Controller";
+    const RELATIVE_PATH = "/src/Factory/Controller/";
 
-    /**
-     * PATH Subffix
-     */
-    const PATH_SUBFFIX = "/src/Factory/Controller/";
-
-    /**
-     * USES
-     * 
-     * Remember: [ ["class" => "THE_CLASS", "alias" => "THE_ALIAS"] ]
-     * 
-     * @type array
-     */
-    const USES = [
-        ["class" => "Interop\Container\ContainerInterface", "alias" => null],
-        ["class" => "Zend\ServiceManager\Factory\FactoryInterface", "alias" => null],
-    ];
-
-   
-    public function getTags(){
-        return [];
-    }
-
-    public function getClassName() {
+    //BASE NAMES
+    public function getBaseName() {
         return $this->getController()->getName();
     }
 
-    public function getNamespaceName() {
+    public function getBaseNamespace() {
         return $this->getController()->getModule()->getName();
     }
 
-    public function getExtendsName() {
-        return "Zend\Mvc\Controller\AbstractActionController";
+    //CLASS METHODS
+
+    public function getClassExtends() {
+        return null;
     }
 
-    public function getPath() {
-        return $this->getController()->getModule()->getPath();
+    public function getClassInterfaces() {
+        return [];
     }
 
-    public function getAuthor() {
-        return $this->getController()->getModule()->getAuthor();
+    public function getClassTags() {
+        return [];
     }
 
-    public function getLicense() {
-        return $this->getController()->getModule()->getLicense();
+    public function getClassUses() {
+        return [
+            ["class" => "Interop\Container\ContainerInterface", "alias" => null],
+            ["class" => "Zend\ServiceManager\Factory\FactoryInterface", "alias" => null],
+        ];
     }
 
-    public function getLink() {
-        return $this->getController()->getModule()->getLink();
+    //MODULE
+    public function getModule() {
+        return $this->getController()->getModule();
     }
-
-    public function getShortDescription() {
-        return $this->getController()->getName() . $this::CLASS_SUBFFIX;
-    }
-
-    public function getLongDescription() {
-        return $this->getController()->getDescription();
-    }
-
-    //END ClassGeneratorInterface
 
     /**
      * Description
@@ -97,33 +58,80 @@ class ControllerFactoryGenerator extends AbstractClassGenerator {
      */
     private $controller;
 
+    /**
+     * Description
+     * 
+     * @var arrray
+     */
+    private $dependencies = [];
+
+    /**
+     * Description
+     * 
+     * @var \Zend\Code\Generator\MethodGenerator
+     */
+    private $invoke;
+
     function __construct(\ZfMetal\Generator\Entity\Controller $controller) {
         $this->controller = $controller;
     }
 
-    function getController() {
-        return $this->controller;
-    }
-
-    function setController(\ZfMetal\Generator\Entity\Controller $controller) {
-        $this->controller = $controller;
-    }
-
-    public function generate() {
-        parent::generate();
+    public function prepare() {
+        parent::prepare();
+        $this->genCommons();
         $this->genInvoke();
-        $this->insertFile();
     }
 
-    /**
-     * [6] Se generan Actions
-     */
+    protected function genCommons() {
+        $c = $this->getController()->getCommons();
+        if ($c) {
+            //GRID ACTION
+            if ($c->getEntityManager()) {
+                \ZfMetal\Generator\Generator\Commons\EmGenerator::applyEmFactory($this);
+            }
+
+            if ($c->getGridAction()) {
+                \ZfMetal\Generator\Generator\Commons\GridActionGenerator::applyGridinFactory($this);
+            }
+        }
+    }
+
+    function addDependency($name, $type) {
+        if (!key_exists($name, $this->dependencies)) {
+            $this->dependencies[$name] = ["name" => $name, "type" => $type];
+        }
+    }
+
+    function getParamters() {
+        $parameters = "";
+        foreach ($this->dependencies as $p) {
+            $parameters .= "$" . $p["name"] . ",";
+        }
+        return trim($parameters, ",");
+    }
+
+    function getInvokeReturn() {
+        return "return new \\" . $this->getModule()->getName() . "\Controller\\" . $this->getClassName() . "Controller(" . $this->getParamters() . ");" . PHP_EOL;
+    }
+
+    function getInvoke() {
+        if (!$this->invoke) {
+            $this->setInvoke(new \Zend\Code\Generator\MethodGenerator("__invoke"));
+        }
+        return $this->invoke;
+    }
+
+    function setInvoke(\Zend\Code\Generator\MethodGenerator $invoke) {
+        $this->invoke = $invoke;
+    }
+
     protected function genInvoke() {
-        $m = new \Zend\Code\Generator\MethodGenerator();
-        $m->setName("__invoke");
-        $m->setBody($this->getInvokeBody());
-        $m->setParameters($this->getInvokeParameter());
-        $this->getClassGenerator()->addMethodFromGenerator($m);
+        $this->getInvoke()->setBody($this->getInvokeBody());
+        $this->getInvoke()->setParameters($this->getInvokeParameter());
+        if ($this->getCg()->hasMethod("__invoke")) {
+            $this->getCg()->removeMethod("__invoke");
+        }
+        $this->getCg()->addMethodFromGenerator($this->getInvoke());
     }
 
     protected function getInvokeParameter() {
@@ -134,8 +142,17 @@ class ControllerFactoryGenerator extends AbstractClassGenerator {
     }
 
     protected function getInvokeBody() {
-        $body = "return new \\" . $this->getNamespaceName() . "\Controller\\" . $this->getClassName() . "Controller();";
+        $body = $this->getInvoke()->getBody();
+        $body .= $this->getInvokeReturn();
         return $body;
+    }
+
+    function getController() {
+        return $this->controller;
+    }
+
+    function setController(\ZfMetal\Generator\Entity\Controller $controller) {
+        $this->controller = $controller;
     }
 
 }

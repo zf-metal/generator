@@ -7,270 +7,173 @@ namespace ZfMetal\Generator\Generator;
  *
  * @author Cristian Incarnato <cristian.cdi@gmail.com>
  */
-abstract class AbstractClassGenerator implements ClassGeneratorInterface {
+abstract class AbstractClassGenerator extends AbstractFileGenerator implements \ZfMetal\Generator\Generator\ClassGeneratorInterface {
 
     /**
-     * Description
+     * construct Method
      * 
      * @var \Zend\Code\Generator\ClassGenerator
      */
-    protected $classGenerator;
+    protected $cg;
+
 
     /**
-     * Description
+     *
+     * @var array
+     */
+    protected $classProperties = [];
+
+    /**
+     *
+     * @var array
+     */
+    protected $classMethods = [];
+
+    /**
+     *
+     * @var \Zend\Code\Generator\DocBlockGenerator
+     */
+    protected $classDockBlock = null;
+
+    /**
+     *
+     * @var array
+     */
+    protected $classTags = [];
+
+    /**
+     * isPrepared Flag
      * 
-     * @var \Zend\Code\Generator\FileGenerator
+     * @var boolean 
      */
-    protected $file;
+    protected $isPrepared = false;
 
-    /**
-     * fileGenerate by \Zend\Code\Generator\FileGenerator
-     * 
-     */
-    protected $fileGenerate;
+    public function prepare() {
 
-    /**
-     * path
-     * 
-     * @var string
-     */
-    protected $path;
 
-    /**
-     * path
-     * 
-     * @var string
-     */
-    protected $completePath;
-
-    /**
-     * name
-     * 
-     * @var string
-     */
-    protected $name;
-
-    /**
-     * fileName
-     * 
-     * @var string
-     */
-    protected $fileName;
-
-    /**
-     * Status
-     * 
-     * @var string
-     */
-    protected $status;
-
-    /**
-     * msj
-     * 
-     * @var string
-     */
-    protected $msj;
-
-    /**
-     * overwrite
-     * 
-     * @var boolean
-     */
-    protected $overwrite = false;
-
-    /**
-     * exist
-     * 
-     * @var boolean
-     */
-    protected $exists = null;
-
-    public function generate() {
-        $this->genClass();
-        $this->genNamespace();
-        $this->genUse();
-        $this->genDockBlockClass();
-        $this->genExtendClass();
-        $this->genFile();
-    }
-
-    public function getFullClassName() {
-        return $this::CLASS_PREFIX . $this->getClassName() . $this::CLASS_SUBFFIX;
-    }
-
-    /**
-     * [1] Generate class Generator
-     */
-    protected function genClass() {
-        $this->setClassGenerator(new \Zend\Code\Generator\ClassGenerator());
-        $this->getClassGenerator()->setName($this->getFullClassName());
-    }
-
-    /**
-     * [2] Generate Namespace
-     */
-    protected function genNamespace() {
-        $namespace = $this::NAMESPACE_PREFIX . $this->getNamespaceName() . $this::NAMESPACE_SUBFFIX;
-        $this->getClassGenerator()->setNamespaceName($namespace);
-    }
-
-    /**
-     * [3] Generate USE
-     */
-    protected function genUse() {
-        foreach ($this::USES as $USE) {
-            $this->classGenerator->addUse($USE["class"],$USE["alias"]);
+        if (class_exists($this->getClassNamespaceAndName())) {
+            $reflectionClass = new \Zend\Code\Reflection\ClassReflection($this->getClassNamespaceAndName());
+            if ($reflectionClass->isInstantiable()) {
+                $this->setCg(\Zend\Code\Generator\ClassGenerator::fromReflection($reflectionClass));
+            } else {
+                $this->setCg(\Zend\Code\Generator\ClassGenerator::FromArray($this->getClassArray()));
+            }
+        } else {
+            $this->setCg(\Zend\Code\Generator\ClassGenerator::FromArray($this->getClassArray()));
         }
+
+
+        $this->getFg()->setClass($this->getCg());
+        $this->isPrepared = true;
+        //USES ??
     }
 
-    /**
-     * [4] Generate DockBlock
-     */
-    protected function genDockBlockClass() {
+    public function getClassArray() {
+        return [
+            'name' => $this->getClassName(), //Needed baseName
+            'namespacename' => $this->getClassNamespace(), //Needed baseNamespace
+            'flags' => $this->getClassFlags(), //Optional Overwrite
+            'extendedclass' => $this->getClassExtends(), //Needed
+            'implementedinterfaces' => $this->getClassInterfaces(), //Needed
+            'docblock' => $this->getClassDockBlock(), //Optional extension
+            'properties' => $this->getClassProperties(), //Optional
+            'methods' => $this->getClassMethods(), //Optional
+            'containingfile' => $this->getClassFileGenerator(), //Optional Overwrite
+        ];
+    }
+
+    //CLASS METHODS
+
+    public function getClassName() {
+        return $this::CLASS_PREFIX . $this->getBaseName() . $this::CLASS_SUBFFIX;
+    }
+
+    public function getClassNamespace() {
+        return $this::NAMESPACE_PREFIX . $this->getBaseNamespace() . $this::NAMESPACE_SUBFFIX;
+    }
+
+    public function getClassNamespaceAndName() {
+        return '\\' . $this->getClassNamespace() . '\\' . $this->getClassName();
+    }
+
+    public function getClassFlags() {
+        return null;
+    }
+
+    public function getClassDockBlock() {
+        if (!$this->classDockBlock) {
+            $this->classDockBlock = $this->genDockBlock();
+        }
+        return $this->classDockBlock;
+    }
+
+    public function getClassProperties() {
+        return $this->classProperties;
+    }
+
+    public function getClassMethods() {
+        return $this->classMethods;
+    }
+
+    public function getClassFileGenerator() {
+        return $this->getFg();
+    }
+
+    //GEN METHODS
+
+    protected function genDockBlock() {
         $dockBlock = new \Zend\Code\Generator\DocBlockGenerator();
         $dockBlock->setShortDescription($this->getShortDescription());
         $dockBlock->setLongDescription($this->getLongDescription());
-        $a = [
+        $tags = [
             ["name" => "author", 'description' => $this->getAuthor()],
             ["name" => "license", 'description' => $this->getLicense()],
             ["name" => "link", 'description' => $this->getLink()],
         ];
 
-        $a = array_merge_recursive($a, $this->getTags());
+        $tags = array_merge_recursive($tags, $this->getClassTags());
 
-        $dockBlock->setTags($a);
+        $dockBlock->setTags($tags);
 
-        $this->classGenerator->setDocBlock($dockBlock);
+        return $dockBlock;
     }
 
-    /**
-     * [5] Generate Extends
-     */
-    protected function genExtendClass() {
-        $this->classGenerator->setExtendedClass($this->getExtendsName());
+    //NORMAL CLASS TAGS
+    public function getAuthor() {
+        return $this->getModule()->getAuthor();
     }
 
-    /**
-     * [6] Generate FILE
-     */
-    protected function genFile() {
-        $this->file = new \Zend\Code\Generator\FileGenerator();
-        $this->getFile()->setClass($this->getClassGenerator());
+    public function getLicense() {
+        return $this->getModule()->getLicense();
     }
 
-    /**
-     * INSERT FILE
-     */
-    protected function insertFile() {
-        try {
-            $dir = realpath(__DIR__ . "/../../../../../");
+    public function getLink() {
+        return $this->getModule()->getLink();
+    }
 
-            $this->path = $this->getPath() . $this::PATH_SUBFFIX;
-            $this->completePath = $dir . $this->path;
-            $this->name = $this->getFullClassName() . ".php";
-            $this->fileName = $this->completePath . $this->name;
+    public function getShortDescription() {
+        return $this->getBaseName() . $this::CLASS_SUBFFIX;
+    }
 
-            $this->checkFileExist();
+    public function getLongDescription() {
+        return "";
+    }
 
-            if ($this->getOverwrite() == true || !$this->exists) {
+    //GT-ST
 
-                $this->makeDir();
-                $this->putFile();
-                $this->status = true;
-            } else {
-                $this->msj = "File exists";
-                $this->status = false;
-            }
-        } catch (Exception $ex) {
-            echo $ex;
+    function getCg() {
+        if (!$this->cg) {
+            throw new \Exception("ClassGenerator need be prepare");
         }
+        return $this->cg;
     }
 
-    protected function makeDir() {
-        if (!is_dir($this->completePath)) {
-            try {
-                mkdir($this->completePath, 0777, true);
-            } catch (Exception $ex) {
-                //LOG ERROR
-                throw $ex;
-            }
-        }
+
+
+    function setCg(\Zend\Code\Generator\ClassGenerator $cg) {
+        $this->cg = $cg;
     }
 
-    protected function checkFileExist() {
-        $this->exists = file_exists($this->fileName);
-        if ($this->exists) {
-            $this->msj = "File overwritten";
-        } else {
-            $this->msj = "Generated file";
-        }
-    }
-
-    protected function putFile() {
-        $this->fileGenerate = $this->getFile()->generate();
-
-        try {
-            file_put_contents($this->fileName, $this->fileGenerate);
-        } catch (Exception $ex) {
-            //LOG ERROR
-            throw $ex;
-        }
-    }
-
-    function getClassGenerator() {
-        return $this->classGenerator;
-    }
-
-    function getFile() {
-        return $this->file;
-    }
-
-    function getFileGenerate() {
-        return $this->fileGenerate;
-    }
-
-    function getPath() {
-        return $this->path;
-    }
-
-    function getCompletePath() {
-        return $this->completePath;
-    }
-
-    function getName() {
-        return $this->name;
-    }
-
-    function getFileName() {
-        return $this->fileName;
-    }
-
-    function getStatus() {
-        return $this->status;
-    }
-
-    function getMsj() {
-        return $this->msj;
-    }
-
-    function getOverwrite() {
-        return $this->overwrite;
-    }
-
-    function getExists() {
-        return $this->exists;
-    }
-
-    function setClassGenerator(\Zend\Code\Generator\ClassGenerator $classGenerator) {
-        $this->classGenerator = $classGenerator;
-    }
-
-    function setFile(\Zend\Code\Generator\FileGenerator $file) {
-        $this->file = $file;
-    }
-
-    function setOverwrite($overwrite) {
-        $this->overwrite = $overwrite;
-    }
+ 
 
 }

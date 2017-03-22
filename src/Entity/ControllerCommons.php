@@ -25,14 +25,9 @@ class ControllerCommons extends \ZfMetal\Generator\Entity\AbstractEntity {
     protected $id;
 
     /**
-     * @Annotation\Type("DoctrineModule\Form\Element\ObjectSelect")
-     * @Annotation\Options({
-     * "label":"Controller:",
-     * "empty_option": "",
-     * "target_class":"ZfMetal\Generator\Entity\Controller",
-     * "property": "name"})
      * @ORM\OneToOne(targetEntity="ZfMetal\Generator\Entity\Controller")
      * @ORM\JoinColumn(name="controller_id", referencedColumnName="id", nullable=false,onDelete="CASCADE")
+     * @Annotation\Type("Zend\Form\Element\Hidden")
      */
     protected $controller;
 
@@ -67,7 +62,16 @@ class ControllerCommons extends \ZfMetal\Generator\Entity\AbstractEntity {
      */
     protected $entityManager;
 
-    
+    /**
+     * @var string
+     * @ORM\Column(type="boolean", unique=false, nullable=true, name="grid_action")
+     * @Annotation\Type("Zend\Form\Element\Checkbox")
+     * @Annotation\Attributes({"type":"checkbox"})
+     * @Annotation\Options({"label":"Grid"})
+     * @Annotation\AllowEmpty({"true"})
+     */
+    protected $gridAction;
+
     /**
      * @var string
      * @ORM\Column(type="boolean", unique=false, nullable=true, name="list_action")
@@ -77,8 +81,8 @@ class ControllerCommons extends \ZfMetal\Generator\Entity\AbstractEntity {
      * @Annotation\AllowEmpty({"true"})
      */
     protected $listAction;
-    
-      /**
+
+    /**
      * @var string
      * @ORM\Column(type="boolean", unique=false, nullable=true, name="create_action")
      * @Annotation\Type("Zend\Form\Element\Checkbox")
@@ -87,9 +91,8 @@ class ControllerCommons extends \ZfMetal\Generator\Entity\AbstractEntity {
      * @Annotation\AllowEmpty({"true"})
      */
     protected $createAction;
-    
-    
-         /**
+
+    /**
      * @var string
      * @ORM\Column(type="boolean", unique=false, nullable=true, name="edit_action")
      * @Annotation\Type("Zend\Form\Element\Checkbox")
@@ -98,8 +101,8 @@ class ControllerCommons extends \ZfMetal\Generator\Entity\AbstractEntity {
      * @Annotation\AllowEmpty({"true"})
      */
     protected $editAction;
-    
-         /**
+
+    /**
      * @var string
      * @ORM\Column(type="boolean", unique=false, nullable=true, name="delete_action")
      * @Annotation\Type("Zend\Form\Element\Checkbox")
@@ -108,8 +111,8 @@ class ControllerCommons extends \ZfMetal\Generator\Entity\AbstractEntity {
      * @Annotation\AllowEmpty({"true"})
      */
     protected $deleteAction;
-    
-         /**
+
+    /**
      * @var string
      * @ORM\Column(type="boolean", unique=false, nullable=true, name="view_action")
      * @Annotation\Type("Zend\Form\Element\Checkbox")
@@ -118,6 +121,7 @@ class ControllerCommons extends \ZfMetal\Generator\Entity\AbstractEntity {
      * @Annotation\AllowEmpty({"true"})
      */
     protected $viewAction;
+
     function getId() {
         return $this->id;
     }
@@ -198,5 +202,17 @@ class ControllerCommons extends \ZfMetal\Generator\Entity\AbstractEntity {
         $this->viewAction = $viewAction;
     }
 
+    function getGridAction() {
+        return $this->gridAction;
+    }
 
+    function setGridAction($gridAction) {
+        $this->gridAction = $gridAction;
+    }
+
+    public function __toString() {
+        return "commons";
+    }
+
+    
 }

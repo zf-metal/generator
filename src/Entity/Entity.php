@@ -94,6 +94,10 @@ class Entity extends \ZfMetal\Generator\Entity\AbstractEntity {
         return $this->id;
     }
 
+    function getClass() {
+        return $this->getModule()->getName() . "\Entity\\" . $this->name;
+    }
+
     function getFullName() {
         return $this->getModule()->getName() . "\Entity\\" . $this->name;
     }
@@ -135,7 +139,7 @@ class Entity extends \ZfMetal\Generator\Entity\AbstractEntity {
     }
 
     public function __toString() {
-        return $this->getModule()->getName()."\Entity\\".$this->getName();
+        return $this->getModule()->getName() . "\Entity\\" . $this->getName();
     }
 
     function getCustomOnTable() {

@@ -8,99 +8,53 @@ namespace ZfMetal\Generator\Generator;
  * @author Cristian Incarnato <cristian.cdi@gmail.com>
  */
 class EntityGenerator extends AbstractClassGenerator {
-    //INIT ClassGeneratorInterface
 
-    /**
-     * Prefix
-     */
+    //CONSTS
     const CLASS_PREFIX = "";
-
-    /**
-     * Subffix
-     */
     const CLASS_SUBFFIX = "";
-
-    /**
-     * Namespace Prefix
-     */
     const NAMESPACE_PREFIX = "";
-
-    /**
-     * Namespace Subffix
-     */
     const NAMESPACE_SUBFFIX = "\Entity";
+    const RELATIVE_PATH = "/src/Entity/";
 
-    /**
-     * PATH Subffix
-     */
-    const PATH_SUBFFIX = "/src/Entity/";
-
-    /**
-     * USES
-     * 
-     * Remember: [ ["class" => "THE_CLASS", "alias" => "THE_ALIAS"] ]
-     * 
-     * @type array
-     */
-    const USES = [
-        ["class" => "Doctrine\Common\Collections\ArrayCollection", "alias" => null],
-        ["class" => "Zend\Form\Annotation", "alias" => null],
-        ["class" => "Doctrine\ORM\Mapping", "alias" => "ORM"],
-        ["class" => "Doctrine\ORM\Mapping\UniqueConstraint", "alias" => "UniqueConstraint"],
-    ];
-
-    /**
-     * getTags
-     * 
-     * Remember, return: [ ["class" => "THE_CLASS", "alias" => "THE_ALIAS"] ]
-     * 
-     * @return array
-     */
-    public function getTags() {
-        $a = [
-            ["name" => 'ORM\Table(name="' . $this->genTableName() . '"' . $this->genCustomTable() . ')'],
-            ["name" => 'ORM\Entity(repositoryClass="' . $this->genRepositoryClass() . '")'],
-        ];
-        return $a;
-    }
-
-    public function getClassName() {
+    //BASE NAMES
+    public function getBaseName() {
         return $this->getEntity()->getName();
     }
 
-    public function getNamespaceName() {
+    public function getBaseNamespace() {
         return $this->getEntity()->getModule()->getName();
     }
 
-    public function getExtendsName() {
-        return null;
+    //CLASS METHODS
+
+    public function getClassExtends() {
+        return ""; //OPTIONAL 
     }
 
-    public function getPath() {
-        return $this->getEntity()->getModule()->getPath();
+    public function getClassInterfaces() {
+        return []; //OPTIONAL 
     }
 
-    public function getAuthor() {
-        return $this->getEntity()->getModule()->getAuthor();
+    public function getClassTags() {
+        return [
+            ["name" => 'ORM\Table(name="' . $this->genTableName() . '"' . $this->genCustomTable() . ')'],
+            ["name" => 'ORM\Entity(repositoryClass="' . $this->genRepositoryClass() . '")'],
+        ];
     }
 
-    public function getLicense() {
-        return $this->getEntity()->getModule()->getLicense();
+    public function getClassUses() {
+        return [
+            ["class" => "Doctrine\Common\Collections\ArrayCollection", "alias" => null],
+            ["class" => "Zend\Form\Annotation", "alias" => null],
+            ["class" => "Doctrine\ORM\Mapping", "alias" => "ORM"],
+            ["class" => "Doctrine\ORM\Mapping\UniqueConstraint", "alias" => "UniqueConstraint"],
+        ];
     }
 
-    public function getLink() {
-        return $this->getEntity()->getModule()->getLink();
+    //MODULE
+    public function getModule() {
+        return $this->getEntity()->getModule(); // return \ZfMetal\Generator\Entity\Module
     }
-
-    public function getShortDescription() {
-        return $this->getEntity()->getName();
-    }
-
-    public function getLongDescription() {
-        return "";
-    }
-
-    //END ClassGeneratorInterface
 
     /**
      * Description
@@ -113,11 +67,10 @@ class EntityGenerator extends AbstractClassGenerator {
         $this->entity = $entity;
     }
 
-    public function generate() {
-        parent::generate();
+    public function prepare() {
+        parent::prepare();
         $this->genProperties();
         $this->genToString();
-        $this->insertFile();
     }
 
     /**
@@ -126,7 +79,7 @@ class EntityGenerator extends AbstractClassGenerator {
     protected function genProperties() {
         foreach ($this->getEntity()->getProperties() as $property) {
             //GENERATE AND ADD Property +(Getter&Setter) to Class 
-            $propertyGenerator = new \ZfMetal\Generator\Generator\PropertyGenerator($property, $this->classGenerator);
+            $propertyGenerator = new \ZfMetal\Generator\Generator\PropertyGenerator($property, $this->cg);
             $propertyGenerator->generate();
         }
     }
@@ -135,6 +88,10 @@ class EntityGenerator extends AbstractClassGenerator {
      * [7] Se genera ToString
      */
     protected function genToString() {
+
+        if ($this->getCg()->hasMethod("__toString")) {
+            $this->getCg()->removeMethod("__toString");
+        }
 
         //BODY
         $toString = "return ";
@@ -147,11 +104,9 @@ class EntityGenerator extends AbstractClassGenerator {
         $toString .= ';';
 
         //GENERATE
-        $m = new \Zend\Code\Generator\MethodGenerator ( );
-        $m->setName(
-                "__toString");
+        $m = new \Zend\Code\Generator\MethodGenerator("__toString");
         $m->setBody($toString);
-        $this->classGenerator->addMethodFromGenerator($m);
+        $this->getCg()->addMethodFromGenerator($m);
     }
 
     /**

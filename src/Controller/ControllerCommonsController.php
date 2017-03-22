@@ -58,8 +58,6 @@ class ControllerCommonsController extends AbstractActionController {
 
         
         //Custom Form
-        $form->remove('controller');
-        $form->add(['name' => 'controller', 'attributes' => ['type' => 'hidden']]);
         $form->get("controller")->setValue($controllerId);
         $form->setAttribute('class', 'form-vertical');
         $form->setAttribute('action', 'javascript:submitCommons()');

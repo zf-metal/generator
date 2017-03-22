@@ -1,0 +1,23 @@
+<table class="table table-striped table-condensed">
+    <tr>  
+        <th class="text-right">STATUS</th> 
+        <td><?php echo ($fileGenerator->getStatus()) ? "<label class='text-success'>OK</label>" : "<label class='text-danger'>Fail</label>"; ?></td>
+    </tr>
+
+    <tr>  <th class="text-right">MSJ</th> 
+        <td><?php echo $fileGenerator->getMessage(); ?></td>
+    </tr>
+
+    <tr>
+        <th class="text-right">FILE EXISTS</th> 
+        <td><?php echo ($fileGenerator->getExists()) ? "YES" : "NO"; ?></td>
+    </tr>
+
+    <tr>
+        <th class="text-right">RELATIVE PATH</th> <td><?php echo $fileGenerator->getRelativePath(); ?></td>
+    </tr>
+    <tr>  
+        <th class="text-right">FILE NAME</th> <td><?php echo $fileGenerator->getBaseFileName(); ?></td>
+    </tr>
+
+</table>

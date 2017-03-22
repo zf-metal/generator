@@ -1,58 +1,16 @@
 <div class="row">
     <div class="col-lg-10 col-lg-offset-1">
+
+        
+         <div class="col-lg-6 col-md-6 ">
         <h3>Entity</h3>
-        <table class="table table-striped table-condensed">
-            <tr>  
-                <th class="text-right">STATUS</th> <td><?php echo ($entityGenerator->getStatus()) ? "<label class='text-success'>OK</label>" : "<label class='text-danger'>Fail</label>"; ?></td>
-            </tr>
-            <tr>  
-                <th class="text-right">FILE EXISTS</th> <td><?php echo ($entityGenerator->getExists()) ? "YES" : "NO"; ?></td>
-            </tr> 
-            <tr>  
-                <th class="text-right">MSJ</th> <td><?php echo $entityGenerator->getMsj(); ?></td>
-            </tr>
-            <tr>
-                <th class="text-right">RELATIVE PATH</th> <td><?php echo $entityGenerator->getPath(); ?></td>
-            </tr>
-            <tr>  
-                <th class="text-right">COMPLETE PATH</th> <td><?php echo $entityGenerator->getCompletePath(); ?></td>
-            </tr>
-            <tr>  
-                <th class="text-right">FILE NAME</th> <td><?php echo $entityGenerator->getName(); ?></td>
-            </tr>
-
-            <tr>  
-                <th class="text-right">PATH & FILE NAME</th> <td><?php echo $entityGenerator->getFileName(); ?></td>
-            </tr>
-        </table>
-
+        <?php echo $this->partial('zf-metal/generator/generator/base-result', ["fileGenerator" => $entityGenerator]); ?>
+        </div>
+        
+          <div class="col-lg-6 col-md-6 ">
         <h3>Entity Repository</h3>
-        <table class="table table-striped table-condensed">
-            <tr>  
-                <th class="text-right">STATUS</th> <td><?php echo ($repositoryGenerator->getStatus()) ? "<label class='text-success'>OK</label>" : "<label class='text-danger'>Fail</label>"; ?></td>
-            </tr>
-            <tr>  
-                <th class="text-right">FILE EXISTS</th> <td><?php echo ($repositoryGenerator->getExists()) ? "YES" : "NO"; ?></td>
-            </tr> 
-            <tr>  
-                <th class="text-right">MSJ</th> <td><?php echo $repositoryGenerator->getMsj(); ?></td>
-            </tr>
-            <tr>
-                <th class="text-right">RELATIVE PATH</th> <td><?php echo $repositoryGenerator->getPath(); ?></td>
-            </tr>
-            <tr>  
-                <th class="text-right">COMPLETE PATH</th> <td><?php echo $repositoryGenerator->getCompletePath(); ?></td>
-            </tr>
-            <tr>  
-                <th class="text-right">FILE NAME</th> <td><?php echo $repositoryGenerator->getName(); ?></td>
-            </tr>
-
-            <tr>  
-                <th class="text-right">PATH & FILE NAME</th> <td><?php echo $repositoryGenerator->getFileName(); ?></td>
-            </tr>
-        </table>
-
-
+        <?php echo $this->partial('zf-metal/generator/generator/base-result', ["fileGenerator" => $repositoryGenerator]); ?>
+        </div>
 
     </div>
 

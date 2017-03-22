@@ -21,6 +21,10 @@ return [
              "entity" => [
                 "type" => "relational"
             ],
+             "commons" => [
+                "type" => "relational",
+                   "hidden" => true
+            ],
         ],
         "crudConfig" => [
             "enable" => true,

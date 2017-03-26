@@ -13,7 +13,7 @@ return [
                 'detail' => "",
                 'icon' => 'fa fa-sitemap ',
                 'permission' => 'ZfMetal\Generator',
-                'uri' => '/generator/module',
+                'uri' => '/generator/main',
             ],
         ],
     ],

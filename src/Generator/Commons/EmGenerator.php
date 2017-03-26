@@ -39,10 +39,16 @@ class EmGenerator {
     static protected function genConstruct($controllerGenerator) {
         $cm = $controllerGenerator->getConstruct();
 
+        
         //BODY
         $body = $cm->getBody();
-        $body .= ' $this->em = $em;' . PHP_EOL;
-        $cm->setBody($body);
+        
+        //CHECK IF EM EXIST
+        if (!preg_match("/em/", $body)) {
+            $body .= ' $this->em = $em;' . PHP_EOL;
+            $cm->setBody($body);
+        }
+
 
         //PARAMETERS
         $em = new \Zend\Code\Generator\ParameterGenerator("em", "\Doctrine\ORM\EntityManager");

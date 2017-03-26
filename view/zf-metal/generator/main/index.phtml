@@ -1,30 +1,99 @@
-<style>
-    a {
-        text-decoration: none ! important; 
-    }
-
-    a .panel-hover:hover{
-        text-decoration: none ! important; 
-        opacity: 0.9;
-
-    }
-
-    a .panel-primary.panel-hover:hover{
-        border: 1px solid  #039 ! important; 
-    }
-</style>
-
-<div class="col-lg-3 col-md-4 col-sm-6">
-    <a href="/generator/module">
-
-        <div class="panel panel-primary panel-hover">
+<div class="row">
+    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+        <div class="panel panel-default">
             <div class="panel-heading">
-                <h4 class="panel-title"><?php echo $this->translate('Modulos'); ?></h4>
+                <?php echo $this->translate('Modules'); ?>
+                <span class="pull-right">
+                    <a class="btn btn-xs btn-primary glyphicon glyphicon-plus"></a>
+                </span>
+
+
             </div>
             <div class="panel-body">
-                <?php echo $this->translate('Generar Modulos completos con entidades, controladores, formularios, menus.'); ?>
+                <div class="list-group">
+
+                    <?php foreach ($this->modules as $m): ?>
+
+                        <a href="<?php echo $this->url("ZfMetal\Generator/Main", ['moduleId' => $m->getId()]); ?>" class="list-group-item">
+                            <i class="fa fa-comment fa-fw"></i> <?php echo $m->getName(); ?>
+                            </span>
+                        </a>
+
+                    <?php endforeach; ?>
+
+                </div>
             </div>
 
         </div>
-    </a>
+
+    </div>
+    <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+        <?php if ($this->module): ?>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title"> <?php echo $this->translate('Module'); ?>: <strong><?php echo $module->getName(); ?></strong></h4>
+                </div>
+                <div class="panel-body">
+
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="#entityTab" data-toggle="tab" aria-expanded="true">Entity</a>
+                        </li>
+                        <li class=""><a href="#controllerTab" data-toggle="tab" aria-expanded="false">Controller</a>
+                        </li>
+                        <li class=""><a href="#routeTab" data-toggle="tab" aria-expanded="false">Routes</a>
+                        </li>
+                        <li class=""><a href="#navigationTab" data-toggle="tab" aria-expanded="false">Navigation</a>
+                        </li>
+                        <li class=""><a href="#optionTab" data-toggle="tab" aria-expanded="true">Options</a>
+                        </li>
+                        <li class=""><a href="#formTab" data-toggle="tab" aria-expanded="false">Forms</a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content">
+                        <div class="tab-pane fade active in" id="entityTab">
+                     
+                            <h4>Entity</h4>
+                            <br>
+                            <i class="glyphicon glyphicon-transfer"> Cargando...</i>
+
+                        </div>
+                        <div class="tab-pane fade" id="controllerTab">
+                            <h4>Controllers</h4>
+                            <br>
+                            <i class="glyphicon glyphicon-transfer"> Cargando...</i>
+
+                        </div>
+                        <div class="tab-pane fade" id="routeTab">
+                            <h4>Routes</h4>
+                            <br>
+                            <i class="glyphicon glyphicon-transfer"> Cargando...</i>
+
+                        </div>
+                        <div class="tab-pane fade" id="navigationTab">
+                            <h4>Navigation</h4>
+                            <p></p>
+                        </div>
+                        <div class="tab-pane fade" id="optionTab">
+                            <h4>Module Options</h4>
+                            <p></p>
+                        </div>
+
+                        <div class="tab-pane fade" id="formTab">
+                            <h4>Forms</h4>
+                            <p></p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        <?php endif; ?>
+    </div>
 </div>
+
+<?php if ($this->module): ?>
+    <?php echo $this->partial("zf-metal/generator/main/assets"); ?>
+<?php endif; ?>

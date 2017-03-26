@@ -7,6 +7,9 @@ use Zend\View\Model\ViewModel;
 
 class RouteController extends AbstractActionController {
 
+    
+    const ENTITY = \ZfMetal\Generator\Entity\Route::class;
+    
     /**
      * @var Doctrine\ORM\EntityManager
      */
@@ -32,18 +35,27 @@ class RouteController extends AbstractActionController {
         $this->em = $em;
     }
 
-    public function setEntityManager(EntityManager $em) {
-        $this->em = $em;
+    /**
+     * 
+     * @return \ZfMetal\Generator\Repository\RouteRepository;
+     */
+   function getRouteRepository(){
+       return $this->getEm()->getRepository(self::ENTITY);
+   }
+
+    public function mainAction() {
+
+        $moduleId = $this->params("moduleId");
+        $module = $this->getEm()->getRepository("ZfMetal\Generator\Entity\Module")->find($moduleId);
+        
+        $routes = $this->getRouteRepository()->findWhitoutParent($moduleId);
+        
+        $view = new ViewModel(array('routes' => $routes));
+        $view->setTerminal(true);
+        return $view;
     }
 
-    public function getEntityManager() {
-        if (null === $this->em) {
-            $this->em = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
-        }
-        return $this->em;
-    }
-
-    public function moduleAction() {
+    public function gridAction() {
 
         //Limitamos las Entity al module correspondiente
 
@@ -59,7 +71,7 @@ class RouteController extends AbstractActionController {
         $this->grid->setSource($source);
 
         ##################################################
-        
+
         $this->grid->setRecordsPerPage(100);
         $this->grid->setTableClass("table-condensed");
         $this->grid->prepare();
@@ -75,11 +87,8 @@ class RouteController extends AbstractActionController {
 
 
         $view = new ViewModel(array('grid' => $this->grid));
-        $view->setTerminal(true);
+        $view->setTerminal(false);
         return $view;
     }
-
-
-  
 
 }

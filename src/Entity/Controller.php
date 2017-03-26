@@ -131,4 +131,8 @@ class Controller extends \ZfMetal\Generator\Entity\AbstractEntity {
         $this->description = $description;
     }
 
+    public function __toString() {
+        return $this->getClass();
+    }
+
 }

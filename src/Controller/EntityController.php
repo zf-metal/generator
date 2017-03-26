@@ -60,10 +60,10 @@ class EntityController extends AbstractActionController {
 
         ##################################################
 
-        $this->grid->addExtraColumn("PROPERTIES", "<a class='btn btn-warning btn-xs fa fa-database ' onclick='modalProperties({{id}},\"{{name}}\")' ></a>", "right", false);
-        $this->grid->addExtraColumn("GENERATOR", "<a class='btn btn-warning btn-xs fa fa-file-code-o' onclick='modalEntityGenerator({{id}},\"{{name}}\")' ></a>", "right", false);
-        $this->grid->addExtraColumn("ABM", "<a class='btn btn-warning btn-xs fa fa-file-code-o' onclick='modalAbm({{id}},\"{{name}}\")' ></a>", "right", false);
-
+        $this->grid->addExtraColumn("property-list", "<a class='btn btn-warning btn-xs glyphicon glyphicon-th-list' onclick='modalProperties({{id}},\"{{name}}\")' ></a>", "right", false);
+        $this->grid->addExtraColumn("quick", "<a class='btn btn-primary btn-xs glyphicon glyphicon-fast-forward' onclick='modalAbm({{id}},\"{{name}}\")' ></a>", "right", false);
+        $this->grid->addExtraColumn("generator", "<a class='btn btn-danger btn-xs glyphicon glyphicon-play' onclick='modalEntityGenerator({{id}},\"{{name}}\")' ></a>", "right", false);
+        
         
         $this->grid->setRecordsPerPage(100);
         $this->grid->setTableClass("table-condensed");

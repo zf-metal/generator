@@ -91,6 +91,10 @@ class Action extends \ZfMetal\Generator\Entity\AbstractEntity {
         $this->template = $template;
     }
 
+    public function __toString() {
+        return $this->name;
+    }
+
 
 
 }

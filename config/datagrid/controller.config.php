@@ -25,6 +25,15 @@ return [
                 "type" => "relational",
                    "hidden" => true
             ],
+             "action-list" => [
+                 "tdClass" => "text-center"
+            ],
+             "quick" => [
+                 "tdClass" => "text-center"
+            ],
+             "generator" => [
+                "tdClass" => "text-center"
+            ],
         ],
         "crudConfig" => [
             "enable" => true,

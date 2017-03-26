@@ -46,8 +46,12 @@ class GridActionGenerator {
 
         //BODY
         $body = $cm->getBody();
-        $body .= ' $this->grid = $grid;' . PHP_EOL;
-        $cm->setBody($body);
+        
+         //CHECK IF EM EXIST
+        if (!preg_match("/grid/", $body)) {
+            $body .= ' $this->grid = $grid;' . PHP_EOL;
+            $cm->setBody($body);
+        }
 
         //PARAMETERS
         $grid = new \Zend\Code\Generator\ParameterGenerator("grid", "\ZfMetal\Datagrid\Grid");
@@ -82,6 +86,7 @@ class GridActionGenerator {
         $method->setName("gridAction");
 
         //BODY
+        
         $body = '$this->grid->prepare();' . PHP_EOL;
         $body .= 'return array("grid" => $this->grid);' . PHP_EOL;
         $method->setBody($body);

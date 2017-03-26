@@ -11,7 +11,6 @@ class MainController extends AbstractActionController {
      */
     protected $em;
 
-
     function __construct(\Doctrine\ORM\EntityManager $em) {
         $this->em = $em;
     }
@@ -34,11 +33,20 @@ class MainController extends AbstractActionController {
         }
         return $this->em;
     }
-    
-    public function indexAction() {
-        
-        return [];
-    }
 
+    public function indexAction() {
+
+        $moduleId = $this->params("moduleId");
+        if ($moduleId) {
+            $module = $this->getEm()->getRepository("ZfMetal\Generator\Entity\Module")->find($moduleId);
+        }else{
+            $module = null;
+        }
+
+         $modules = $this->getEm()->getRepository("ZfMetal\Generator\Entity\Module")->findAll();
+        
+
+        return ["modules" => $modules,"module" => $module];
+    }
 
 }

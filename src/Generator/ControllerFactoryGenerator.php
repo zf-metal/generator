@@ -111,7 +111,7 @@ class ControllerFactoryGenerator extends AbstractClassGenerator {
     }
 
     function getInvokeReturn() {
-        return "return new \\" . $this->getModule()->getName() . "\Controller\\" . $this->getClassName() . "Controller(" . $this->getParamters() . ");" . PHP_EOL;
+        return "return new \\" . $this->getModule()->getName() . "\Controller\\" . $this->getBaseName() . "Controller(" . $this->getParamters() . ");" . PHP_EOL;
     }
 
     function getInvoke() {
@@ -137,7 +137,7 @@ class ControllerFactoryGenerator extends AbstractClassGenerator {
     protected function getInvokeParameter() {
         $parameters[] = new \Zend\Code\Generator\ParameterGenerator("container", "\Interop\Container\ContainerInterface");
         $parameters[] = new \Zend\Code\Generator\ParameterGenerator("requestedName", null);
-        $parameters[] = new \Zend\Code\Generator\ParameterGenerator("options", "array", null);
+        $parameters[] = new \Zend\Code\Generator\ParameterGenerator("options", "array", array());
         return $parameters;
     }
 

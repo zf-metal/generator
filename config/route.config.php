@@ -11,17 +11,24 @@ use Zend\Router\Http\Segment;
 return [
     'router' => array(
         'routes' => array(
-            'ZfMetal\Generator_Main' => array(
+            'ZfMetal\Generator' => array(
                 'type' => Literal::class,
-                'may_terminate' => true,
-                'options' => array(
-                    'route' => '/generator',
-                    'defaults' => array(
-                        'controller' => Controller\MainController::class,
-                        'action' => 'index',
-                    ),
-                ),
+                'may_terminate' => false,
+                 'options' => array(
+                       'route' => '/generator',
+                     ),
                 'child_routes' => [
+                    'Main' => array(
+                        'type' => Segment::class,
+                        'may_terminate' => true,
+                        'options' => array(
+                            'route' => '/main[/:moduleId]',
+                            'defaults' => array(
+                                'controller' => Controller\MainController::class,
+                                'action' => 'index',
+                            ),
+                        ),
+                    ),
                     'Module' => array(
                         'type' => Literal::class,
                         'may_terminate' => true,
@@ -83,23 +90,43 @@ return [
                                     ),
                                 ),
                             ),
-                             'Route' => array(
+                            'Route' => array(
                                 'type' => Segment::class,
                                 'options' => array(
                                     'route' => '/route/:moduleId',
                                     'defaults' => array(
                                         'controller' => Controller\RouteController::class,
-                                        'action' => 'module',
+                                        'action' => 'main',
                                     ),
                                 ),
                             ),
-                             'Controller' => array(
+                            'Route_Childs' => array(
+                                'type' => Segment::class,
+                                'options' => array(
+                                    'route' => '/route/childs/:routeId',
+                                    'defaults' => array(
+                                        'controller' => Controller\RouteController::class,
+                                        'action' => 'childs',
+                                    ),
+                                ),
+                            ),
+                             'Route_Grid' => array(
+                                'type' => Segment::class,
+                                'options' => array(
+                                    'route' => '/route/grid/:moduleId',
+                                    'defaults' => array(
+                                        'controller' => Controller\RouteController::class,
+                                        'action' => 'grid',
+                                    ),
+                                ),
+                            ),
+                            'Controller' => array(
                                 'type' => Segment::class,
                                 'options' => array(
                                     'route' => '/controller/:moduleId',
                                     'defaults' => array(
                                         'controller' => Controller\ControllerController::class,
-                                        'action' => 'module',
+                                        'action' => 'main',
                                     ),
                                 ),
                             ),

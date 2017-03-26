@@ -1,0 +1,36 @@
+<div class="row"> 
+    <br>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <?php echo $this->translate('Routes'); ?>
+                <span class="pull-right">
+                    <a class="btn btn-xs btn-primary glyphicon glyphicon-plus"></a>
+                </span>
+
+
+            </div>
+            <div class="panel-body">
+                <nav>
+                    <ul class="nav">
+                        <?php $this->depth = 0; ?>
+                        <?php foreach ($this->routes as $r): ?>
+
+                            <?php
+                            if ($r->hasChilds()) {
+                                echo $this->partial('zf-metal/generator/route/partial/child', ["route" => $r, "depth" => $this->depth]);
+                            } else {
+
+                                echo $this->partial('zf-metal/generator/route/partial/unique', ["route" => $r, "depth" => $this->depth]);
+                            }
+                            ?>
+
+                        <?php endforeach; ?>
+                    </ul>
+                </nav>
+            </div>
+
+        </div>
+
+    </div>
+</div>

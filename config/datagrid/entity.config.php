@@ -21,16 +21,28 @@ return [
                 "displayName" => "Actualizado",
                 "format" => "Y-m-d H:i:s"
             ],
+            "customOnTable" =>[
+                "hidden" => true 
+            ],
+             "extends" =>[
+                "hidden" => true 
+            ],
+             "module" =>[
+                "hidden" => true 
+            ],
             "properties" => [
                 "hidden" => true
             ],
             "path" => [
                 "hidden" => true
             ],
-            "PROPERTIES" => [
+            "property-list" => [
                 "tdClass" => "text-center"
             ],
-             "GENERATOR" => [
+             "generator" => [
+                "tdClass" => "text-center"
+            ],
+             "quick" => [
                 "tdClass" => "text-center"
             ]
         ],

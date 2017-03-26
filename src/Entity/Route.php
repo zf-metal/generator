@@ -10,7 +10,7 @@ use Zend\Form\Annotation;
  *
  * @ORM\Entity
  * @ORM\Table(name="route")
- *
+ * @ORM\Entity(repositoryClass="ZfMetal\Generator\Repository\RouteRepository")
  * @author Cristian Incarnato
  */
 class Route extends \ZfMetal\Generator\Entity\AbstractEntity {
@@ -63,8 +63,7 @@ class Route extends \ZfMetal\Generator\Entity\AbstractEntity {
      */
     protected $name;
 
-
-       /**
+    /**
      * @Annotation\Type("DoctrineModule\Form\Element\ObjectSelect")
      * @Annotation\Options({
      * "label":"Route Type:",
@@ -75,9 +74,8 @@ class Route extends \ZfMetal\Generator\Entity\AbstractEntity {
      * @ORM\JoinColumn(name="type_id", referencedColumnName="id",nullable=true)
      */
     protected $type;
-    
-    
-        /**
+
+    /**
      * @Annotation\Type("DoctrineModule\Form\Element\ObjectSelect")
      * @Annotation\Options({
      * "label":"Controller:",
@@ -89,8 +87,7 @@ class Route extends \ZfMetal\Generator\Entity\AbstractEntity {
      */
     protected $controller;
 
-    
-        /**
+    /**
      * @Annotation\Type("DoctrineModule\Form\Element\ObjectSelect")
      * @Annotation\Options({
      * "label":"Action:",
@@ -101,9 +98,8 @@ class Route extends \ZfMetal\Generator\Entity\AbstractEntity {
      * @ORM\JoinColumn(name="action_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $action;
-    
-    
-        /**
+
+    /**
      * @var string
      * @Annotation\Options({"label":"Route:", "description": ""})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":500}})
@@ -112,11 +108,10 @@ class Route extends \ZfMetal\Generator\Entity\AbstractEntity {
      */
     protected $route;
 
-    
     public function __construct() {
         $this->childs = new ArrayCollection();
     }
-    
+
     function getId() {
         return $this->id;
     }
@@ -189,9 +184,28 @@ class Route extends \ZfMetal\Generator\Entity\AbstractEntity {
         $this->route = $route;
     }
 
+    public function hasChilds() {
+        return count($this->childs)?true:false;
+    }
 
+    public function addChild(\ZfMetal\Generator\Entity\Route $route) {
+        if ($this->childs->contains($route)) {
+            return;
+        }
+        $this->childs[] = $route;
+        $route->setParent($this);
+    }
 
-   
+    public function removeChild() {
+        if (!$this->childs->contains($route)) {
+            return;
+        }
+        $this->childs->removeElement($route);
+        $route->setParent(null);
+    }
 
+    public function __toString() {
+        return $this->name." (".$this->route.")";
+    }
 
 }

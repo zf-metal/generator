@@ -1,0 +1,18 @@
+<li><a href="#"  data-toggle="collapse" data-target="#submenu<?php echo $this->route->getId(); ?>" aria-expanded="false">
+    <?php echo $this->route->getName(); ?>
+    </a>
+    <ul class="nav collapse" id="submenu<?php echo $this->route->getId(); ?>" role="menu">
+        <?php foreach ($this->route->getChilds() as $r): ?>
+            <?php
+            if ($r->hasChilds()) {
+                echo $this->partial('zf-metal/generator/route/partial/child', ["route" => $r, "depth" => $this->depth]);
+            } else {
+
+                echo $this->partial('zf-metal/generator/route/partial/unique', ["route" => $r, "depth" => $this->depth]);
+            }
+            ?>
+        <?php endforeach; ?>
+
+
+    </ul>
+</li>

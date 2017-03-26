@@ -43,7 +43,7 @@ class ControllerController extends AbstractActionController {
         return $this->em;
     }
 
-    public function moduleAction() {
+    public function mainAction() {
 
         //Limitamos las Entity al module correspondiente
 
@@ -59,10 +59,10 @@ class ControllerController extends AbstractActionController {
         $this->grid->setSource($source);
 
         ##################################################
-        $this->grid->addExtraColumn("ACTIONS", "<a class='btn btn-warning btn-xs fa fa-database ' onclick='modalActions({{id}},\"{{name}}\")' ></a>", "right", false);
-        $this->grid->addExtraColumn("COMMONS", "<a class='btn btn-warning btn-xs fa fa-database ' onclick='modalCommons({{id}},\"{{name}}\")' ></a>", "right", false);
+        $this->grid->addExtraColumn("action-list", "<a class='btn btn-warning btn-xs glyphicon glyphicon-th-list' onclick='modalActions({{id}},\"{{name}}\")' ></a>", "right", false);
+        $this->grid->addExtraColumn("quick", "<a class='btn btn-primary btn-xs glyphicon glyphicon-fast-forward' onclick='modalCommons({{id}},\"{{name}}\")' ></a>", "right", false);
        
-        $this->grid->addExtraColumn("GENERATOR", "<a class='btn btn-warning btn-xs fa fa-file-code-o' onclick='modalControllerGenerator({{id}},\"{{name}}\")' ></a>", "right", false);
+        $this->grid->addExtraColumn("generator", "<a class='btn btn-danger btn-xs glyphicon glyphicon-play' onclick='modalControllerGenerator({{id}},\"{{name}}\")' ></a>", "right", false);
         
         
         $this->grid->setRecordsPerPage(100);

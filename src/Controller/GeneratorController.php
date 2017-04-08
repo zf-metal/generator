@@ -43,11 +43,27 @@ class GeneratorController extends AbstractActionController {
         return $view;
     }
 
+    public function routeAction() {
+        $moduleId = $this->params("moduleId");
+        $module = $this->getEm()->getRepository("ZfMetal\Generator\Entity\Module")->find($moduleId);
+
+        $routeCollection = $this->getEm()->getRepository("ZfMetal\Generator\Entity\Route")->findWhitoutParent($moduleId);
+
+        $routeConfigGenerator = new \ZfMetal\Generator\Generator\Config\RouteConfigGenerator($module, $routeCollection);
+        $routeConfigGenerator->prepare();
+        $routeConfigGenerator->pushFile(true);
+
+        $view = new \Zend\View\Model\ViewModel([
+            "routeConfigGenerator" => $routeConfigGenerator]);
+        $view->setTerminal(true);
+        return $view;
+    }
+
     public function controllerAction() {
         $controllerId = $this->params("controllerId");
         $controller = $this->getEm()->getRepository("ZfMetal\Generator\Entity\Controller")->find($controllerId);
         $module = $controller->getModule();
-        
+
         $controllerGenerator = new \ZfMetal\Generator\Generator\ControllerGenerator($controller);
         $controllerGenerator->prepare();
         $controllerGenerator->pushFile(true);
@@ -56,10 +72,10 @@ class GeneratorController extends AbstractActionController {
         $controllerFactoryGenerator = new \ZfMetal\Generator\Generator\ControllerFactoryGenerator($controller);
         $controllerFactoryGenerator->prepare();
         $controllerFactoryGenerator->pushFile(true);
-        
+
         $controllerCollection = $this->getEm()->getRepository("ZfMetal\Generator\Entity\Controller")->findByModule($module->getId());
 
-        $controllerConfigGenerator = new \ZfMetal\Generator\Generator\Config\ControllerConfigGenerator($module,$controllerCollection);
+        $controllerConfigGenerator = new \ZfMetal\Generator\Generator\Config\ControllerConfigGenerator($module, $controllerCollection);
         $controllerConfigGenerator->prepare();
         $controllerConfigGenerator->pushFile(true);
 

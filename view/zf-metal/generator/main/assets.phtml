@@ -1,28 +1,38 @@
+<?php
+//ZfMetal\View\Helper\BootstrapModal
+// ObjectJavascript = MetalModal
+$this->bootstrapModal('metalModal', true, 'modal-lg');
 
-<!--MODAL-->
-<div class="modal fade " id="modal" data-backdrop="static" tabindex="-10" role="dialog" aria-labelledby="Properties">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="modalLabel"></h4>
-            </div>
-            <div class="modal-body" id="modalContent">
-                ...
-            </div>
+//ADD route,crontroller,entity  Javascript Class
+$this->headScript()
+        ->appendScript($this->partial('zf-metal/generator/route/js/route.js'), 'text/javascript')
+        ->appendScript($this->partial('zf-metal/generator/controller/js/controller.js'), 'text/javascript')
+        ->appendScript($this->partial('zf-metal/generator/entity/js/entity.js'), 'text/javascript');
+?>    
 
-        </div>
-    </div>
-</div>
+<script type='text/javascript'>
+    var MetalRoutes;
+    var MetalControllers;
+    var MetalEntities;
+    jQuery(function ($) {
+        //Routes
+        MetalRoutes = new $.MetalRoutes();
+        MetalRoutes.setModal(MetalModal);
+        MetalRoutes.run(<?php echo $module->getId(); ?>);
+        //Controllers
+        MetalControllers = new $.MetalControllers();
+        MetalControllers.setModal(MetalModal);
+        MetalControllers.run(<?php echo $module->getId(); ?>);
+        //Entities
+        MetalEntities = new $.MetalEntities();
+        MetalEntities.setModal(MetalModal);
+        MetalEntities.run(<?php echo $module->getId(); ?>);
 
+    });
+</script>
 
 
 <style>
-    @media (min-width: 1200px){
-        .modal-lg {
-            width: 1100px;
-        }
-    }
 
     .fade {
         opacity: 0;
@@ -32,93 +42,11 @@
         -o-transition: opacity 0.15s linear;
         transition: opacity 0.15s linear;
     }
+
+    .section-header{
+        padding-bottom: 6px;
+        margin: 20px 0 10px;
+        border-bottom: 1px solid #eee;
+    }
+
 </style>
-
-<script>
-    function getEntities() {
-        $.get("/generator/module/entity/<?php echo $module->getId(); ?>").done(function (data) {
-            $("#entityTab").html(data);
-        });
-    }
-
-    function getRoutes() {
-        $.get("/generator/module/route/<?php echo $module->getId(); ?>").done(function (data) {
-            $("#routeTab").html(data);
-        });
-    }
-
-    function getController() {
-        $.get("/generator/module/controller/<?php echo $module->getId(); ?>").done(function (data) {
-            $("#controllerTab").html(data);
-        });
-    }
-
-    function modalProperties(entityId, entityName) {
-        var modalLabel = "Edit entity properties : " + entityName;
-        $('#modalLabel').html(modalLabel);
-
-        $.get("/generator/module/entity/property/" + entityId).done(function (data) {
-            $("#modalContent").html(data);
-            $('#modal').modal('toggle');
-        });
-    }
-
-    function modalActions(controllerId, controllerName) {
-        var modalLabel = "Edit actions Controller: " + controllerName;
-        $('#modalLabel').html(modalLabel);
-
-        $.get("/generator/module/controller/action/" + controllerId).done(function (data) {
-            $("#modalContent").html(data);
-            $('#modal').modal('toggle');
-        });
-    }
-
-    function modalCommons(controllerId, controllerName) {
-        var modalLabel = "Edit Commons Controller: " + controllerName;
-        $('#modalLabel').html(modalLabel);
-
-        $.get("/generator/module/controller/commons/" + controllerId).done(function (data) {
-            $("#modalContent").html(data);
-            $('#modal').modal('toggle');
-        });
-    }
-
-
-    function modalEntityGenerator(entityId, entityName) {
-        var modalLabel = "Generando entidad: " + entityName;
-        $('#modalLabel').html(modalLabel);
-
-        $.get("/generator/module/entity/generator/" + entityId).done(function (data) {
-            $("#modalContent").html(data);
-            $('#modal').modal('toggle');
-        });
-    }
-
-
-    function modalControllerGenerator(controllerId, controllerName) {
-        var modalLabel = "Generando Controller: " + controllerName;
-        $('#modalLabel').html(modalLabel);
-
-        $.get("/generator/module/controller/generator/" + controllerId).done(function (data) {
-            $("#modalContent").html(data);
-            $('#modal').modal('toggle');
-        });
-    }
-
-
-    function modalAbm(entityId, entityName) {
-        var modalLabel = "ABM entidad: " + entityName;
-        $('#modalLabel').html(modalLabel);
-
-        $.get("/generator/module/abm/" + entityId).done(function (data) {
-            $("#modalContent").html(data);
-            $('#modal').modal('toggle');
-        });
-    }
-
-
-
-    getEntities();
-    getRoutes();
-    getController();
-</script>    

@@ -59,10 +59,9 @@ class ControllerController extends AbstractActionController {
         $this->grid->setSource($source);
 
         ##################################################
-        $this->grid->addExtraColumn("action-list", "<a class='btn btn-warning btn-xs glyphicon glyphicon-th-list' onclick='modalActions({{id}},\"{{name}}\")' ></a>", "right", false);
-        $this->grid->addExtraColumn("quick", "<a class='btn btn-primary btn-xs glyphicon glyphicon-fast-forward' onclick='modalCommons({{id}},\"{{name}}\")' ></a>", "right", false);
-       
-        $this->grid->addExtraColumn("generator", "<a class='btn btn-danger btn-xs glyphicon glyphicon-play' onclick='modalControllerGenerator({{id}},\"{{name}}\")' ></a>", "right", false);
+        $this->grid->addExtraColumn("action-list", "<a class='btn btn-warning btn-xs glyphicon glyphicon-th-list' onclick='MetalControllers.actionsAction({{id}},\"{{name}}\")' ></a>", "right", false);
+        $this->grid->addExtraColumn("quick", "<a class='btn btn-primary btn-xs glyphicon glyphicon-fast-forward' onclick='MetalControllers.commonsAction({{id}},\"{{name}}\")' ></a>", "right", false);
+        $this->grid->addExtraColumn("generator", "<a class='btn btn-danger btn-xs glyphicon glyphicon-play' onclick='MetalControllers.generatorAction({{id}},\"{{name}}\")' ></a>", "right", false);
         
         
         $this->grid->setRecordsPerPage(100);

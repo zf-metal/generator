@@ -14,7 +14,7 @@
 
                     <?php foreach ($this->modules as $m): ?>
 
-                        <a href="<?php echo $this->url("ZfMetal\Generator/Main", ['moduleId' => $m->getId()]); ?>" class="list-group-item">
+                        <a href="<?php echo $this->url("ZfMetal_Generator/Main", ['moduleId' => $m->getId()]); ?>" class="list-group-item">
                             <i class="fa fa-comment fa-fw"></i> <?php echo $m->getName(); ?>
                             </span>
                         </a>
@@ -47,13 +47,17 @@
                         </li>
                         <li class=""><a href="#optionTab" data-toggle="tab" aria-expanded="true">Options</a>
                         </li>
+                        <li class=""><a href="#pluginControllerTab" data-toggle="tab" aria-expanded="false">Plugin Controller</a>
+                        </li>
+                        <li class=""><a href="#viewHelperTab" data-toggle="tab" aria-expanded="false">View Helper</a>
+                        </li>
                         <li class=""><a href="#formTab" data-toggle="tab" aria-expanded="false">Forms</a>
                         </li>
                     </ul>
 
                     <div class="tab-content">
                         <div class="tab-pane fade active in" id="entityTab">
-                     
+
                             <h4>Entity</h4>
                             <br>
                             <i class="glyphicon glyphicon-transfer"> Cargando...</i>
@@ -66,9 +70,9 @@
 
                         </div>
                         <div class="tab-pane fade" id="routeTab">
-                            <h4>Routes</h4>
-                            <br>
-                            <i class="glyphicon glyphicon-transfer"> Cargando...</i>
+
+                              <?php echo $this->partial("zf-metal/generator/route/route-tab"); ?>
+
 
                         </div>
                         <div class="tab-pane fade" id="navigationTab">
@@ -77,6 +81,16 @@
                         </div>
                         <div class="tab-pane fade" id="optionTab">
                             <h4>Module Options</h4>
+                            <p></p>
+                        </div>
+                        
+                          <div class="tab-pane fade" id="pluginControllerTab">
+                            <h4>Plugin Controller</h4>
+                            <p></p>
+                        </div>
+                        
+                          <div class="tab-pane fade" id="viewHelperTab">
+                            <h4>View Helper</h4>
                             <p></p>
                         </div>
 
@@ -93,6 +107,13 @@
         <?php endif; ?>
     </div>
 </div>
+
+<?php
+//ADD TREEVIEW JQUERY
+$this->headScript()->appendFile('/shared/bootstrap-treeview/bootstrap-treeview.min.js', 'text/javascript');
+$this->headLink()->appendStylesheet($this->basePath() . '/shared/bootstrap-treeview/bootstrap-treeview.min.css');
+?>
+
 
 <?php if ($this->module): ?>
     <?php echo $this->partial("zf-metal/generator/main/assets"); ?>

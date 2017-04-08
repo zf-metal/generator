@@ -43,7 +43,7 @@ class EntityController extends AbstractActionController {
         return $this->em;
     }
 
-    public function moduleAction() {
+    public function mainAction() {
 
         //Limitamos las Entity al module correspondiente
 
@@ -60,9 +60,9 @@ class EntityController extends AbstractActionController {
 
         ##################################################
 
-        $this->grid->addExtraColumn("property-list", "<a class='btn btn-warning btn-xs glyphicon glyphicon-th-list' onclick='modalProperties({{id}},\"{{name}}\")' ></a>", "right", false);
-        $this->grid->addExtraColumn("quick", "<a class='btn btn-primary btn-xs glyphicon glyphicon-fast-forward' onclick='modalAbm({{id}},\"{{name}}\")' ></a>", "right", false);
-        $this->grid->addExtraColumn("generator", "<a class='btn btn-danger btn-xs glyphicon glyphicon-play' onclick='modalEntityGenerator({{id}},\"{{name}}\")' ></a>", "right", false);
+        $this->grid->addExtraColumn("property-list", "<a class='btn btn-warning btn-xs glyphicon glyphicon-th-list' onclick='MetalEntities.propertiesAction({{id}},\"{{name}}\")' ></a>", "right", false);
+       // $this->grid->addExtraColumn("quick", "<a class='btn btn-primary btn-xs glyphicon glyphicon-fast-forward' onclick='MetalEntities.xxxx({{id}},\"{{name}}\")' ></a>", "right", false);
+        $this->grid->addExtraColumn("generator", "<a class='btn btn-danger btn-xs glyphicon glyphicon-play' onclick='MetalEntities.generatorAction({{id}},\"{{name}}\")' ></a>", "right", false);
         
         
         $this->grid->setRecordsPerPage(100);

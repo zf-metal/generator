@@ -1,0 +1,21 @@
+<div id="router-search" class="col-md-4">
+    <h3 class="section-header">ABM</h3>
+   
+    <?php echo $this->partial("zf-metal/generator/route/partial/router-abm", ['moduleId' => $this->module->getId()]); ?>
+
+    <h3 class="section-header">Search</h3>
+    
+    <?php echo $this->partial("zf-metal/generator/route/partial/router-search"); ?>
+
+</div>
+
+<div  class="col-md-6 col-md-offset-1">
+    <h3 class="section-header">Routes <button class="btn btn-primary" id="btn-generate-routes">Generate</button></h4>
+    <div id="router-tree-content">
+        <br>
+        <i class="glyphicon glyphicon-transfer"> Cargando...</i>
+
+    </div>
+
+
+</div>

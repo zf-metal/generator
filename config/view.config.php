@@ -16,5 +16,8 @@ return [
         'template_path_stack' => array(
             'ZfMetal\Generator' => __DIR__ . '/../view',
         ),
+        'strategies' => array(
+            'ViewJsonStrategy',
+        ),
     ),
-    ];
+];

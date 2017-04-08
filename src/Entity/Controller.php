@@ -72,7 +72,7 @@ class Controller extends \ZfMetal\Generator\Entity\AbstractEntity {
     }
     
     function getClass() {
-        return "\\".$this->getModule()->getName() . "\Entity\\" . $this->name;
+        return "\\".$this->getModule()->getName() . "\Controller\\" . $this->name."Controller";
     }
 
     function getCommons() {

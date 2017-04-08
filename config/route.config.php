@@ -11,12 +11,12 @@ use Zend\Router\Http\Segment;
 return [
     'router' => array(
         'routes' => array(
-            'ZfMetal\Generator' => array(
+            'ZfMetal_Generator' => array(
                 'type' => Literal::class,
                 'may_terminate' => false,
-                 'options' => array(
-                       'route' => '/generator',
-                     ),
+                'options' => array(
+                    'route' => '/generator',
+                ),
                 'child_routes' => [
                     'Main' => array(
                         'type' => Segment::class,
@@ -61,104 +61,207 @@ return [
                                 ),
                             ),
                             'Entity' => array(
-                                'type' => Segment::class,
+                                'type' => Literal::class,
+                                'may_terminate' => false,
                                 'options' => array(
-                                    'route' => '/entity/:moduleId',
-                                    'defaults' => array(
-                                        'controller' => Controller\EntityController::class,
-                                        'action' => 'module',
-                                    ),
+                                    'route' => '/entity',
                                 ),
-                            ),
-                            'Entity_Property' => array(
-                                'type' => Segment::class,
-                                'options' => array(
-                                    'route' => '/entity/property/:entityId',
-                                    'defaults' => array(
-                                        'controller' => Controller\PropertyController::class,
-                                        'action' => 'entity',
+                                'child_routes' => [
+                                    'Main' => array(
+                                        'type' => Segment::class,
+                                        'options' => array(
+                                            'route' => '/main/:moduleId',
+                                            'defaults' => array(
+                                                'controller' => Controller\EntityController::class,
+                                                'action' => 'main',
+                                            ),
+                                        ),
                                     ),
-                                ),
-                            ),
-                            'Entity_Generator' => array(
-                                'type' => Segment::class,
-                                'options' => array(
-                                    'route' => '/entity/generator/:entityId',
-                                    'defaults' => array(
-                                        'controller' => Controller\GeneratorController::class,
-                                        'action' => 'entity',
+                                    'Property' => array(
+                                        'type' => Segment::class,
+                                        'options' => array(
+                                            'route' => '/property/:entityId',
+                                            'defaults' => array(
+                                                'controller' => Controller\PropertyController::class,
+                                                'action' => 'entity',
+                                            ),
+                                        ),
                                     ),
-                                ),
+                                    'Generator' => array(
+                                        'type' => Segment::class,
+                                        'options' => array(
+                                            'route' => '/generator/:entityId',
+                                            'defaults' => array(
+                                                'controller' => Controller\GeneratorController::class,
+                                                'action' => 'entity',
+                                            ),
+                                        ),
+                                    ),
+                                ]
                             ),
                             'Route' => array(
-                                'type' => Segment::class,
+                                'type' => Literal::class,
                                 'options' => array(
-                                    'route' => '/route/:moduleId',
+                                    'route' => '/route',
                                     'defaults' => array(
                                         'controller' => Controller\RouteController::class,
                                         'action' => 'main',
                                     ),
                                 ),
-                            ),
-                            'Route_Childs' => array(
-                                'type' => Segment::class,
-                                'options' => array(
-                                    'route' => '/route/childs/:routeId',
-                                    'defaults' => array(
-                                        'controller' => Controller\RouteController::class,
-                                        'action' => 'childs',
+                                'child_routes' => [
+                                    'Main' => array(
+                                        'type' => Segment::class,
+                                        'options' => array(
+                                            'route' => '/main/:moduleId',
+                                            'defaults' => array(
+                                                'controller' => Controller\RouteController::class,
+                                                'action' => 'main',
+                                            ),
+                                        ),
                                     ),
-                                ),
-                            ),
-                             'Route_Grid' => array(
-                                'type' => Segment::class,
-                                'options' => array(
-                                    'route' => '/route/grid/:moduleId',
-                                    'defaults' => array(
-                                        'controller' => Controller\RouteController::class,
-                                        'action' => 'grid',
+                                    'Json' => array(
+                                        'type' => Segment::class,
+                                        'options' => array(
+                                            'route' => '/json/:moduleId',
+                                            'defaults' => array(
+                                                'controller' => Controller\RouteController::class,
+                                                'action' => 'json',
+                                            ),
+                                        ),
                                     ),
-                                ),
+                                    'Childs' => array(
+                                        'type' => Segment::class,
+                                        'options' => array(
+                                            'route' => '/childs/:routeId',
+                                            'defaults' => array(
+                                                'controller' => Controller\RouteController::class,
+                                                'action' => 'childs',
+                                            ),
+                                        ),
+                                    ),
+                                    'Grid' => array(
+                                        'type' => Segment::class,
+                                        'options' => array(
+                                            'route' => '/grid/:moduleId',
+                                            'defaults' => array(
+                                                'controller' => Controller\RouteController::class,
+                                                'action' => 'grid',
+                                            ),
+                                        ),
+                                    ),
+                                    'CreateForm' => array(
+                                        'type' => Segment::class,
+                                        'options' => array(
+                                            'route' => '/create-form/:moduleId[/:routeParentId]',
+                                            'defaults' => array(
+                                                'controller' => Controller\RouteController::class,
+                                                'action' => 'create-form',
+                                            ),
+                                        ),
+                                    ),
+                                    'Create' => array(
+                                        'type' => Segment::class,
+                                        'options' => array(
+                                            'route' => '/create',
+                                            'defaults' => array(
+                                                'controller' => Controller\RouteController::class,
+                                                'action' => 'create',
+                                            ),
+                                        ),
+                                    ),
+                                    'EditForm' => array(
+                                        'type' => Segment::class,
+                                        'options' => array(
+                                            'route' => '/edit-form/:routeId',
+                                            'defaults' => array(
+                                                'controller' => Controller\RouteController::class,
+                                                'action' => 'edit-form',
+                                            ),
+                                        ),
+                                    ),
+                                    'Edit' => array(
+                                        'type' => Segment::class,
+                                        'options' => array(
+                                            'route' => '/edit/:routeId',
+                                            'defaults' => array(
+                                                'controller' => Controller\RouteController::class,
+                                                'action' => 'edit',
+                                            ),
+                                        ),
+                                    ),
+                                    'Delete' => array(
+                                        'type' => Segment::class,
+                                        'options' => array(
+                                            'route' => '/delete/:routeId',
+                                            'defaults' => array(
+                                                'controller' => Controller\RouteController::class,
+                                                'action' => 'delete',
+                                            ),
+                                        ),
+                                    ),
+                                    'Generator' => array(
+                                        'type' => Segment::class,
+                                        'options' => array(
+                                            'route' => '/generate/:moduleId',
+                                            'defaults' => array(
+                                                'controller' => Controller\GeneratorController::class,
+                                                'action' => 'route',
+                                            ),
+                                        ),
+                                    ),
+                                ]
                             ),
                             'Controller' => array(
                                 'type' => Segment::class,
                                 'options' => array(
-                                    'route' => '/controller/:moduleId',
+                                    'route' => '/controller',
                                     'defaults' => array(
                                         'controller' => Controller\ControllerController::class,
                                         'action' => 'main',
                                     ),
                                 ),
-                            ),
-                            'Controller_Action' => array(
-                                'type' => Segment::class,
-                                'options' => array(
-                                    'route' => '/controller/action/:controllerId',
-                                    'defaults' => array(
-                                        'controller' => Controller\ActionController::class,
-                                        'action' => 'controller',
+                                'child_routes' => [
+                                    'Main' => array(
+                                        'type' => Segment::class,
+                                        'options' => array(
+                                            'route' => '/main/:moduleId',
+                                            'defaults' => array(
+                                                'controller' => Controller\ControllerController::class,
+                                                'action' => 'main',
+                                            ),
+                                        ),
                                     ),
-                                ),
-                            ),
-                            'Controller_Commons' => array(
-                                'type' => Segment::class,
-                                'options' => array(
-                                    'route' => '/controller/commons/:controllerId',
-                                    'defaults' => array(
-                                        'controller' => Controller\ControllerCommonsController::class,
-                                        'action' => 'controller',
+                                    'Action' => array(
+                                        'type' => Segment::class,
+                                        'options' => array(
+                                            'route' => '/action/:controllerId',
+                                            'defaults' => array(
+                                                'controller' => Controller\ActionController::class,
+                                                'action' => 'controller',
+                                            ),
+                                        ),
                                     ),
-                                ),
-                            ),
-                            'Controller_Generator' => array(
-                                'type' => Segment::class,
-                                'options' => array(
-                                    'route' => '/controller/generator/:controllerId',
-                                    'defaults' => array(
-                                        'controller' => Controller\GeneratorController::class,
-                                        'action' => 'controller',
+                                    'Commons' => array(
+                                        'type' => Segment::class,
+                                        'options' => array(
+                                            'route' => '/commons/:controllerId',
+                                            'defaults' => array(
+                                                'controller' => Controller\ControllerCommonsController::class,
+                                                'action' => 'controller',
+                                            ),
+                                        ),
                                     ),
-                                ),
+                                    'Generator' => array(
+                                        'type' => Segment::class,
+                                        'options' => array(
+                                            'route' => '/generator/:controllerId',
+                                            'defaults' => array(
+                                                'controller' => Controller\GeneratorController::class,
+                                                'action' => 'controller',
+                                            ),
+                                        ),
+                                    ),
+                                ]
                             ),
                         ]
                     ),

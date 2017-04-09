@@ -22,13 +22,16 @@
             this.jsonAction();
             this.abmInit();
         },
-        jsonAction: function () {
+        jsonAction: function (postLoadSearchName = null) {
             var that = this;
             this.treeDivPush();
             var url = "/generator/module/route/json/" + this.moduleId;
             $.get(url).done(function (data) {
                 that.createTreeHelper(data);
                 that.search_Init();
+                if (postLoadSearchName !== null) {
+                    that.searchSubmitHelper(postLoadSearchName);
+                }
             });
         },
         createAction: function (event) {
@@ -50,16 +53,17 @@
         createSubmit: function () {
             var that = this;
             var url = "/generator/module/route/create";
-
+            var postData = $('#Route').serialize();
+            var nameSearch = $('#Route').find('[name="name"]').val();
             $.post(
                     url,
-                    $('#Route').serialize(),
+                    postData,
                     function (data) {
 
                         if (typeof data === 'object') {
                             if (data.status === true) {
-                                that.jsonAction();
                                 that.clearHelper();
+                                that.jsonAction(nameSearch);
                                 that.modal.toggle();
                             } else {
                                 that.submitErrors(data.errors);
@@ -97,16 +101,17 @@
         editSubmit: function (routeId) {
             var that = this;
             var url = "/generator/module/route/edit/" + routeId;
-
+            var postData = $('#Route').serialize();
+            var nameSearch = $('#Route').find('[name="name"]').val();
             $.post(
                     url,
-                    $('#Route').serialize(),
+                    postData,
                     function (data) {
 
                         if (typeof data === 'object') {
                             if (data.status === true) {
-                                that.jsonAction();
                                 that.clearHelper();
+                                that.jsonAction(nameSearch);
                                 that.modal.toggle();
                             } else {
                                 that.submitErrors(data.errors);
@@ -151,8 +156,13 @@
             $('#route-selected-parent_route_url').html("");
             $('#route-selected-route_url').html("");
 
+            //CLEAR SELECTED
             var nodesSelected = this.tree.treeview('getSelected');
-            this.tree.treeview('unselectNode', nodesSelected);
+            if (nodesSelected.length) {
+                this.tree.treeview('unselectNode', nodesSelected);
+            }
+            //CLEAR SEARCH
+            this.tree.treeview('search', [""]);
 
             this.routeSelected = null;
             this.routeSelectedId = null;
@@ -209,12 +219,20 @@
             };
             self.tree.treeview('search', [pattern, options]);
         },
+        searchSubmitHelper: function (name) {
+            var options = {
+                revealResults: true
+            };
+            this.tree.treeview('search', [name, options]);
+        },
         createTreeHelper: function (data) {
             this.tree = this.treeDiv.treeview({
                 data: data,
                 levels: 1,
                 showTags: true,
-                color: '#428bca'
+                color: '#428bca',
+                expandIcon: 'glyphicon glyphicon-chevron-right',
+                collapseIcon: 'glyphicon glyphicon-chevron-down',
             });
         },
         treeDivPush: function () {

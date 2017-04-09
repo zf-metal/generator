@@ -1,34 +1,30 @@
 <?php echo $this->Grid($this->grid); ?>
-<script>
-
-    jQuery(function () {
-
-        changetype();
-
-    });
-
-
+<script type="text/javascript">
     function changetype() {
-        var types = jQuery("[name='type'").val();
+        var types = $("[name='type'").val();
 
         if (types == "file") {
-            jQuery("#row_absolutepath").show();
-            jQuery("#row_webpath").show();
+            $("#form-group-File").show();
+            $("[name='absolutepath']").parent().parent().parent().show();
+            $("[name='webpath']").parent().parent().parent().show();
         } else {
-            jQuery("#row_absolutepath").hide();
-            jQuery("#row_webpath").hide();
+            $("#form-group-File").hide();
+            $("[name='absolutepath']").parent().parent().parent().hide();
+            $("[name='webpath']").parent().parent().parent().hide();
         }
 
         if (types == "oneToOne" || types == "manyToOne" || types == "oneToMany") {
-            jQuery("#row_length").hide();
-            jQuery("#row_relatedEntity").show();
+            $("[name='length']").parent().parent().parent().hide();
+            $("[name='relatedEntity']").parent().parent().parent().show();
         } else {
 
-            jQuery("#row_length").show();
-            jQuery("#row_relatedEntity").hide();
+            $("[name='length']").parent().parent().parent().show();
+            $("[name='relatedEntity']").parent().parent().parent().hide();
         }
 
     }
+
+    changetype();
 
 </script>
 

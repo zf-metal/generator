@@ -10,6 +10,10 @@ return [
                 "entityManager" => "doctrine.entitymanager.orm_zf_metal_generator"
             ]
         ],
+        "formConfig" => [
+            'columns' => \ZfMetal\Commons\Consts::COLUMNS_TWO,
+            'style' => \ZfMetal\Commons\Consts::STYLE_MENU_VERTICAL,
+        ],
         "columnsConfig" => [
             "createdAt" => [
                 "type" => "date",
@@ -21,14 +25,14 @@ return [
                 "displayName" => "Actualizado",
                 "format" => "Y-m-d H:i:s"
             ],
-            "customOnTable" =>[
-                "hidden" => true 
+            "customOnTable" => [
+                "hidden" => true
             ],
-             "extends" =>[
-                "hidden" => true 
+            "extends" => [
+                "hidden" => true
             ],
-             "module" =>[
-                "hidden" => true 
+            "module" => [
+                "hidden" => true
             ],
             "properties" => [
                 "hidden" => true
@@ -39,10 +43,10 @@ return [
             "property-list" => [
                 "tdClass" => "text-center"
             ],
-             "generator" => [
+            "generator" => [
                 "tdClass" => "text-center"
             ],
-             "quick" => [
+            "quick" => [
                 "tdClass" => "text-center"
             ]
         ],

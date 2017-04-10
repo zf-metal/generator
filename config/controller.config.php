@@ -20,6 +20,7 @@ return array(
             \ZfMetal\Generator\Controller\ControllerCommonsController::class => \ZfMetal\Generator\Factory\Controller\ControllerCommonsControllerFactory::class,
             \ZfMetal\Generator\Controller\NavigationController::class => \ZfMetal\Generator\Factory\Controller\NavigationControllerFactory::class,
             \ZfMetal\Generator\Controller\OptionController::class => \ZfMetal\Generator\Factory\Controller\OptionControllerFactory::class,
+            \ZfMetal\Generator\Controller\PluginController::class => \ZfMetal\Generator\Factory\Controller\PluginControllerFactory::class,
         ],
     ]
 );

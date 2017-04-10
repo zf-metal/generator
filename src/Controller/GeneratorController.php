@@ -113,4 +113,31 @@ class GeneratorController extends AbstractActionController {
         return $view;
     }
 
+    public function pluginAction() {
+        $pluginId = $this->params("pluginId");
+
+        $plugin = $this->getEm()->getRepository("ZfMetal\Generator\Entity\Plugin")->find($pluginId);
+
+        $pluginGenerator = new \ZfMetal\Generator\Generator\PluginGenerator($plugin);
+        $pluginGenerator->prepare();
+        $pluginGenerator->pushFile(true);
+
+        if (!$plugin->getInvokable()) {
+            $optionFactoryGenerator = new \ZfMetal\Generator\Generator\PluginFactoryGenerator($plugin);
+            $optionFactoryGenerator->prepare();
+            $optionFactoryGenerator->pushFile(true);
+        }
+
+        $pluginsConfigGenerator = new \ZfMetal\Generator\Generator\Config\PluginsConfigGenerator($plugin);
+        $pluginsConfigGenerator->prepare();
+        $pluginsConfigGenerator->pushFile(true);
+
+        $view = new \Zend\View\Model\ViewModel([
+            "pluginGenerator" => $pluginGenerator,
+//            'optionFactoryGenerator' => $optionFactoryGenerator
+        ]);
+        $view->setTerminal(true);
+        return $view;
+    }
+
 }

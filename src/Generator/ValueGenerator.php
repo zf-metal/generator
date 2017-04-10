@@ -17,7 +17,7 @@ class ValueGenerator extends \Zend\Code\Generator\ValueGenerator {
      */
     public static function escape($input, $quote = true) {
         
-        if (!preg_match("/CLASS/", $input)) {
+        if (!preg_match("/CLASS|class/", $input)) {
             $output = addcslashes($input, "\\'");
 
             // adds quoting strings

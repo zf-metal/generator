@@ -407,6 +407,38 @@ return [
                                     ),
                                 ]
                             ),
+                            'Plugin' => array(
+                                'type' => Segment::class,
+                                'options' => array(
+                                    'route' => '/plugin',
+                                    'defaults' => array(
+                                        'controller' => Controller\PluginController::class,
+                                        'action' => 'main',
+                                    ),
+                                ),
+                                'child_routes' => [
+                                    'Main' => array(
+                                        'type' => Segment::class,
+                                        'options' => array(
+                                            'route' => '/main/:moduleId',
+                                            'defaults' => array(
+                                                'controller' => Controller\PluginController::class,
+                                                'action' => 'main',
+                                            ),
+                                        ),
+                                    ),
+                                    'Generator' => array(
+                                        'type' => Segment::class,
+                                        'options' => array(
+                                            'route' => '/generator/:pluginId',
+                                            'defaults' => array(
+                                                'controller' => Controller\GeneratorController::class,
+                                                'action' => 'plugin',
+                                            ),
+                                        ),
+                                    ),
+                                ]
+                            ),
                         ]
                     ),
                 ],

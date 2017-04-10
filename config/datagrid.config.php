@@ -9,7 +9,8 @@ $setting = array_merge(
         include 'datagrid/controller.config.php',
         include 'datagrid/action.config.php',
         include 'datagrid/controller_commons.config.php',
-        include 'datagrid/option.config.php'
+        include 'datagrid/option.config.php',
+        include 'datagrid/plugin.config.php'
 );
 
 return $setting;

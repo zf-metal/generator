@@ -7,22 +7,22 @@ namespace ZfMetal\Generator\Generator;
  *
  * @author Cristian Incarnato <cristian.cdi@gmail.com>
  */
-class OptionFactoryGenerator extends AbstractClassGenerator {
+class PluginFactoryGenerator extends AbstractClassGenerator {
 
     //CONSTS
     const CLASS_PREFIX = "";
-    const CLASS_SUBFFIX = "";
+    const CLASS_SUBFFIX = "Factory";
     const NAMESPACE_PREFIX = "";
-    const NAMESPACE_SUBFFIX = "\Factory\Options";
-    const RELATIVE_PATH = "/src/Factory/Options/";
+    const NAMESPACE_SUBFFIX = "\Factory\Controller\Plugin";
+    const RELATIVE_PATH = "/src/Factory/Controller/Plugin/";
 
     //BASE NAMES
     public function getBaseName() {
-        return "ModuleOptionsFactory";
+        return $this->getPlugin()->getName();
     }
 
     public function getBaseNamespace() {
-        return $this->getModule()->getName();
+        return $this->getPlugin()->getModule()->getName();
     }
 
     //CLASS METHODS
@@ -48,9 +48,15 @@ class OptionFactoryGenerator extends AbstractClassGenerator {
 
     //MODULE
     public function getModule() {
-        return $this->module;
+        return $this->getPlugin()->getModule();
     }
 
+    /**
+     * Description
+     * 
+     * @var arrray
+     */
+    private $dependencies = [];
 
     /**
      * Description
@@ -60,26 +66,41 @@ class OptionFactoryGenerator extends AbstractClassGenerator {
     private $invoke;
 
     /**
-     * Description
      * 
-     * @var \ZfMetal\Generator\Entity\Module
+     * @param \ZfMetal\Generator\Entity\Plugin 
      */
-    private $module;
+    private $plugin;
 
-
-    function __construct($module) {
-        $this->module = $module;
+    function __construct(\ZfMetal\Generator\Entity\Plugin $plugin) {
+        $this->plugin = $plugin;
+    }
+    
+    function getPlugin() {
+        return $this->plugin;
     }
 
+    
     public function prepare() {
         parent::prepare();
         $this->genInvoke();
     }
 
+    function addDependency($name, $type) {
+        if (!key_exists($name, $this->dependencies)) {
+            $this->dependencies[$name] = ["name" => $name, "type" => $type];
+        }
+    }
+
+    function getParamters() {
+        $parameters = "";
+        foreach ($this->dependencies as $p) {
+            $parameters .= "$" . $p["name"] . ",";
+        }
+        return trim($parameters, ",");
+    }
+
     function getInvokeReturn() {
-        $body = '$config = $container->get(\'Config\');'. PHP_EOL;
-        $body.= ' return new \\'. $this->getClassNamespace() .'\Options\ModuleOptions(isset($config[\''.$this->getBaseNamespace().'.options\']) ? $config[\''.$this->getBaseNamespace().'.options\'] : array());';
-        return $body;
+        return "return new \\" . $this->getModule()->getName() . "\Controller\Plugin\\" . $this->getBaseName() . "(" . $this->getParamters() . ");" . PHP_EOL;
     }
 
     function getInvoke() {
@@ -113,14 +134,6 @@ class OptionFactoryGenerator extends AbstractClassGenerator {
         $body = $this->getInvoke()->getBody();
         $body .= $this->getInvokeReturn();
         return $body;
-    }
-
-    function getController() {
-        return $this->controller;
-    }
-
-    function setController(\ZfMetal\Generator\Entity\Controller $controller) {
-        $this->controller = $controller;
     }
 
 }

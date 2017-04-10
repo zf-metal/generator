@@ -211,6 +211,118 @@ return [
                                     ),
                                 ]
                             ),
+                            'Navigation' => array(
+                                'type' => Literal::class,
+                                'options' => array(
+                                    'route' => '/nav',
+                                    'defaults' => array(
+                                        'controller' => Controller\NavigationController::class,
+                                        'action' => 'main',
+                                    ),
+                                ),
+                                'child_routes' => [
+                                    'Main' => array(
+                                        'type' => Segment::class,
+                                        'options' => array(
+                                            'route' => '/main/:moduleId',
+                                            'defaults' => array(
+                                                'controller' => Controller\NavigationController::class,
+                                                'action' => 'main',
+                                            ),
+                                        ),
+                                    ),
+                                    'Json' => array(
+                                        'type' => Segment::class,
+                                        'options' => array(
+                                            'route' => '/json/:moduleId',
+                                            'defaults' => array(
+                                                'controller' => Controller\NavigationController::class,
+                                                'action' => 'json',
+                                            ),
+                                        ),
+                                    ),
+                                    'Childs' => array(
+                                        'type' => Segment::class,
+                                        'options' => array(
+                                            'route' => '/childs/:navId',
+                                            'defaults' => array(
+                                                'controller' => Controller\NavigationController::class,
+                                                'action' => 'childs',
+                                            ),
+                                        ),
+                                    ),
+                                    'Grid' => array(
+                                        'type' => Segment::class,
+                                        'options' => array(
+                                            'route' => '/grid/:moduleId',
+                                            'defaults' => array(
+                                                'controller' => Controller\NavigationController::class,
+                                                'action' => 'grid',
+                                            ),
+                                        ),
+                                    ),
+                                    'CreateForm' => array(
+                                        'type' => Segment::class,
+                                        'options' => array(
+                                            'route' => '/create-form/:moduleId[/:navParentId]',
+                                            'defaults' => array(
+                                                'controller' => Controller\NavigationController::class,
+                                                'action' => 'create-form',
+                                            ),
+                                        ),
+                                    ),
+                                    'Create' => array(
+                                        'type' => Segment::class,
+                                        'options' => array(
+                                            'route' => '/create',
+                                            'defaults' => array(
+                                                'controller' => Controller\NavigationController::class,
+                                                'action' => 'create',
+                                            ),
+                                        ),
+                                    ),
+                                    'EditForm' => array(
+                                        'type' => Segment::class,
+                                        'options' => array(
+                                            'route' => '/edit-form/:navId',
+                                            'defaults' => array(
+                                                'controller' => Controller\NavigationController::class,
+                                                'action' => 'edit-form',
+                                            ),
+                                        ),
+                                    ),
+                                    'Edit' => array(
+                                        'type' => Segment::class,
+                                        'options' => array(
+                                            'route' => '/edit/:navId',
+                                            'defaults' => array(
+                                                'controller' => Controller\NavigationController::class,
+                                                'action' => 'edit',
+                                            ),
+                                        ),
+                                    ),
+                                    'Delete' => array(
+                                        'type' => Segment::class,
+                                        'options' => array(
+                                            'route' => '/delete/:navId',
+                                            'defaults' => array(
+                                                'controller' => Controller\NavigationController::class,
+                                                'action' => 'delete',
+                                            ),
+                                        ),
+                                    ),
+                                    'Generator' => array(
+                                        'type' => Segment::class,
+                                        'options' => array(
+                                            'route' => '/generate/:moduleId',
+                                            'defaults' => array(
+                                                'controller' => Controller\GeneratorController::class,
+                                                'action' => 'navigation',
+                                            ),
+                                        ),
+                                    ),
+                                ]
+                            ),
                             'Controller' => array(
                                 'type' => Segment::class,
                                 'options' => array(

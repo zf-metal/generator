@@ -10,7 +10,8 @@ use Zend\Form\Annotation;
  *
  * @ORM\Entity
  * @ORM\Table(name="navigation")
- *
+ * @ORM\Entity(repositoryClass="ZfMetal\Generator\Repository\NavigationRepository")
+ * 
  * @author Cristian Incarnato
  */
 class Navigation extends \ZfMetal\Generator\Entity\AbstractEntity {
@@ -25,24 +26,14 @@ class Navigation extends \ZfMetal\Generator\Entity\AbstractEntity {
     protected $id;
 
     /**
-     * @Annotation\Type("DoctrineModule\Form\Element\ObjectSelect")
-     * @Annotation\Options({
-     * "label":"Module:",
-     * "empty_option": "",
-     * "target_class":"ZfMetal\Generator\Entity\Module",
-     * "property": "name"})
+     * @Annotation\Type("ZfMetal\Commons\DoctrineModule\Form\Element\ObjectHidden")
      * @ORM\ManyToOne(targetEntity="ZfMetal\Generator\Entity\Module")
      * @ORM\JoinColumn(name="module_id", referencedColumnName="id", nullable=false,onDelete="CASCADE")
      */
     protected $module;
 
     /**
-     * @Annotation\Type("DoctrineModule\Form\Element\ObjectSelect")
-     * @Annotation\Options({
-     * "label":"Menu Parent:",
-     * "empty_option": "",
-     * "target_class":"ZfMetal\Generator\Entity\Navigation",
-     * "property": "label"})
+     * @Annotation\Type("ZfMetal\Commons\DoctrineModule\Form\Element\ObjectHidden")
      * @ORM\ManyToOne(targetEntity="ZfMetal\Generator\Entity\Navigation")
      * @ORM\JoinColumn(name="menu_id", referencedColumnName="id",nullable=true)
      */
@@ -73,6 +64,18 @@ class Navigation extends \ZfMetal\Generator\Entity\AbstractEntity {
     protected $uri;
 
     /**
+     * @Annotation\Type("DoctrineModule\Form\Element\ObjectSelect")
+     * @Annotation\Options({
+     * "label":"Route:",
+     * "empty_option": "",
+     * "target_class":"ZfMetal\Generator\Entity\Route",
+     * "property": "name"})
+     * @ORM\ManyToOne(targetEntity="ZfMetal\Generator\Entity\Route")
+     * @ORM\JoinColumn(name="route_id", referencedColumnName="id", nullable=true,onDelete="CASCADE")
+     */
+    protected $route;
+
+    /**
      * @var string
      * @Annotation\Options({"label":"Detail:", "description": "Solo se admiten nombres alfanumericos"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":100}})
@@ -98,8 +101,6 @@ class Navigation extends \ZfMetal\Generator\Entity\AbstractEntity {
      * @ORM\Column(type="string", length=100, unique=false, nullable=true)
      */
     protected $permission;
-
-
 
     public function __construct() {
         $this->childs = new ArrayCollection();
@@ -172,6 +173,18 @@ class Navigation extends \ZfMetal\Generator\Entity\AbstractEntity {
     function setParent($parent) {
         $this->parent = $parent;
     }
+    
+    function getRoute() {
+        return $this->route;
+    }
+
+    function setRoute($route) {
+        $this->route = $route;
+        return $this;
+    }
+
+            
+    
 
     function getChilds() {
         return $this->childs;
@@ -181,6 +194,28 @@ class Navigation extends \ZfMetal\Generator\Entity\AbstractEntity {
         $this->childs = $childs;
     }
 
+    public function hasChilds() {
+        return count($this->childs) ? true : false;
+    }
 
+    public function hasParent() {
+        return isset($this->parent) ? true : false;
+    }
+
+    public function addChild(\ZfMetal\Generator\Entity\Route $route) {
+        if ($this->childs->contains($route)) {
+            return;
+        }
+        $this->childs[] = $route;
+        $route->setParent($this);
+    }
+
+    public function removeChild() {
+        if (!$this->childs->contains($route)) {
+            return;
+        }
+        $this->childs->removeElement($route);
+        $route->setParent(null);
+    }
 
 }

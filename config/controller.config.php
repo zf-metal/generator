@@ -19,6 +19,7 @@ return array(
             \ZfMetal\Generator\Controller\ActionController::class => \ZfMetal\Generator\Factory\Controller\ActionControllerFactory::class,
             \ZfMetal\Generator\Controller\ControllerCommonsController::class => \ZfMetal\Generator\Factory\Controller\ControllerCommonsControllerFactory::class,
             \ZfMetal\Generator\Controller\NavigationController::class => \ZfMetal\Generator\Factory\Controller\NavigationControllerFactory::class,
+            \ZfMetal\Generator\Controller\OptionController::class => \ZfMetal\Generator\Factory\Controller\OptionControllerFactory::class,
         ],
     ]
 );

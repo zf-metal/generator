@@ -87,4 +87,30 @@ class GeneratorController extends AbstractActionController {
         return $view;
     }
 
+    public function optionAction() {
+        $moduleId = $this->params("moduleId");
+        $module = $this->getEm()->getRepository("ZfMetal\Generator\Entity\Module")->find($moduleId);
+
+        $optionCollection = $this->getEm()->getRepository("ZfMetal\Generator\Entity\Option")->findByModule($moduleId);
+
+        $optionGenerator = new \ZfMetal\Generator\Generator\OptionGenerator($module, $optionCollection);
+        $optionGenerator->prepare();
+        $optionGenerator->pushFile(true);
+
+        $optionFactoryGenerator = new \ZfMetal\Generator\Generator\OptionFactoryGenerator($module);
+        $optionFactoryGenerator->prepare();
+        $optionFactoryGenerator->pushFile(true);
+
+        $servicesConfigGenerator = new \ZfMetal\Generator\Generator\Config\ServicesConfigGenerator($module);
+        $servicesConfigGenerator->prepare();
+        $servicesConfigGenerator->pushFile(true);
+
+        $view = new \Zend\View\Model\ViewModel([
+            "optionGenerator" => $optionGenerator,
+            'optionFactoryGenerator' => $optionFactoryGenerator
+        ]);
+        $view->setTerminal(true);
+        return $view;
+    }
+
 }

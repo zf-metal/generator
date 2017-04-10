@@ -8,7 +8,8 @@ $setting = array_merge(
         include 'datagrid/route.config.php',
         include 'datagrid/controller.config.php',
         include 'datagrid/action.config.php',
-        include 'datagrid/controller_commons.config.php'
+        include 'datagrid/controller_commons.config.php',
+        include 'datagrid/option.config.php'
 );
 
 return $setting;

@@ -53,7 +53,6 @@ class PluginsConfigGenerator extends AbstractConfigGenerator {
             $config = include $this->getFileName();
             if (is_array($config)) {
                 $this->pluginsConfig = $config;
-                $this->applyClassConstant();
             }
         }
         return $this->pluginsConfig;
@@ -73,16 +72,16 @@ class PluginsConfigGenerator extends AbstractConfigGenerator {
     }
 
     protected function getKeyOption() {
-        return '\\' . $this->getModule()->getName() . '\Controller\Plugin\\' . $this->getPlugin()->getName() . '::class';
+        return $this->getModule()->getName() . '\Controller\Plugin\\' . $this->getPlugin()->getName();
     }
 
     protected function getOptionFactory() {
         if (!$this->getPlugin()->getInvokable()) {
-            $str = '\\' . $this->getModule()->getName() . '\Factory\Plugin\\' . $this->getPlugin()->getName() . 'Factory::class';
+            $str = $this->getModule()->getName() . '\Factory\Controller\Plugin\\' . $this->getPlugin()->getName() . 'Factory';
         } else {
-            $str = '\Zend\ServiceManager\Factory\InvokableFactory::class';
+            $str = 'Zend\ServiceManager\Factory\InvokableFactory';
         }
-        $vg = new \Zend\Code\Generator\ValueGenerator($str, \Zend\Code\Generator\ValueGenerator::TYPE_CONSTANT);
+        $vg = $str;
         return $vg;
     }
 
@@ -93,6 +92,7 @@ class PluginsConfigGenerator extends AbstractConfigGenerator {
 
     protected function mergeContent() {
         $this->pluginsConfig = \Zend\Stdlib\ArrayUtils::merge($this->getPluginsConfig(), $this->generatePluginsConfig(), TRUE);
+        $this->applyClassConstant();
     }
 
     protected function generatePluginsConfig() {
@@ -102,7 +102,7 @@ class PluginsConfigGenerator extends AbstractConfigGenerator {
                     $this->getKeyOption() => $this->getOptionFactory(),
                 ],
                 'aliases' => [
-                    'get' . $this->getPlugin()->getName() => new \Zend\Code\Generator\ValueGenerator($this->getKeyOption(), \Zend\Code\Generator\ValueGenerator::TYPE_CONSTANT)
+                    lcfirst($this->getPlugin()->getName()) => new \Zend\Code\Generator\ValueGenerator("\\" . $this->getKeyOption() . "::class", \Zend\Code\Generator\ValueGenerator::TYPE_CONSTANT)
                 ]
             ]
         ];
@@ -114,15 +114,15 @@ class PluginsConfigGenerator extends AbstractConfigGenerator {
                 foreach ($this->pluginsConfig["controller_plugins"] as $key => $conf) {
 
                     foreach ($conf as $k => $v) {
-
-                        if (class_exists($v)) {
+                        if (class_exists($v) || $v == $this->getOptionFactory()) {
                             $v = new \Zend\Code\Generator\ValueGenerator("\\" . $v . "::class", \Zend\Code\Generator\ValueGenerator::TYPE_CONSTANT);
                         }
 
-
-                        if (class_exists($k)) {
+                        if (class_exists($k) || $k == $this->getKeyOption()) {
                             unset($this->pluginsConfig["controller_plugins"][$key][$k]);
                             $this->pluginsConfig["controller_plugins"][$key]["\\" . $k . "::class"] = $v;
+                        } else {
+                            $this->pluginsConfig["controller_plugins"][$key][$k] = $v;
                         }
                     }
                 }

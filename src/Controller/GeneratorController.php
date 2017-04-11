@@ -105,6 +105,22 @@ class GeneratorController extends AbstractActionController {
         $servicesConfigGenerator->prepare();
         $servicesConfigGenerator->pushFile(true);
 
+        $plugin = new \ZfMetal\Generator\Entity\Plugin();
+        $plugin->setName($module->getName() . 'Options');
+        $plugin->setModule($module);
+
+        $pluginGenerator = new \ZfMetal\Generator\Generator\OptionPluginGenerator($plugin);
+        $pluginGenerator->prepare();
+        $pluginGenerator->pushFile(true);
+
+        $pluginFactoryGenerator = new \ZfMetal\Generator\Generator\OptionPluginFactoryGenerator($plugin);
+        $pluginFactoryGenerator->prepare();
+        $pluginFactoryGenerator->pushFile(true);
+
+        $pluginsConfigGenerator = new \ZfMetal\Generator\Generator\Config\PluginsConfigGenerator($plugin);
+        $pluginsConfigGenerator->prepare();
+        $pluginsConfigGenerator->pushFile(true);
+
         $view = new \Zend\View\Model\ViewModel([
             "optionGenerator" => $optionGenerator,
             'optionFactoryGenerator' => $optionFactoryGenerator
@@ -121,20 +137,21 @@ class GeneratorController extends AbstractActionController {
         $pluginGenerator = new \ZfMetal\Generator\Generator\PluginGenerator($plugin);
         $pluginGenerator->prepare();
         $pluginGenerator->pushFile(true);
-
+        
+        $pluginFactoryGenerator = null;
         if (!$plugin->getInvokable()) {
-            $optionFactoryGenerator = new \ZfMetal\Generator\Generator\PluginFactoryGenerator($plugin);
-            $optionFactoryGenerator->prepare();
-            $optionFactoryGenerator->pushFile(true);
+            $pluginFactoryGenerator = new \ZfMetal\Generator\Generator\PluginFactoryGenerator($plugin);
+            $pluginFactoryGenerator->prepare();
+            $pluginFactoryGenerator->pushFile(true);
         }
 
         $pluginsConfigGenerator = new \ZfMetal\Generator\Generator\Config\PluginsConfigGenerator($plugin);
         $pluginsConfigGenerator->prepare();
         $pluginsConfigGenerator->pushFile(true);
-
+        
         $view = new \Zend\View\Model\ViewModel([
             "pluginGenerator" => $pluginGenerator,
-//            'optionFactoryGenerator' => $optionFactoryGenerator
+            "pluginFactoryGenerator" => $pluginFactoryGenerator,
         ]);
         $view->setTerminal(true);
         return $view;

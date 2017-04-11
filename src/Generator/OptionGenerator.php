@@ -78,20 +78,32 @@ class OptionGenerator extends AbstractClassGenerator {
     }
 
     public function prepare() {
-        $this->addProperties();
 
         //PARENT
         parent::prepare();
+
+        $this->addProperties();
     }
 
     protected function addProperties() {
         foreach ($this->getOptionCollection() as $option) {
             $property = new \Zend\Code\Generator\PropertyGenerator($option->getName(), $option->getDefaultValue(), \Zend\Code\Generator\PropertyGenerator::FLAG_PRIVATE);
             
-            $this->classMethods[] = $this->getMethodGetter($option);
-            $this->classMethods[] = $this->getMethodSetter($option);
-
-            $this->classProperties[] = $property;
+            if(!$this->getCg()->hasProperty($option->getName())){
+                $this->getCg()->addPropertyFromGenerator($property);
+            }
+            
+            $getter = $this->getMethodGetter($option);
+            $setter = $this->getMethodSetter($option);
+            
+            if(!$this->getCg()->hasMethod($getter->getName())){
+                $this->getCg()->addMethodFromGenerator($getter);
+            }
+            
+            
+            if(!$this->getCg()->hasMethod($setter->getName())){
+                $this->getCg()->addMethodFromGenerator($setter);
+            }
         }
     }
 

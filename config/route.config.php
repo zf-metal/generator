@@ -439,6 +439,38 @@ return [
                                     ),
                                 ]
                             ),
+                            'ViewHelper' => array(
+                                'type' => Segment::class,
+                                'options' => array(
+                                    'route' => '/view-helper',
+                                    'defaults' => array(
+                                        'controller' => Controller\ViewHelperController::class,
+                                        'action' => 'main',
+                                    ),
+                                ),
+                                'child_routes' => [
+                                    'Main' => array(
+                                        'type' => Segment::class,
+                                        'options' => array(
+                                            'route' => '/main/:moduleId',
+                                            'defaults' => array(
+                                                'controller' => Controller\ViewHelperController::class,
+                                                'action' => 'main',
+                                            ),
+                                        ),
+                                    ),
+                                    'Generator' => array(
+                                        'type' => Segment::class,
+                                        'options' => array(
+                                            'route' => '/generator/:viewHelperId',
+                                            'defaults' => array(
+                                                'controller' => Controller\GeneratorController::class,
+                                                'action' => 'view-helper',
+                                            ),
+                                        ),
+                                    ),
+                                ]
+                            ),
                         ]
                     ),
                 ],

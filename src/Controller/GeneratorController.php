@@ -156,5 +156,33 @@ class GeneratorController extends AbstractActionController {
         $view->setTerminal(true);
         return $view;
     }
+    
+    public function viewHelperAction() {
+        $viewHelperId = $this->params("viewHelperId");
+
+        $viewHelper = $this->getEm()->getRepository("ZfMetal\Generator\Entity\ViewHelper")->find($viewHelperId);
+
+        $viewHelperGenerator = new \ZfMetal\Generator\Generator\ViewHelperGenerator($viewHelper);
+        $viewHelperGenerator->prepare();
+        $viewHelperGenerator->pushFile(true);
+        
+        $viewHelperFactoryGenerator = null;
+        if (!$viewHelper->getInvokable()) {
+            $viewHelperFactoryGenerator = new \ZfMetal\Generator\Generator\ViewHelperFactoryGenerator($viewHelper);
+            $viewHelperFactoryGenerator->prepare();
+            $viewHelperFactoryGenerator->pushFile(true);
+        }
+
+//        $viewHelperConfigGenerator = new \ZfMetal\Generator\Generator\Config\ViewHelperConfigGenerator($plugin);
+//        $viewHelperConfigGenerator->prepare();
+//        $viewHelperConfigGenerator->pushFile(true);
+        
+        $view = new \Zend\View\Model\ViewModel([
+            "viewHelperGenerator" => $viewHelperGenerator,
+            "viewHelperFactoryGenerator" => $viewHelperFactoryGenerator,
+        ]);
+        $view->setTerminal(true);
+        return $view;
+    }
 
 }

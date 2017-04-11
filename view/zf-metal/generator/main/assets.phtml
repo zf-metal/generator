@@ -10,7 +10,8 @@ $this->headScript()
         ->appendScript($this->partial('zf-metal/generator/controller/js/controller.js'), 'text/javascript')
         ->appendScript($this->partial('zf-metal/generator/entity/js/entity.js'), 'text/javascript')
         ->appendScript($this->partial('zf-metal/generator/option/js/option.js'), 'text/javascript')
-        ->appendScript($this->partial('zf-metal/generator/plugin/js/plugin.js'), 'text/javascript');
+        ->appendScript($this->partial('zf-metal/generator/plugin/js/plugin.js'), 'text/javascript')
+        ->appendScript($this->partial('zf-metal/generator/view-helper/js/view-helper.js'), 'text/javascript');
 ?>    
 
 <script type='text/javascript'>
@@ -45,6 +46,10 @@ $this->headScript()
         MetalPlugin = new $.MetalPlugin();
         MetalPlugin.setModal(MetalModal);
         MetalPlugin.run(<?php echo $module->getId(); ?>);
+        //ViewHelper
+        MetalViewHelper = new $.MetalViewHelper();
+        MetalViewHelper.setModal(MetalModal);
+        MetalViewHelper.run(<?php echo $module->getId(); ?>);
 
     });
 </script>

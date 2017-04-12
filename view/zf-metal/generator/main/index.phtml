@@ -71,27 +71,31 @@
                         </div>
                         <div class="tab-pane fade" id="routeTab">
 
-                              <?php echo $this->partial("zf-metal/generator/route/route-tab"); ?>
+                            <?php echo $this->partial("zf-metal/generator/route/route-tab"); ?>
 
 
                         </div>
                         <div class="tab-pane fade" id="navigationTab">
-                              <?php echo $this->partial("zf-metal/generator/navigation/navigation-tab"); ?>
+                            <?php echo $this->partial("zf-metal/generator/navigation/navigation-tab"); ?>
 
                         </div>
                         <div class="tab-pane fade" id="optionTab">
-                            <h4>Module Options</h4>
-                            <p></p>
+                            <h4 class="section-header">Options <button class="btn btn-primary" id="btn-generate-option">Generate</button></h4>
+                            <div id="optionContent">
+                                
+                            </div>
                         </div>
-                        
-                          <div class="tab-pane fade" id="pluginControllerTab">
-                            <h4>Plugin Controller</h4>
-                            <p></p>
+
+                        <div class="tab-pane fade" id="pluginControllerTab">
+                            <h4 class="section-header">Plugin Generate <button class="btn btn-primary" id="btn-generate-plugin">Generate</button></h4>
+                            <div id="pluginContent">
+                                
+                            </div>
                         </div>
-                        
-                          <div class="tab-pane fade" id="viewHelperTab">
-                            <h4>View Helper</h4>
-                            <p></p>
+
+                        <div class="tab-pane fade" id="viewHelperTab">
+                            <h4 class="section-header">ViewHelper Generate <button class="btn btn-primary" id="btn-generate-view-helper">Generate</button></h4>
+                            <div id="viewHelperContent"></div>
                         </div>
 
                         <div class="tab-pane fade" id="formTab">

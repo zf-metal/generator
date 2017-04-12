@@ -8,7 +8,10 @@ $this->headScript()
         ->appendScript($this->partial('zf-metal/generator/navigation/js/navigation.js'), 'text/javascript')
         ->appendScript($this->partial('zf-metal/generator/route/js/route.js'), 'text/javascript')
         ->appendScript($this->partial('zf-metal/generator/controller/js/controller.js'), 'text/javascript')
-        ->appendScript($this->partial('zf-metal/generator/entity/js/entity.js'), 'text/javascript');
+        ->appendScript($this->partial('zf-metal/generator/entity/js/entity.js'), 'text/javascript')
+        ->appendScript($this->partial('zf-metal/generator/option/js/option.js'), 'text/javascript')
+        ->appendScript($this->partial('zf-metal/generator/plugin/js/plugin.js'), 'text/javascript')
+        ->appendScript($this->partial('zf-metal/generator/view-helper/js/view-helper.js'), 'text/javascript');
 ?>    
 
 <script type='text/javascript'>
@@ -16,6 +19,8 @@ $this->headScript()
     var MetalRoutes;
     var MetalControllers;
     var MetalEntities;
+    var MetalOptions;
+    var MetalPlugin;
     jQuery(function ($) {
         //Entities
         MetalEntities = new $.MetalEntities();
@@ -33,7 +38,18 @@ $this->headScript()
         MetalNavigation = new $.MetalNavigation();
         MetalNavigation.setModal(MetalModal);
         MetalNavigation.run(<?php echo $module->getId(); ?>);
-
+        //Options
+        MetalOptions = new $.MetalOptions();
+        MetalOptions.setModal(MetalModal);
+        MetalOptions.run(<?php echo $module->getId(); ?>);
+        //Plugin
+        MetalPlugin = new $.MetalPlugin();
+        MetalPlugin.setModal(MetalModal);
+        MetalPlugin.run(<?php echo $module->getId(); ?>);
+        //ViewHelper
+        MetalViewHelper = new $.MetalViewHelper();
+        MetalViewHelper.setModal(MetalModal);
+        MetalViewHelper.run(<?php echo $module->getId(); ?>);
 
     });
 </script>

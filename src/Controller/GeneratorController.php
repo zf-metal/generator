@@ -87,4 +87,102 @@ class GeneratorController extends AbstractActionController {
         return $view;
     }
 
+    public function optionAction() {
+        $moduleId = $this->params("moduleId");
+        $module = $this->getEm()->getRepository("ZfMetal\Generator\Entity\Module")->find($moduleId);
+
+        $optionCollection = $this->getEm()->getRepository("ZfMetal\Generator\Entity\Option")->findByModule($moduleId);
+
+        $optionGenerator = new \ZfMetal\Generator\Generator\OptionGenerator($module, $optionCollection);
+        $optionGenerator->prepare();
+        $optionGenerator->pushFile(true);
+
+        $optionFactoryGenerator = new \ZfMetal\Generator\Generator\OptionFactoryGenerator($module);
+        $optionFactoryGenerator->prepare();
+        $optionFactoryGenerator->pushFile(true);
+
+        $servicesConfigGenerator = new \ZfMetal\Generator\Generator\Config\ServicesConfigGenerator($module);
+        $servicesConfigGenerator->prepare();
+        $servicesConfigGenerator->pushFile(true);
+
+        $plugin = new \ZfMetal\Generator\Entity\Plugin();
+        $plugin->setName($module->getName() . 'Options');
+        $plugin->setModule($module);
+
+        $pluginGenerator = new \ZfMetal\Generator\Generator\OptionPluginGenerator($plugin);
+        $pluginGenerator->prepare();
+        $pluginGenerator->pushFile(true);
+
+        $pluginFactoryGenerator = new \ZfMetal\Generator\Generator\OptionPluginFactoryGenerator($plugin);
+        $pluginFactoryGenerator->prepare();
+        $pluginFactoryGenerator->pushFile(true);
+
+        $pluginsConfigGenerator = new \ZfMetal\Generator\Generator\Config\PluginsConfigGenerator($plugin);
+        $pluginsConfigGenerator->prepare();
+        $pluginsConfigGenerator->pushFile(true);
+
+        $view = new \Zend\View\Model\ViewModel([
+            "optionGenerator" => $optionGenerator,
+            'optionFactoryGenerator' => $optionFactoryGenerator
+        ]);
+        $view->setTerminal(true);
+        return $view;
+    }
+
+    public function pluginAction() {
+        $pluginId = $this->params("pluginId");
+
+        $plugin = $this->getEm()->getRepository("ZfMetal\Generator\Entity\Plugin")->find($pluginId);
+
+        $pluginGenerator = new \ZfMetal\Generator\Generator\PluginGenerator($plugin);
+        $pluginGenerator->prepare();
+        $pluginGenerator->pushFile(true);
+        
+        $pluginFactoryGenerator = null;
+        if (!$plugin->getInvokable()) {
+            $pluginFactoryGenerator = new \ZfMetal\Generator\Generator\PluginFactoryGenerator($plugin);
+            $pluginFactoryGenerator->prepare();
+            $pluginFactoryGenerator->pushFile(true);
+        }
+
+        $pluginsConfigGenerator = new \ZfMetal\Generator\Generator\Config\PluginsConfigGenerator($plugin);
+        $pluginsConfigGenerator->prepare();
+        $pluginsConfigGenerator->pushFile(true);
+        
+        $view = new \Zend\View\Model\ViewModel([
+            "pluginGenerator" => $pluginGenerator,
+            "pluginFactoryGenerator" => $pluginFactoryGenerator,
+        ]);
+        $view->setTerminal(true);
+        return $view;
+    }
+    
+    public function viewHelperAction() {
+        $viewHelperId = $this->params("viewHelperId");
+
+        $viewHelper = $this->getEm()->getRepository("ZfMetal\Generator\Entity\ViewHelper")->find($viewHelperId);
+
+        $viewHelperGenerator = new \ZfMetal\Generator\Generator\ViewHelperGenerator($viewHelper);
+        $viewHelperGenerator->prepare();
+        $viewHelperGenerator->pushFile(true);
+        
+        $viewHelperFactoryGenerator = null;
+        if (!$viewHelper->getInvokable()) {
+            $viewHelperFactoryGenerator = new \ZfMetal\Generator\Generator\ViewHelperFactoryGenerator($viewHelper);
+            $viewHelperFactoryGenerator->prepare();
+            $viewHelperFactoryGenerator->pushFile(true);
+        }
+
+//        $viewHelperConfigGenerator = new \ZfMetal\Generator\Generator\Config\ViewHelperConfigGenerator($plugin);
+//        $viewHelperConfigGenerator->prepare();
+//        $viewHelperConfigGenerator->pushFile(true);
+        
+        $view = new \Zend\View\Model\ViewModel([
+            "viewHelperGenerator" => $viewHelperGenerator,
+            "viewHelperFactoryGenerator" => $viewHelperFactoryGenerator,
+        ]);
+        $view->setTerminal(true);
+        return $view;
+    }
+
 }

@@ -174,6 +174,17 @@ abstract class AbstractClassGenerator extends AbstractFileGenerator implements \
         $this->cg = $cg;
     }
 
- 
+
+    public function setClassProperties($classProperties) {
+        $this->classProperties = $classProperties;
+    }
+
+    public function setClassMethods($classMethods) {
+        $this->classMethods = $classMethods;
+    }
+
+    public function addClassProperties($classProperty){
+        $this->classProperties[] = $classProperty;
+    }
 
 }

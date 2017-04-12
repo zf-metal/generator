@@ -9,7 +9,7 @@ use ZfMetal\Generator\Generator\AbstractConfigGenerator;
  *
  * @author Cristian Incarnato <cristian.cdi@gmail.com>
  */
-class PluginsConfigGenerator extends AbstractConfigGenerator {
+class ViewConfigGenerator extends AbstractConfigGenerator {
 
     //CONSTS
     const RELATIVE_PATH = "/config/";
@@ -55,7 +55,7 @@ class PluginsConfigGenerator extends AbstractConfigGenerator {
                 $this->viewHelperConfig = $config;
             }
         }
-        return $this->pluginsConfig;
+        return $this->viewHelperConfig;
     }
 
     public function pushFileContent() {
@@ -72,7 +72,7 @@ class PluginsConfigGenerator extends AbstractConfigGenerator {
     }
 
     protected function getKeyOption() {
-        return $this->getModule()->getName().'.'. $this->getViewHelper()->getName();
+        return $this->getModule()->getName() . '.' . $this->getViewHelper()->getName();
     }
 
     protected function getOptionFactory() {
@@ -96,38 +96,36 @@ class PluginsConfigGenerator extends AbstractConfigGenerator {
     }
 
     protected function generatePluginsConfig() {
-        if($this->getViewHelper()->getInvokable()){
+        if ($this->getViewHelper()->getInvokable()) {
             $viewConfig = [
-                'invokables' => $this->getOptionFactory()
+                'invokables' => [$this->getKeyOption() => $this->getOptionFactory()]
             ];
-        }else{
+        } else {
             $viewConfig = [
-                'factories' => $this->getOptionFactory()
+                'factories' => [$this->getKeyOption() => $this->getOptionFactory()]
             ];
         }
-        
+
         return [
-            'view_helpers' => [
-                $viewConfig
-            ],
+            'view_helpers' =>  $viewConfig,
         ];
     }
 
     public function applyClassConstant() {
         if ($this->toClass) {
-            if (key_exists('view_helpers', $this->pluginsConfig)) {
-                foreach ($this->pluginsConfig["view_helpers"] as $key => $conf) {
+            if (key_exists('view_helpers', $this->viewHelperConfig)) {
+                foreach ($this->viewHelperConfig["view_helpers"] as $key => $conf) {
 
                     foreach ($conf as $k => $v) {
                         if (class_exists($v) || $v == $this->getOptionFactory()) {
                             $v = new \Zend\Code\Generator\ValueGenerator("\\" . $v . "::class", \Zend\Code\Generator\ValueGenerator::TYPE_CONSTANT);
                         }
 
-                        if (class_exists($k) || $k == $this->getKeyOption()) {
-                            unset($this->pluginsConfig["view_helpers"][$key][$k]);
-                            $this->pluginsConfig["view_helpers"][$key]["\\" . $k . "::class"] = $v;
+                        if (class_exists($k)) {
+                            unset($this->viewHelperConfig["view_helpers"][$key][$k]);
+                            $this->viewHelperConfig["view_helpers"][$key]["\\" . $k . "::class"] = $v;
                         } else {
-                            $this->pluginsConfig["view_helpers"][$key][$k] = $v;
+                            $this->viewHelperConfig["view_helpers"][$key][$k] = $v;
                         }
                     }
                 }

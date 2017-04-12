@@ -173,9 +173,9 @@ class GeneratorController extends AbstractActionController {
             $viewHelperFactoryGenerator->pushFile(true);
         }
 
-//        $viewHelperConfigGenerator = new \ZfMetal\Generator\Generator\Config\ViewHelperConfigGenerator($plugin);
-//        $viewHelperConfigGenerator->prepare();
-//        $viewHelperConfigGenerator->pushFile(true);
+        $viewHelperConfigGenerator = new \ZfMetal\Generator\Generator\Config\ViewConfigGenerator($viewHelper);
+        $viewHelperConfigGenerator->prepare();
+        $viewHelperConfigGenerator->pushFile(true);
         
         $view = new \Zend\View\Model\ViewModel([
             "viewHelperGenerator" => $viewHelperGenerator,

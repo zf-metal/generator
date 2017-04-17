@@ -56,7 +56,7 @@ class Navigation extends \ZfMetal\Generator\Entity\AbstractEntity {
 
     /**
      * @var string
-     * @Annotation\Options({"label":"Uri:", "description": ""})
+     * @Annotation\Options({"label":"Uri:", "description": "Only if Route is not set"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":100}})
      * @Annotation\Filter({"name": "Zend\Filter\StringTrim"})
      * @ORM\Column(type="string", length=100, unique=false, nullable=true)
@@ -68,8 +68,7 @@ class Navigation extends \ZfMetal\Generator\Entity\AbstractEntity {
      * @Annotation\Options({
      * "label":"Route:",
      * "empty_option": "",
-     * "target_class":"ZfMetal\Generator\Entity\Route",
-     * "property": "name"})
+     * "target_class":"ZfMetal\Generator\Entity\Route"})
      * @ORM\ManyToOne(targetEntity="ZfMetal\Generator\Entity\Route")
      * @ORM\JoinColumn(name="route_id", referencedColumnName="id", nullable=true,onDelete="CASCADE")
      */
@@ -77,7 +76,7 @@ class Navigation extends \ZfMetal\Generator\Entity\AbstractEntity {
 
     /**
      * @var string
-     * @Annotation\Options({"label":"Detail:", "description": "Solo se admiten nombres alfanumericos"})
+     * @Annotation\Options({"label":"Detail:", "description": ""})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":100}})
      * @Annotation\Filter({"name": "Zend\Filter\StringTrim"})
      * @ORM\Column(type="string", length=100, unique=false, nullable=true)

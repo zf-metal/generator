@@ -15,7 +15,7 @@ class ControllerConfigGenerator extends AbstractConfigGenerator {
     const RELATIVE_PATH = "/config/";
 
     protected $controllerConfig = array();
-    protected $controllerCollection;
+    protected $controller;
     protected $module;
     protected $toClass = true;
 
@@ -31,18 +31,17 @@ class ControllerConfigGenerator extends AbstractConfigGenerator {
         return $this->getAbsolutePath() . $this->getBaseFileName();
     }
 
-    function __construct(\ZfMetal\Generator\Entity\Module $module, $controllerCollection, $toClass = true) {
-        $this->module = $module;
-        $this->controllerCollection = $controllerCollection;
-        $this->toClass = $toClass;
+    function __construct(\ZfMetal\Generator\Entity\Controller $controller) {
+        $this->controller = $controller;
     }
 
     public function getModule() {
-        return $this->module;
+        return $this->controller->getModule();
     }
 
     public function prepare() {
         $this->getActualContent();
+        $this->mergeContent();
         $this->pushFileContent();
     }
 
@@ -51,26 +50,48 @@ class ControllerConfigGenerator extends AbstractConfigGenerator {
             $config = include $this->getFileName();
             if (is_array($config)) {
                 $this->controllerConfig = $config;
-                $this->applyClassConstant();
             }
         }
         return $this->controllerConfig;
     }
 
+    protected function mergeContent() {
+        $this->controllerConfig = \Zend\Stdlib\ArrayUtils::merge($this->getControllerConfig(), $this->generateControllerConfig(), TRUE);
+        $this->applyClassConstant();
+    }
+
+    protected function getControllerKey() {
+        return $this->getModule()->getName() . "\Controller\\" . $this->getController()->getName() . 'Controller';
+    }
+
+    protected function getControllerValue() {
+        return $this->getModule()->getName() . '\Factory\Controller\\' . $this->getController()->getName() . 'ControllerFactory';
+    }
+
+    protected function generateControllerConfig() {
+        return [
+            'controllers' => [
+                'factories' => [
+                    $this->getControllerKey() => $this->getControllerValue(),
+                ],
+            ]
+        ];
+    }
+
     public function applyClassConstant() {
-        if ($this->toClass) {
+        if (key_exists('controllers', $this->controllerConfig)) {
             foreach ($this->controllerConfig["controllers"] as $key => $conf) {
 
                 foreach ($conf as $k => $v) {
-
-                    if (class_exists($v)) {
-                        $v = new \Zend\Code\Generator\ValueGenerator("\\".$v . "::CLASS", \Zend\Code\Generator\ValueGenerator::TYPE_CONSTANT);
+                    if (class_exists($v) || $v == $this->getControllerValue()) {
+                        $v = new \Zend\Code\Generator\ValueGenerator("\\" . $v . "::class", \Zend\Code\Generator\ValueGenerator::TYPE_CONSTANT);
                     }
 
-
-                    if (class_exists($k)) {
+                    if (class_exists($k) || $k == $this->getControllerKey()) {
                         unset($this->controllerConfig["controllers"][$key][$k]);
-                        $this->controllerConfig["controllers"][$key]["\\".$k . "::CLASS"] = $v;
+                        $this->controllerConfig["controllers"][$key]["\\" . $k . "::class"] = $v;
+                    } else {
+                        $this->controllerConfig["controllers"][$key][$k] = $v;
                     }
                 }
             }
@@ -90,34 +111,17 @@ class ControllerConfigGenerator extends AbstractConfigGenerator {
         return $body;
     }
 
-    protected function genArrayConfig() {
-        foreach ($this->getControllerCollection() as $controller) {
-            $a["controllers"]["factories"][$this->getControllerClass($controller)->generate()] = $this->getControllerFactory($controller);
-        }
-        return $a;
-    }
-
-    protected function getControllerClass($controller) {
-        $str = "\\" . $controller->getModule() . "\Controller\\" . $controller->getName() . 'Controller::CLASS';
-        $vg = new \Zend\Code\Generator\ValueGenerator($str, \Zend\Code\Generator\ValueGenerator::TYPE_CONSTANT);
-        return $vg;
-    }
-
-    protected function getControllerFactory($controller) {
-        $str = '\\' . $controller->getModule() . '\Factory\Controller\\' . $controller->getName() . 'ControllerFactory::CLASS';
-        $vg = new \Zend\Code\Generator\ValueGenerator($str, \Zend\Code\Generator\ValueGenerator::TYPE_CONSTANT);
-        return $vg;
-    }
-
     function getControllerConfig() {
-        if (!$this->controllerConfig) {
-            $this->controllerConfig = $this->genArrayConfig();
-        }
         return $this->controllerConfig;
     }
 
-    function getControllerCollection() {
-        return $this->controllerCollection;
+    function getController() {
+        return $this->controller;
+    }
+
+    function setController($controller) {
+        $this->controller = $controller;
+        return $this;
     }
 
 }

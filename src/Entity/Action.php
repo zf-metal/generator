@@ -92,7 +92,7 @@ class Action extends \ZfMetal\Generator\Entity\AbstractEntity {
     }
 
     public function __toString() {
-        return $this->name;
+        return $this->getController()->getClass()."->".$this->getName()."Action";
     }
 
 

@@ -85,8 +85,7 @@ class Route extends \ZfMetal\Generator\Entity\AbstractEntity {
      * @Annotation\Options({
      * "label":"Action:",
      * "empty_option": "",
-     * "target_class":"ZfMetal\Generator\Entity\Action",
-     * "property": "name"})
+     * "target_class":"ZfMetal\Generator\Entity\Action"})
      * @ORM\ManyToOne(targetEntity="ZfMetal\Generator\Entity\Action")
      * @ORM\JoinColumn(name="action_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
@@ -210,7 +209,7 @@ class Route extends \ZfMetal\Generator\Entity\AbstractEntity {
     }
 
     public function __toString() {
-        return $this->name . " (" . $this->route . ")";
+        return $this->finalRouteName();
     }
 
     public function finalRouteName() {

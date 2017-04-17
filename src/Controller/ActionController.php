@@ -4,6 +4,7 @@ namespace ZfMetal\Generator\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Zend\View\Model\JsonModel;
 
 class ActionController extends AbstractActionController {
 
@@ -76,6 +77,17 @@ class ActionController extends AbstractActionController {
         $view = new ViewModel(array('grid' => $this->grid));
         $view->setTerminal(true);
         return $view;
+    }
+
+    public function jsonByControllerAction() {
+        $controllerId = $this->getRequest()->getQuery("id");
+        $col = $this->getEm()->getRepository("ZfMetal\Generator\Entity\Action")->findByController($controllerId);
+        $a = array();
+        $a [] = "";
+        foreach ($col as $item) {
+            $a[$item->getId()] = $item->__toString();
+        }
+        return new jsonModel($a);
     }
 
 }

@@ -73,9 +73,7 @@ class GeneratorController extends AbstractActionController {
         $controllerFactoryGenerator->prepare();
         $controllerFactoryGenerator->pushFile(true);
 
-        $controllerCollection = $this->getEm()->getRepository("ZfMetal\Generator\Entity\Controller")->findByModule($module->getId());
-
-        $controllerConfigGenerator = new \ZfMetal\Generator\Generator\Config\ControllerConfigGenerator($module, $controllerCollection);
+        $controllerConfigGenerator = new \ZfMetal\Generator\Generator\Config\ControllerConfigGenerator($controller);
         $controllerConfigGenerator->prepare();
         $controllerConfigGenerator->pushFile(true);
 

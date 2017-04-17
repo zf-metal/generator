@@ -184,8 +184,8 @@
             $('#btn-edit-nav').on('click', {self: this}, this.editAction);
             $('#btn-del-nav').on('click', {self: this}, this.deleteAction);
             $('#btn-clear-nav').on('click', {self: this}, this.clearAction);
-            $('#btn-clear-nav-collapse').on('click', {self: this}, this.collapseAction);
-            $('#btn-clear-nav-expand').on('click', {self: this}, this.expandAction);
+            $('#btn-clear-collapse-nav').on('click', {self: this}, this.collapseAction);
+            $('#btn-clear-expand-nav').on('click', {self: this}, this.expandAction);
             $('#btn-generate-navs').on('click', {self: this}, this.generateAction);
         },
         search_Init: function () {
@@ -194,7 +194,6 @@
             $('#btn-clear-search-nav').on('click', {self: this}, function (e) {
                 this.Tree.treeview('clearSearch');
                 $('#input-search-nav').val('');
-                $('#search-output-nav').html('');
             });
 
             this.tree.on('nodeSelected', {self: this}, this.nodeSelected);

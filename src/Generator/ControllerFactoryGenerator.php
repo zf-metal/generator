@@ -32,7 +32,7 @@ class ControllerFactoryGenerator extends AbstractClassGenerator {
     }
 
     public function getClassInterfaces() {
-        return [];
+        return [\Zend\ServiceManager\Factory\FactoryInterface::class];
     }
 
     public function getClassTags() {

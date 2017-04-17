@@ -323,6 +323,39 @@ return [
                                     ),
                                 ]
                             ),
+                            'Action' => array(
+                                'type' => Literal::class,
+                                'may_terminate' => false,
+                                'options' => array(
+                                    'route' => '/action',
+                                    'defaults' => array(
+                                        'controller' => Controller\ActionController::class,
+                                        'action' => 'main',
+                                    ),
+                                ),
+                                'child_routes' => [
+                                    'Controller' => array(
+                                        'type' => Segment::class,
+                                        'options' => array(
+                                            'route' => '/controller/:controllerId',
+                                            'defaults' => array(
+                                                'controller' => Controller\ActionController::class,
+                                                'action' => 'controller',
+                                            ),
+                                        ),
+                                    ),
+                                     'Json' => array(
+                                        'type' => Segment::class,
+                                        'options' => array(
+                                            'route' => '/json-by-controller',
+                                            'defaults' => array(
+                                                'controller' => Controller\ActionController::class,
+                                                'action' => 'json-by-controller',
+                                            ),
+                                        ),
+                                    ),
+                                ]
+                            ),
                             'Controller' => array(
                                 'type' => Segment::class,
                                 'options' => array(
@@ -340,16 +373,6 @@ return [
                                             'defaults' => array(
                                                 'controller' => Controller\ControllerController::class,
                                                 'action' => 'main',
-                                            ),
-                                        ),
-                                    ),
-                                    'Action' => array(
-                                        'type' => Segment::class,
-                                        'options' => array(
-                                            'route' => '/action/:controllerId',
-                                            'defaults' => array(
-                                                'controller' => Controller\ActionController::class,
-                                                'action' => 'controller',
                                             ),
                                         ),
                                     ),

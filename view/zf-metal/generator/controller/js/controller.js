@@ -28,7 +28,7 @@
             this.modal.loading();
             this.modal.toggle();
             var that = this;
-            $.get("/generator/module/controller/action/" + controllerId).done(function (data) {
+            $.get("/generator/module/action/controller/" + controllerId).done(function (data) {
                 that.modal.box(data);
             });
         },

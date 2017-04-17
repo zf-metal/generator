@@ -194,7 +194,6 @@
             $('#btn-clear-search').on('click', {self: this}, function (e) {
                 this.Tree.treeview('clearSearch');
                 $('#input-search').val('');
-                $('#search-output').html('');
             });
 
             this.tree.on('nodeSelected', {self: this}, this.nodeSelected);

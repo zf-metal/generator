@@ -102,7 +102,7 @@ class PluginsConfigGenerator extends AbstractConfigGenerator {
                     $this->getKeyOption() => $this->getOptionFactory(),
                 ],
                 'aliases' => [
-                    lcfirst($this->getPlugin()->getName()) => new \Zend\Code\Generator\ValueGenerator("\\" . $this->getKeyOption() . "::class", \Zend\Code\Generator\ValueGenerator::TYPE_CONSTANT)
+                    lcfirst($this->getModule()->getName()). ucfirst($this->getPlugin()->getName()) => new \Zend\Code\Generator\ValueGenerator("\\" . $this->getKeyOption() . "::class", \Zend\Code\Generator\ValueGenerator::TYPE_CONSTANT)
                 ]
             ]
         ];

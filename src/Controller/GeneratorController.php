@@ -106,7 +106,7 @@ class GeneratorController extends AbstractActionController {
         $servicesConfigGenerator->pushFile(true);
 
         $plugin = new \ZfMetal\Generator\Entity\Plugin();
-        $plugin->setName($module->getName() . 'Options');
+        $plugin->setName('Options');
         $plugin->setModule($module);
 
         $pluginGenerator = new \ZfMetal\Generator\Generator\OptionPluginGenerator($plugin);
@@ -120,6 +120,22 @@ class GeneratorController extends AbstractActionController {
         $pluginsConfigGenerator = new \ZfMetal\Generator\Generator\Config\PluginsConfigGenerator($plugin);
         $pluginsConfigGenerator->prepare();
         $pluginsConfigGenerator->pushFile(true);
+
+        $viewHelper = new \ZfMetal\Generator\Entity\ViewHelper();
+        $viewHelper->setName('Options');
+        $viewHelper->setModule($module);
+
+        $viewHelperGenerator = new \ZfMetal\Generator\Generator\OptionViewHelperGenerator($viewHelper);
+        $viewHelperGenerator->prepare();
+        $viewHelperGenerator->pushFile(true);
+
+        $viewHelperFactoryGenerator = new \ZfMetal\Generator\Generator\OptionViewHelperFactoryGenerator($viewHelper);
+        $viewHelperFactoryGenerator->prepare();
+        $viewHelperFactoryGenerator->pushFile(true);
+
+        $viewHelperConfigGenerator = new \ZfMetal\Generator\Generator\Config\ViewConfigGenerator($viewHelper);
+        $viewHelperConfigGenerator->prepare();
+        $viewHelperConfigGenerator->pushFile(true);
 
         $view = new \Zend\View\Model\ViewModel([
             "optionGenerator" => $optionGenerator,
@@ -137,7 +153,7 @@ class GeneratorController extends AbstractActionController {
         $pluginGenerator = new \ZfMetal\Generator\Generator\PluginGenerator($plugin);
         $pluginGenerator->prepare();
         $pluginGenerator->pushFile(true);
-        
+
         $pluginFactoryGenerator = null;
         if (!$plugin->getInvokable()) {
             $pluginFactoryGenerator = new \ZfMetal\Generator\Generator\PluginFactoryGenerator($plugin);
@@ -148,7 +164,7 @@ class GeneratorController extends AbstractActionController {
         $pluginsConfigGenerator = new \ZfMetal\Generator\Generator\Config\PluginsConfigGenerator($plugin);
         $pluginsConfigGenerator->prepare();
         $pluginsConfigGenerator->pushFile(true);
-        
+
         $view = new \Zend\View\Model\ViewModel([
             "pluginGenerator" => $pluginGenerator,
             "pluginFactoryGenerator" => $pluginFactoryGenerator,
@@ -156,7 +172,7 @@ class GeneratorController extends AbstractActionController {
         $view->setTerminal(true);
         return $view;
     }
-    
+
     public function viewHelperAction() {
         $viewHelperId = $this->params("viewHelperId");
 
@@ -165,7 +181,7 @@ class GeneratorController extends AbstractActionController {
         $viewHelperGenerator = new \ZfMetal\Generator\Generator\ViewHelperGenerator($viewHelper);
         $viewHelperGenerator->prepare();
         $viewHelperGenerator->pushFile(true);
-        
+
         $viewHelperFactoryGenerator = null;
         if (!$viewHelper->getInvokable()) {
             $viewHelperFactoryGenerator = new \ZfMetal\Generator\Generator\ViewHelperFactoryGenerator($viewHelper);
@@ -176,7 +192,7 @@ class GeneratorController extends AbstractActionController {
         $viewHelperConfigGenerator = new \ZfMetal\Generator\Generator\Config\ViewConfigGenerator($viewHelper);
         $viewHelperConfigGenerator->prepare();
         $viewHelperConfigGenerator->pushFile(true);
-        
+
         $view = new \Zend\View\Model\ViewModel([
             "viewHelperGenerator" => $viewHelperGenerator,
             "viewHelperFactoryGenerator" => $viewHelperFactoryGenerator,

@@ -72,7 +72,7 @@ class ViewConfigGenerator extends AbstractConfigGenerator {
     }
 
     protected function getKeyOption() {
-        return $this->getModule()->getName() . '.' . $this->getViewHelper()->getName();
+        return lcfirst($this->getModule()->getName()) . ucfirst($this->getViewHelper()->getName());
     }
 
     protected function getOptionFactory() {

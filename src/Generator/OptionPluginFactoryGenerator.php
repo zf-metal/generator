@@ -16,7 +16,7 @@ class OptionPluginFactoryGenerator extends PluginFactoryGenerator {
 
     protected function getInvokeBody() {
         $body = '$servicio = $container->get(\'' . $this->getModule()->getName() . '.options\');' . PHP_EOL;
-        $body .= 'return new \\' . $this->getModule()->getName() . '\Controller\Plugin\\' . $this->getModule()->getName() . 'Options($servicio);' . PHP_EOL;
+        $body .= 'return new \\' . $this->getModule()->getName() . '\Controller\Plugin\Options($servicio);' . PHP_EOL;
 
         return $body;
     }

@@ -151,10 +151,10 @@
             });
         },
         clearHelper: function () {
-            $('#nav-selected-parent_nav_name').html("");
-            $('#nav-selected-nav_name').html("");
-            $('#nav-selected-parent_nav_url').html("");
-            $('#nav-selected-nav_url').html("");
+
+            $('#nav-selected-label').html("");
+            $('#nav-selected-uri').html("");
+            $('#nav-selected-route').html("");
 
             //CLEAR SELECTED
             var nodesSelected = this.tree.treeview('getSelected');
@@ -195,17 +195,15 @@
                 this.Tree.treeview('clearSearch');
                 $('#input-search-nav').val('');
             });
-
             this.tree.on('nodeSelected', {self: this}, this.nodeSelected);
         },
         nodeSelected: function (event, data) {
             var self = event.data.self;
             self.navSelected = data;
             self.navSelectedId = data.navid;
-            $('#nav-selected-parent_nav_url').html(data.parent_nav_url);
-            $('#nav-selected-nav_url').html(data.nav_url);
-            $('#nav-selected-parent_nav_name').html(data.parent_nav_name);
-            $('#nav-selected-nav_name').html(data.nav_name);
+            $('#nav-selected-label').html(data.text);
+            $('#nav-selected-uri').html(data.nav_uri);
+            $('#nav-selected-route').html(data.nav_route);
         },
         searchHelper: function (event) {
             var self = event.data.self;

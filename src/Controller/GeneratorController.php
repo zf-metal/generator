@@ -58,6 +58,22 @@ class GeneratorController extends AbstractActionController {
         $view->setTerminal(true);
         return $view;
     }
+    
+    public function navigationAction() {
+        $moduleId = $this->params("moduleId");
+        $module = $this->getEm()->getRepository("ZfMetal\Generator\Entity\Module")->find($moduleId);
+
+        $navCollection = $this->getEm()->getRepository("ZfMetal\Generator\Entity\Navigation")->findWhitoutParent($moduleId);
+
+        $navConfigGenerator = new \ZfMetal\Generator\Generator\Config\NavigationConfigGenerator($module, $navCollection);
+        $navConfigGenerator->prepare();
+        $navConfigGenerator->pushFile(true);
+
+        $view = new \Zend\View\Model\ViewModel([
+            "navConfigGenerator" => $navConfigGenerator]);
+        $view->setTerminal(true);
+        return $view;
+    }
 
     public function controllerAction() {
         $controllerId = $this->params("controllerId");

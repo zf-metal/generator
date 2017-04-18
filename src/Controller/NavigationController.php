@@ -74,7 +74,12 @@ class NavigationController extends AbstractActionController {
 
         $data["text"] = $nav->getLabel();
         $data["navid"] = $nav->getId();
-       // $data["nav_route"] = $nav->getRoute();
+        if ($nav->getRoute()) {
+            $data["nav_route"] = $nav->getRoute()->finalRouteName();
+        }else{
+             $data["nav_route"] = "";
+        }
+
         $data["nav_uri"] = $nav->getUri();
 
         if ($nav->hasChilds()) {
@@ -143,7 +148,7 @@ class NavigationController extends AbstractActionController {
         if ($navParentId) {
             $navParent = $this->getEm()->getRepository("ZfMetal\Generator\Entity\Navigation")->find($navParentId);
             $form->get("label")->setOption("description", "Parent: " . $navParent->getLabel());
-          }
+        }
 
 
         $view = new ViewModel(array('form' => $form));

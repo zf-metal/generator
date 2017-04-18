@@ -202,9 +202,9 @@ class PropertyGenerator {
 
         $annotations->setTags($tags);
 
-        if ($this->getProperty()->getType() == "manyToOne") {
-            var_dump($tags);
-        }
+//        if ($this->getProperty()->getType() == "manyToOne") {
+//          var_dump($tags);
+//        }
 
         $this->getPropertyGenerator()->setDocBlock($annotations);
     }

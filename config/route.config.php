@@ -50,6 +50,16 @@ return [
                                     ),
                                 ),
                             ),
+                            'Create' => array(
+                                'type' => Segment::class,
+                                'options' => array(
+                                    'route' => '/create',
+                                    'defaults' => array(
+                                        'controller' => Controller\ModuleController::class,
+                                        'action' => 'create',
+                                    ),
+                                ),
+                            ),
                             'Manage' => array(
                                 'type' => Segment::class,
                                 'options' => array(
@@ -344,7 +354,7 @@ return [
                                             ),
                                         ),
                                     ),
-                                     'Json' => array(
+                                    'Json' => array(
                                         'type' => Segment::class,
                                         'options' => array(
                                             'route' => '/json-by-controller',

@@ -18,11 +18,6 @@
             this.moduleId = moduleId;
             this.entitiesAction();
         },
-        createAction: function () {
-            $.get("/generator/module/create").done(function (data) {
-               //MODULE RELOAD
-            });
-        },
         generatorAction: function (entityId, entityName) {
             this.modal.title("Generating Module: ");
             this.modal.loading();

@@ -60,6 +60,26 @@ return [
                                     ),
                                 ),
                             ),
+                            'Generator' => array(
+                                'type' => Segment::class,
+                                'options' => array(
+                                    'route' => '/generator/:moduleId',
+                                    'defaults' => array(
+                                        'controller' => Controller\GeneratorController::class,
+                                        'action' => 'module',
+                                    ),
+                                ),
+                            ),
+                             'GeneratorConfig' => array(
+                                'type' => Segment::class,
+                                'options' => array(
+                                    'route' => '/generator/config/:moduleId',
+                                    'defaults' => array(
+                                        'controller' => Controller\GeneratorController::class,
+                                        'action' => 'module-config',
+                                    ),
+                                ),
+                            ),
                             'Manage' => array(
                                 'type' => Segment::class,
                                 'options' => array(

@@ -12,7 +12,7 @@ return [
         ],
         "formConfig" => [
             'columns' => \ZfMetal\Commons\Consts::COLUMNS_TWO,
-            'style' => \ZfMetal\Commons\Consts::STYLE_MENU_VERTICAL,
+            'style' => \ZfMetal\Commons\Consts::STYLE_VERTICAL,
         ],
         "columnsConfig" => [
             "createdAt" => [

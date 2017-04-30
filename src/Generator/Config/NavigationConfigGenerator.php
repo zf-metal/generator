@@ -67,7 +67,7 @@ class NavigationConfigGenerator extends AbstractConfigGenerator {
 
     protected function populateGeneratorConfig() {
         foreach ($this->getNavigationCollection() as $navigation) {
-            $this->generatorNavigationConfig['navigation']['default'][] = $this->addNavigation($navigation);
+            array_push($this->generatorNavigationConfig['navigation']['default'], $this->addNavigation($navigation));
         }
     }
 
@@ -76,17 +76,16 @@ class NavigationConfigGenerator extends AbstractConfigGenerator {
         $a["detail"] = $navigation->getDetail();
         $a["icon"] = $navigation->getIcon();
         $a["permission"] = $navigation->getPermission();
-        if($navigation->getRoute()){
-           $a["route"] = $navigation->getRoute()->finalRouteName();
-        }else{
-           $a["uri"] = $navigation->getUri();
-         
+        if ($navigation->getRoute()) {
+            $a["route"] = $navigation->getRoute()->finalRouteName();
+        } else {
+            $a["uri"] = $navigation->getUri();
         }
 
 
         if ($navigation->hasChilds()) {
             foreach ($navigation->getChilds() as $child) {
-                $a['pages'][] = $this->addNavigation($child);
+                array_push($a['pages'], $this->addNavigation($child));
             }
         }
 

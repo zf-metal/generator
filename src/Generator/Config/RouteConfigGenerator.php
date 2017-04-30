@@ -50,7 +50,7 @@ class RouteConfigGenerator extends AbstractConfigGenerator {
 
     protected function mergeConfig() {
         //$this->routeConfig = array_merge_recursive($this->actualRouteConfig,$this->generatorRouteConfig);
-        $this->routeConfig = \Zend\Stdlib\ArrayUtils::merge($this->actualRouteConfig, $this->generatorRouteConfig,true);
+        $this->routeConfig = \Zend\Stdlib\ArrayUtils::merge($this->actualRouteConfig, $this->generatorRouteConfig, true);
 
         return $this->routeConfig;
     }
@@ -67,7 +67,7 @@ class RouteConfigGenerator extends AbstractConfigGenerator {
 
     protected function populateGeneratorConfig() {
         foreach ($this->getRouteCollection() as $route) {
-            $this->generatorRouteConfig['router']['routes'][] = $this->addRoute($route);
+            array_push($this->generatorRouteConfig['router']['routes'], $this->addRoute($route));
         }
     }
 
@@ -91,7 +91,7 @@ class RouteConfigGenerator extends AbstractConfigGenerator {
 
         if ($route->hasChilds()) {
             foreach ($route->getChilds() as $child) {
-                $a['child_routes'][] = $this->addRoute($child);
+                array_push($a['child_routes'], $this->addRoute($child));
             }
         }
 

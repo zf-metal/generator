@@ -16,20 +16,54 @@
         },
         run: function (moduleId) {
             this.moduleId = moduleId;
-            this.entitiesAction();
+            this.btnInit();
         },
-        createAction: function () {
-            $.get("/generator/module/create").done(function (data) {
-               //MODULE RELOAD
+        btnInit: function () {
+            $('#btn-generate-module').on('click', {self: this}, this.generatorModuleAction);
+            $('#btn-generate-module-config').on('click', {self: this}, this.generatorModuleConfigAction);
+            $('#btn-generate-module-composer').on('click', {self: this}, this.generatorModuleComposerAction);
+               $('#btn-generate-module-dump-autoload').on('click', {self: this}, this.generatorModuleDumpAutoloadAction);
+
+
+        },
+        generatorModuleAction: function (event) {
+            var self = event.data.self;
+            self.modal.title("Generating Module: ");
+            self.modal.loading();
+            self.modal.toggle();
+
+            $.get("/generator/module/generator/" + self.moduleId).done(function (data) {
+              self.modal.box(data);
             });
         },
-        generatorAction: function (entityId, entityName) {
-            this.modal.title("Generating Module: ");
-            this.modal.loading();
-            this.modal.toggle();
-            
-            $.get("/generator/module/entity/generator/" + entityId).done(function (data) {
-                $("#modalContent").html(data);
+         generatorModuleConfigAction: function (event) {
+            var self = event.data.self;
+            self.modal.title("Generating Module: ");
+            self.modal.loading();
+            self.modal.toggle();
+
+            $.get("/generator/module/generator/config/" + self.moduleId).done(function (data) {
+             self.modal.box(data);
+            });
+        },
+         generatorModuleComposerAction: function (event) {
+            var self = event.data.self;
+            self.modal.title("Generating Module: ");
+            self.modal.loading();
+            self.modal.toggle();
+
+            $.get("/generator/module/generator/composer/" + self.moduleId).done(function (data) {
+             self.modal.box(data);
+            });
+        },
+        generatorModuleDumpAutoloadAction: function (event) {
+            var self = event.data.self;
+            self.modal.title("Generating Module: ");
+            self.modal.loading();
+            self.modal.toggle();
+
+            $.get("/generator/module/generator/dump-autoload/" + self.moduleId).done(function (data) {
+             self.modal.box(data);
             });
         }
 

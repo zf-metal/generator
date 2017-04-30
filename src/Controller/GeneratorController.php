@@ -36,7 +36,7 @@ class GeneratorController extends AbstractActionController {
         $view->setTerminal(true);
         return $view;
     }
-    
+
     public function moduleConfigAction() {
         $moduleId = $this->params("moduleId");
         $module = $this->getEm()->getRepository("ZfMetal\Generator\Entity\Module")->find($moduleId);
@@ -47,6 +47,44 @@ class GeneratorController extends AbstractActionController {
 
         $view = new \Zend\View\Model\ViewModel([
             "moduleGenerator" => $ModuleGenerator]);
+        $view->setTerminal(true);
+        return $view;
+    }
+
+    public function moduleComposerAction() {
+        $moduleId = $this->params("moduleId");
+        $module = $this->getEm()->getRepository("ZfMetal\Generator\Entity\Module")->find($moduleId);
+
+        $ModuleGenerator = new \ZfMetal\Generator\Generator\Config\ComposerConfigGenerator($module);
+        $ModuleGenerator->prepare();
+        $ModuleGenerator->pushFile(true);
+
+        $view = new \Zend\View\Model\ViewModel([
+            "moduleGenerator" => $ModuleGenerator]);
+        $view->setTerminal(true);
+        return $view;
+    }
+
+    public function moduleDumpAutoloadAction() {
+        $moduleId = $this->params("moduleId");
+        $module = $this->getEm()->getRepository("ZfMetal\Generator\Entity\Module")->find($moduleId);
+
+        $path = realpath(__DIR__ . "/../../../../..");
+        $com = "composer dump-autoload";
+        $command = "cd " . $path . " && " . $com;
+
+        $result = shell_exec($command);
+
+        //CHECK STATIC
+        $result = false;
+        $file = file_get_contents($path . "/vendor/composer/autoload_static.php");
+        if (preg_match("/" . $module->getName() . "\/src/", $file)) {
+            $result = true;
+        }
+
+        $view = new \Zend\View\Model\ViewModel([
+            "command" => $command,
+            "result" => $result]);
         $view->setTerminal(true);
         return $view;
     }

@@ -21,6 +21,8 @@
         btnInit: function () {
             $('#btn-generate-module').on('click', {self: this}, this.generatorModuleAction);
             $('#btn-generate-module-config').on('click', {self: this}, this.generatorModuleConfigAction);
+            $('#btn-generate-module-composer').on('click', {self: this}, this.generatorModuleComposerAction);
+            $('#btn-generate-module-dump-autoload').on('click', {self: this}, this.generatorModuleDumpAutoloadAction);
 
         },
         generatorModuleAction: function (event) {
@@ -41,6 +43,27 @@
 
             $.get("/generator/module/generator/config/" + self.moduleId).done(function (data) {
              self.modal.box(data);
+            });
+        },
+         generatorModuleComposerAction: function (event) {
+            var self = event.data.self;
+            self.modal.title("Generating Module: ");
+            self.modal.loading();
+            self.modal.toggle();
+
+            $.get("/generator/module/generator/composer/" + self.moduleId).done(function (data) {
+             self.modal.box(data);
+            });
+        },
+        generatorModuleDumpAutoloadAction: function (event) {
+            var self = event.data.self;
+            self.modal.title("Generating Module: ");
+            self.modal.loading();
+            self.modal.toggle();
+
+            $.get("/generator/module/generator/dump-autoload/" + self.moduleId).done(function (data) {
+             self.modal.box(data);
+
             });
         }
 

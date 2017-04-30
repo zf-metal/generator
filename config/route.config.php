@@ -80,6 +80,27 @@ return [
                                     ),
                                 ),
                             ),
+
+                              'GeneratorComposer' => array(
+                                'type' => Segment::class,
+                                'options' => array(
+                                    'route' => '/generator/composer/:moduleId',
+                                    'defaults' => array(
+                                        'controller' => Controller\GeneratorController::class,
+                                        'action' => 'module-composer',
+                                    ),
+                                ),
+                            ),
+                             'GeneratorDumpAutoload' => array(
+                                'type' => Segment::class,
+                                'options' => array(
+                                    'route' => '/generator/dump-autoload/:moduleId',
+                                    'defaults' => array(
+                                        'controller' => Controller\GeneratorController::class,
+                                        'action' => 'module-dump-autoload',
+                                    ),
+                                ),
+                            ),
                             'Manage' => array(
                                 'type' => Segment::class,
                                 'options' => array(

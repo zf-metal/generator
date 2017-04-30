@@ -2,13 +2,6 @@
 
 namespace ZfMetal\Generator;
 
-
-/**
- * Module
- *
- * @package   Cdi
- * @copyright Cristian Incarnato (c) - http://www.cincarnato.com
- */
 class Module {
 
     public function init() {

@@ -60,18 +60,17 @@ class ModuleController extends AbstractActionController {
 
         $module = new \ZfMetal\Generator\Entity\Module();
 
-
         //Generate Form
         $form = $this->formBuilder($this->getEm(), 'ZfMetal\Generator\Entity\Module');
         $form->bind($module);
-
 
         //Process Form
         $formProcess = $this->formProcess($this->getEm(), $form);
 
         if ($formProcess->getStatus()) {
             $module = $form->getObject();
-            $this->redirect('generator/main/'.$module->getId());
+            $route = 'ZfMetal_Generator/Main';
+        $this->redirect()->toRoute($route,["moduleId" =>$module->getId()]);
         }
 
 
@@ -79,31 +78,6 @@ class ModuleController extends AbstractActionController {
         return $view;
     }
 
-    public function editAction() {
-        $moduleId = $this->params("moduleId");
-        $module = $this->getEm()->getRepository("ZfMetal\Generator\Entity\Module")->findOneBy(['module' => $moduleId]);
-
-        if (!$module) {
-            $module = new \ZfMetal\Generator\Entity\Module();
-        }
-
-        //Generate Form
-        $form = $this->formBuilder($this->getEm(), 'ZfMetal\Generator\Entity\Module');
-        $form->bind($module);
-
-
-        //Custom Form
-        $form->get("module")->setValue($moduleId);
-        $form->setAttribute('class', 'form-vertical');
-        $form->setAttribute('action', 'javascript:MetalModule.EditSubmit()');
-
-        //Process Form
-        $this->formProcess($this->getEm(), $form);
-
-
-        $view = new ViewModel(array('form' => $form, 'moduleId' => $moduleId));
-        $view->setTerminal(true);
-        return $view;
-    }
+   
 
 }

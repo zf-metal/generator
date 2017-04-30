@@ -23,6 +23,34 @@ class GeneratorController extends AbstractActionController {
         $this->em = $em;
     }
 
+    public function moduleAction() {
+        $moduleId = $this->params("moduleId");
+        $module = $this->getEm()->getRepository("ZfMetal\Generator\Entity\Module")->find($moduleId);
+
+        $ModuleGenerator = new \ZfMetal\Generator\Generator\ModuleGenerator($module);
+        $ModuleGenerator->prepare();
+        $ModuleGenerator->pushFile(true);
+
+        $view = new \Zend\View\Model\ViewModel([
+            "moduleGenerator" => $ModuleGenerator]);
+        $view->setTerminal(true);
+        return $view;
+    }
+    
+    public function moduleConfigAction() {
+        $moduleId = $this->params("moduleId");
+        $module = $this->getEm()->getRepository("ZfMetal\Generator\Entity\Module")->find($moduleId);
+
+        $ModuleGenerator = new \ZfMetal\Generator\Generator\Config\ModuleConfigGenerator($module);
+        $ModuleGenerator->prepare();
+        $ModuleGenerator->pushFile(true);
+
+        $view = new \Zend\View\Model\ViewModel([
+            "moduleGenerator" => $ModuleGenerator]);
+        $view->setTerminal(true);
+        return $view;
+    }
+
     public function entityAction() {
         $entityId = $this->params("entityId");
         $entity = $this->getEm()->getRepository("ZfMetal\Generator\Entity\Entity")->find($entityId);
@@ -58,7 +86,7 @@ class GeneratorController extends AbstractActionController {
         $view->setTerminal(true);
         return $view;
     }
-    
+
     public function navigationAction() {
         $moduleId = $this->params("moduleId");
         $module = $this->getEm()->getRepository("ZfMetal\Generator\Entity\Module")->find($moduleId);

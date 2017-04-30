@@ -80,6 +80,7 @@ return [
                                     ),
                                 ),
                             ),
+
                               'GeneratorComposer' => array(
                                 'type' => Segment::class,
                                 'options' => array(

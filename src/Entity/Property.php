@@ -38,7 +38,6 @@ class Property extends \ZfMetal\Generator\Entity\AbstractEntity {
 
     /**
      * @var string
-     * @Annotation\Type("Zend\Form\Element\Text")
      * @Annotation\Options({"label":"Name:", "description": "Solo se admiten nombres alfanumericos, sin espacios"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":100}})
      * @Annotation\Validator({"name":"Zend\Validator\Regex", "options":{"pattern": "/^[a-zA-Z]*$/"}})
@@ -113,7 +112,6 @@ class Property extends \ZfMetal\Generator\Entity\AbstractEntity {
 
     /**
      * @var string
-     * @Annotation\Type("Zend\Form\Element\Text")
      * @Annotation\Options({"label":"Label:", "description": ""})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":200}})
      * @ORM\Column(type="string", length=200, unique=false, nullable=true, name="label")
@@ -122,7 +120,6 @@ class Property extends \ZfMetal\Generator\Entity\AbstractEntity {
 
     /**
      * @var string
-     * @Annotation\Type("Zend\Form\Element\Textarea")
      * @Annotation\Options({"label":"Description:", "description": ""})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":500}})
      * @ORM\Column(type="string", length=500, unique=false, nullable=true, name="description")

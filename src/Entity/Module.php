@@ -39,7 +39,7 @@ class Module extends \ZfMetal\Generator\Entity\AbstractEntity {
      * @Annotation\Type("Zend\Form\Element\Text")
      * @Annotation\Options({"label":"Prefix:"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":15}})
-     * @ORM\Column(type="string", length=15, unique=false  , nullable=true, name="prefix")
+     * @ORM\Column(type="string", length=15, unique=true, nullable=true, name="prefix")
      */
     protected $prefix;
 

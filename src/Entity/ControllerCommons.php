@@ -35,32 +35,14 @@ class ControllerCommons extends \ZfMetal\Generator\Entity\AbstractEntity {
      * @Annotation\Type("DoctrineModule\Form\Element\ObjectSelect")
      * @Annotation\Options({
      * "label":"Entity:",
+     * "description":"If select an Entity the EntityManager will be Injected to the controller and a getRepository method of this entity will be created",
      * "empty_option": "",
      * "target_class":"ZfMetal\Generator\Entity\Entity"})
+     * @Annotation\Attributes({"class":"form-control"})
      * @ORM\ManyToOne(targetEntity="ZfMetal\Generator\Entity\Entity")
      * @ORM\JoinColumn(name="entity_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $entity;
-
-    /**
-     * @var string
-     * @ORM\Column(type="boolean", unique=false, nullable=true, name="entity_repository")
-     * @Annotation\Type("Zend\Form\Element\Checkbox")
-     * @Annotation\Attributes({"type":"checkbox"})
-     * @Annotation\Options({"label":"EntityRepository"})
-     * @Annotation\AllowEmpty({"true"})
-     */
-    protected $entityRepository;
-
-    /**
-     * @var string
-     * @ORM\Column(type="boolean", unique=false, nullable=true, name="entity_manager")
-     * @Annotation\Type("Zend\Form\Element\Checkbox")
-     * @Annotation\Attributes({"type":"checkbox"})
-     * @Annotation\Options({"label":"EntityManager"})
-     * @Annotation\AllowEmpty({"true"})
-     */
-    protected $entityManager;
 
     /**
      * @var string
@@ -134,14 +116,6 @@ class ControllerCommons extends \ZfMetal\Generator\Entity\AbstractEntity {
         return $this->entity;
     }
 
-    function getEntityRepository() {
-        return $this->entityRepository;
-    }
-
-    function getEntityManager() {
-        return $this->entityManager;
-    }
-
     function getListAction() {
         return $this->listAction;
     }
@@ -172,14 +146,6 @@ class ControllerCommons extends \ZfMetal\Generator\Entity\AbstractEntity {
 
     function setEntity($entity) {
         $this->entity = $entity;
-    }
-
-    function setEntityRepository($entityRepository) {
-        $this->entityRepository = $entityRepository;
-    }
-
-    function setEntityManager($entityManager) {
-        $this->entityManager = $entityManager;
     }
 
     function setListAction($listAction) {
@@ -214,5 +180,4 @@ class ControllerCommons extends \ZfMetal\Generator\Entity\AbstractEntity {
         return "commons";
     }
 
-    
 }

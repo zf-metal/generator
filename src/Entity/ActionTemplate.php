@@ -27,6 +27,7 @@ class ActionTemplate extends \ZfMetal\Generator\Entity\AbstractEntity {
     /**
      * @var string
      * @Annotation\Options({"label":"Name:", "description": ""})
+     * @Annotation\Type("Zend\Form\Element\Text")
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":200}})
      * @ORM\Column(type="string", length=200, unique=false, nullable=true, name="name")
      */
@@ -34,10 +35,19 @@ class ActionTemplate extends \ZfMetal\Generator\Entity\AbstractEntity {
 
     /**
      * @var string
-     * @Annotation\Options({"label":"Description:", "description": ""})
-     * @ORM\Column(type="text", unique=false, nullable=true, name="content")
+     * @Annotation\Type("Zend\Form\Element\Textarea")
+     * @Annotation\Options({"label":"Action Content:", "description": ""})
+     * @ORM\Column(type="text", unique=false, nullable=true, name="action_content")
      */
-    protected $content;
+    protected $actionContent;
+
+    /**
+     * @var string
+     * @Annotation\Type("Zend\Form\Element\Textarea")
+     * @Annotation\Options({"label":"View Content:", "description": ""})
+     * @ORM\Column(type="text", unique=false, nullable=true, name="view_content")
+     */
+    protected $viewContent;
 
     function getId() {
         return $this->id;
@@ -45,10 +55,6 @@ class ActionTemplate extends \ZfMetal\Generator\Entity\AbstractEntity {
 
     function getName() {
         return $this->name;
-    }
-
-    function getContent() {
-        return $this->content;
     }
 
     function setId($id) {
@@ -59,8 +65,27 @@ class ActionTemplate extends \ZfMetal\Generator\Entity\AbstractEntity {
         $this->name = $name;
     }
 
-    function setContent($content) {
-        $this->content = $content;
+    function getActionContent() {
+        return $this->actionContent;
     }
+
+    function getViewContent() {
+        return $this->viewContent;
+    }
+
+    function setActionContent($actionContent) {
+        $this->actionContent = $actionContent;
+        return $this;
+    }
+
+    function setViewContent($viewContent) {
+        $this->viewContent = $viewContent;
+        return $this;
+    }
+    
+    public function __toString() {
+        return $this->name;
+    }
+
 
 }

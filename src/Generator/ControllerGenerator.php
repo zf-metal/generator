@@ -98,17 +98,25 @@ class ControllerGenerator extends AbstractClassGenerator {
     }
 
     protected function genCommons() {
-        $c = $this->getController()->getCommons();
-        if ($c) {
-            //GRID ACTION
-            if ($c->getEntityManager()) {
-                \ZfMetal\Generator\Generator\Commons\EmGenerator::applyEm($this);
-            }
+        if ($this->getController()->getEntity()) {
+            \ZfMetal\Generator\Generator\Commons\EmGenerator::applyEm($this);
 
-            if ($c->getGridAction()) {
+            if ($this->getController()->getGridAction()) {
                 \ZfMetal\Generator\Generator\Commons\GridActionGenerator::applyGridAction($this);
+
+                //Generate Grid View //Need Improve...
+                $this->genGridView();
             }
         }
+    }
+
+    protected function genGridView() {
+        $action = new \ZfMetal\Generator\Entity\Action();
+        $action->setName("grid");
+        $action->setController($this->getController());
+        $gv = new \ZfMetal\Generator\Generator\ViewActionGenerator($action);
+        $gv->setBody('<?php echo $this->Grid($this->grid); ?>');
+        $gv->pushFile();
     }
 
     protected function genActions() {

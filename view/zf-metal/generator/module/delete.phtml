@@ -1,0 +1,6 @@
+<div class="text-center">
+    <a class="btn btn-default" href="<?php echo $this->url("ZfMetal_Generator/Main", ["moduleId" => $this->module->getId()]); ?>" >Cancel and Back to Module</a>
+    or 
+    <a class="btn btn-danger" href="<?php echo $this->url("ZfMetal_Generator/Module/DeleteConfirm", ["moduleId" => $this->module->getId()]); ?>">Confirm Delete Module <?php echo $this->module->getName(); ?> </a>
+
+</div>

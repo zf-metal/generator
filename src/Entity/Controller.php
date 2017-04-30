@@ -55,24 +55,40 @@ class Controller extends \ZfMetal\Generator\Entity\AbstractEntity {
     protected $description;
 
     /**
+     * @Annotation\Type("DoctrineModule\Form\Element\ObjectSelect")
+     * @Annotation\Options({
+     * "label":"Entity:",
+     * "description":"If select an Entity the EntityManager will be Injected to the controller and a getRepository method of this entity will be created",
+     * "empty_option": "",
+     * "target_class":"ZfMetal\Generator\Entity\Entity"})
+     * @Annotation\Attributes({"class":"form-control"})
+     * @ORM\ManyToOne(targetEntity="ZfMetal\Generator\Entity\Entity")
+     * @ORM\JoinColumn(name="entity_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    protected $entity;
+
+    /**
+     * @var string
+     * @ORM\Column(type="boolean", unique=false, nullable=true, name="grid_action")
+     * @Annotation\Type("Zend\Form\Element\Checkbox")
+     * @Annotation\Attributes({"type":"checkbox"})
+     * @Annotation\Options({"label":"Grid"})
+     * @Annotation\AllowEmpty({"true"})
+     */
+    protected $gridAction;
+
+    /**
      * @var 
      * @ORM\OneToMany(targetEntity="ZfMetal\Generator\Entity\Action", mappedBy="controller")
      */
     protected $actions;
 
-    /**
-     * @Annotation\Type("Zend\Form\Element\Hidden")
-     * @ORM\OneToOne(targetEntity="ZfMetal\Generator\Entity\ControllerCommons", mappedBy="controller")
-     * @var \ZfMetal\Generator\Entity\ControllerCommons
-     */
-    protected $commons;
-
     public function __construct() {
         $this->actions = new ArrayCollection();
     }
-    
+
     function getClass() {
-        return "\\".$this->getModule()->getName() . "\Controller\\" . $this->name."Controller";
+        return "\\" . $this->getModule()->getName() . "\Controller\\" . $this->name . "Controller";
     }
 
     function getCommons() {
@@ -134,5 +150,16 @@ class Controller extends \ZfMetal\Generator\Entity\AbstractEntity {
     public function __toString() {
         return $this->getClass();
     }
+
+    
+    function getGridAction() {
+        return $this->gridAction;
+    }
+
+    function setGridAction($gridAction) {
+        $this->gridAction = $gridAction;
+        return $this;
+    }
+
 
 }

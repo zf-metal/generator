@@ -83,14 +83,10 @@ class ControllerFactoryGenerator extends AbstractClassGenerator {
     }
 
     protected function genCommons() {
-        $c = $this->getController()->getCommons();
-        if ($c) {
-            //GRID ACTION
-            if ($c->getEntityManager()) {
-                \ZfMetal\Generator\Generator\Commons\EmGenerator::applyEmFactory($this);
-            }
+        if ($this->getController()->getEntity()) {
+            \ZfMetal\Generator\Generator\Commons\EmGenerator::applyEmFactory($this);
 
-            if ($c->getGridAction()) {
+            if ($this->getController()->getGridAction()) {
                 \ZfMetal\Generator\Generator\Commons\GridActionGenerator::applyGridinFactory($this);
             }
         }
@@ -137,7 +133,7 @@ class ControllerFactoryGenerator extends AbstractClassGenerator {
     protected function getInvokeParameter() {
         $parameters[] = new \Zend\Code\Generator\ParameterGenerator("container", "\Interop\Container\ContainerInterface");
         $parameters[] = new \Zend\Code\Generator\ParameterGenerator("requestedName", null);
-        $parameters[] = new \Zend\Code\Generator\ParameterGenerator("options", "array", array());
+        $parameters[] = new \Zend\Code\Generator\ParameterGenerator("options", "array", new \Zend\Code\Generator\ValueGenerator(null, \Zend\Code\Generator\ValueGenerator::TYPE_NULL));
         return $parameters;
     }
 

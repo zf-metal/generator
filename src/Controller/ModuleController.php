@@ -70,7 +70,7 @@ class ModuleController extends AbstractActionController {
         if ($formProcess->getStatus()) {
             $module = $form->getObject();
             $route = 'ZfMetal_Generator/Main';
-        $this->redirect()->toRoute($route,["moduleId" =>$module->getId()]);
+            $this->redirect()->toRoute($route, ["moduleId" => $module->getId()]);
         }
 
 
@@ -78,6 +78,20 @@ class ModuleController extends AbstractActionController {
         return $view;
     }
 
-   
+    public function deleteAction() {
+        $moduleId = $this->params("moduleId");
+        $module = $this->getEm()->getRepository("ZfMetal\Generator\Entity\Module")->find($moduleId);
+
+        return ["module" => $module];
+    }
+
+    public function deleteConfirmAction() {
+        $moduleId = $this->params("moduleId");
+        $module = $this->getEm()->getRepository("ZfMetal\Generator\Entity\Module")->find($moduleId);
+        $this->getEm()->remove($module);
+        $this->getEm()->flush();
+        $this->redirect()->toRoute("ZfMetal_Generator/Main");
+        return ["module" => $module];
+    }
 
 }

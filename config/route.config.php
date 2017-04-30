@@ -29,6 +29,17 @@ return [
                             ),
                         ),
                     ),
+                    'ActionTemplate' => array(
+                        'type' => Segment::class,
+                        'may_terminate' => true,
+                        'options' => array(
+                            'route' => '/action-template',
+                            'defaults' => array(
+                                'controller' => Controller\ActionTemplateController::class,
+                                'action' => 'grid',
+                            ),
+                        ),
+                    ),
                     'Module' => array(
                         'type' => Literal::class,
                         'may_terminate' => true,
@@ -60,6 +71,26 @@ return [
                                     ),
                                 ),
                             ),
+                            'Delete' => array(
+                                'type' => Segment::class,
+                                'options' => array(
+                                    'route' => '/delete/:moduleId',
+                                    'defaults' => array(
+                                        'controller' => Controller\ModuleController::class,
+                                        'action' => 'delete',
+                                    ),
+                                ),
+                            ),
+                            'DeleteConfirm' => array(
+                                'type' => Segment::class,
+                                'options' => array(
+                                    'route' => '/delete-confirm/:moduleId',
+                                    'defaults' => array(
+                                        'controller' => Controller\ModuleController::class,
+                                        'action' => 'delete-confirm',
+                                    ),
+                                ),
+                            ),
                             'Generator' => array(
                                 'type' => Segment::class,
                                 'options' => array(
@@ -70,7 +101,7 @@ return [
                                     ),
                                 ),
                             ),
-                             'GeneratorConfig' => array(
+                            'GeneratorConfig' => array(
                                 'type' => Segment::class,
                                 'options' => array(
                                     'route' => '/generator/config/:moduleId',
@@ -80,8 +111,7 @@ return [
                                     ),
                                 ),
                             ),
-
-                              'GeneratorComposer' => array(
+                            'GeneratorComposer' => array(
                                 'type' => Segment::class,
                                 'options' => array(
                                     'route' => '/generator/composer/:moduleId',
@@ -91,7 +121,7 @@ return [
                                     ),
                                 ),
                             ),
-                             'GeneratorDumpAutoload' => array(
+                            'GeneratorDumpAutoload' => array(
                                 'type' => Segment::class,
                                 'options' => array(
                                     'route' => '/generator/dump-autoload/:moduleId',

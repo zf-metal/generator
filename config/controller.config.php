@@ -17,6 +17,7 @@ return array(
             \ZfMetal\Generator\Controller\RouteController::class => \ZfMetal\Generator\Factory\Controller\RouteControllerFactory::class,
             \ZfMetal\Generator\Controller\ControllerController::class => \ZfMetal\Generator\Factory\Controller\ControllerControllerFactory::class,
             \ZfMetal\Generator\Controller\ActionController::class => \ZfMetal\Generator\Factory\Controller\ActionControllerFactory::class,
+            \ZfMetal\Generator\Controller\ActionTemplateController::class => \ZfMetal\Generator\Factory\Controller\ActionTemplateControllerFactory::class,
             \ZfMetal\Generator\Controller\ControllerCommonsController::class => \ZfMetal\Generator\Factory\Controller\ControllerCommonsControllerFactory::class,
             \ZfMetal\Generator\Controller\NavigationController::class => \ZfMetal\Generator\Factory\Controller\NavigationControllerFactory::class,
             \ZfMetal\Generator\Controller\OptionController::class => \ZfMetal\Generator\Factory\Controller\OptionControllerFactory::class,

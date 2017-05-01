@@ -1,4 +1,4 @@
-## ZF GENERATOR
+## ZF GENERATOR: Development accelerator
 
 Friendly and fast interface to generate Zend Framework 3 modules focused on Doctrine 2.
 
@@ -15,7 +15,7 @@ Friendly and fast interface to generate Zend Framework 3 modules focused on Doct
 - Plugin Controllers (Class, Factory and Config)
 - Forms (Comming soon)
 
-ZfMetal Team:
+#### ZfMetal Team:
 - Cristian Incarnato cristian.cdi@gmail.com
 - Alejandro Furgeri alesitoman@gmail.com
 

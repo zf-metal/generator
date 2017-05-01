@@ -22,4 +22,8 @@ ZfMetal Team:
 
 ### Preview
 
+#### Entity
 ![alt text](/docs/img/generator_entity.jpg)
+
+#### Route
+![alt text](/docs/img/generator_route.jpg)

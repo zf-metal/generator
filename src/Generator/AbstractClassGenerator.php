@@ -58,9 +58,9 @@ abstract class AbstractClassGenerator extends AbstractFileGenerator implements \
             }
         } else {
             $this->setCg(\Zend\Code\Generator\ClassGenerator::FromArray($this->getClassArray()));
-            $this->addUses();
         }
-
+        
+        $this->addUses();
 
         $this->getFg()->setClass($this->getCg());
         $this->isPrepared = true;

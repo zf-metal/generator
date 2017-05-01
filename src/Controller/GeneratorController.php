@@ -224,7 +224,7 @@ class GeneratorController extends AbstractActionController {
                     if (!$routeModule3) {
                         $routeModule3 = new \ZfMetal\Generator\Entity\Route();
                         $routeModule3->setModule($module);
-                        $routeModule3->setName($action->getName());
+                        $routeModule3->setName(ucfirst($action->getName()));
                         $routeModule3->setMayTerminate(true);
                         $routeModule3->setType("segment");
                         $routeModule3->setAction($action);

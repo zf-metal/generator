@@ -66,14 +66,14 @@ class RouteConfigGenerator extends AbstractConfigGenerator {
     }
 
     protected function populateGeneratorConfig() {
+        $this->generatorRouteConfig['router']['routes'] = array();
         foreach ($this->getRouteCollection() as $route) {
-            array_push($this->generatorRouteConfig['router']['routes'], $this->addRoute($route));
+             $this->generatorRouteConfig['router']['routes'][$route->getName()] = array();
+            $this->generatorRouteConfig['router']['routes'][$route->getName()] = $this->addRoute($route);
         }
     }
 
     protected function addRoute(\ZfMetal\Generator\Entity\Route $route) {
-        $name = $route->getName();
-
 
         $controller = new \Zend\Code\Generator\ValueGenerator($route->getController()->getClass() . "::CLASS", \Zend\Code\Generator\ValueGenerator::TYPE_CONSTANT);
 
@@ -90,14 +90,14 @@ class RouteConfigGenerator extends AbstractConfigGenerator {
         ];
 
         if ($route->hasChilds()) {
+            
             foreach ($route->getChilds() as $child) {
-                array_push($a['child_routes'], $this->addRoute($child));
+                $a['child_routes'][$child->getName()] = array();
+                $a['child_routes'][$child->getName()] = $this->addRoute($child);
             }
         }
 
-        $aRoute[$name] = $a;
-
-        return $aRoute;
+        return $a;
     }
 
     public function pushFileContent() {

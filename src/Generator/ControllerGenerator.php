@@ -106,6 +106,7 @@ class ControllerGenerator extends AbstractClassGenerator {
 
                 //Generate Grid View //Need Improve...
                 $this->genGridView();
+                $this->genGridConfig();
             }
         }
     }
@@ -118,12 +119,26 @@ class ControllerGenerator extends AbstractClassGenerator {
         $gv->setBody('<?php echo $this->Grid($this->grid); ?>');
         $gv->pushFile();
     }
+    
+      protected function genGridConfig() {
+          $gdc = new \ZfMetal\Generator\Generator\Config\DatagridConfigGenerator($this->getController()->getEntity());
+          $gdc->prepare();
+          $gdc->pushFile();
+      }
 
     protected function genActions() {
-//        foreach ($this->getController()->getActions() as $action) {
-//            $actionGenerator = new \ZfMetal\Generator\Generator\ActionGenerator($action, $this->classGenerator);
-//            $actionGenerator->generate();
-//        }
+        foreach ($this->getController()->getActions() as $action) {
+            $actionGenerator = new \ZfMetal\Generator\Generator\ActionGenerator($this->getCg(), $action);
+            $actionGenerator->generate();
+
+            $this->genActionView($action);
+        }
+    }
+
+    protected function genActionView($action) {
+        $gv = new \ZfMetal\Generator\Generator\ViewActionGenerator($action);
+        $gv->prepare();
+        $gv->pushFile();
     }
 
 }

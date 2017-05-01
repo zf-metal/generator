@@ -79,11 +79,12 @@ class PropertyGenerator {
         $this->generateAnnotation();
 
         //Add PropertyGenerator to Entity Class Generator
-        //CHECK IF EXIST (Reflection)
-        if (!$this->getClassGenerator()->hasProperty($this->getProperty()->getName())) {
-            $this->getClassGenerator()->addPropertyFromGenerator($this->getPropertyGenerator());
+        //CHECK IF EXIST (Reflection). Remove if Exist. ZfMetal\Generator Priority.
+        if ($this->getClassGenerator()->hasProperty($this->getProperty()->getName())) {
+           $this->getClassGenerator()->removeProperty($this->getProperty()->getName());
         }
-
+        
+         $this->getClassGenerator()->addPropertyFromGenerator($this->getPropertyGenerator());
 
         //Generate Getter Method of property and ADD to Entity Class
         $this->generateGetter();

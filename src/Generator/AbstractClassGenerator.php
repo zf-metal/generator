@@ -49,9 +49,8 @@ abstract class AbstractClassGenerator extends AbstractFileGenerator implements \
     protected $isPrepared = false;
 
     public function prepare() {
-
-
-        if (class_exists($this->getClassNamespaceAndName())) {
+ 
+        if (file_exists($this->getFileName()) AND class_exists($this->getClassNamespaceAndName())) {
             $reflectionClass = new \Zend\Code\Reflection\ClassReflection($this->getClassNamespaceAndName());
             if ($reflectionClass->isInstantiable()) {
                 $this->setCg(\Zend\Code\Generator\ClassGenerator::fromReflection($reflectionClass));

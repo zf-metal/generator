@@ -13,7 +13,7 @@ class ViewActionGenerator extends AbstractFileGenerator {
     const RELATIVE_PATH = "/view";
 
     public function getRelativePath() {
-        return "/module/" . $this->camelToDash($this->getModule()) . $this::RELATIVE_PATH . "/" . $this->camelToDash($this->getModule()->getName()) . "/" . $this->camelToDash($this->getAction()->getController()->getName()) . "/";
+        return "/module/" . \ZfMetal\Generator\Generator\Util::camelToDash($this->getModule()) . $this::RELATIVE_PATH . "/" . \ZfMetal\Generator\Generator\Util::camelToDash($this->getModule()->getName()) . "/" . \ZfMetal\Generator\Generator\Util::camelToDash($this->getAction()->getController()->getName()) . "/";
     }
 
     //Override
@@ -32,17 +32,13 @@ class ViewActionGenerator extends AbstractFileGenerator {
 
     //BASE NAMES
     public function getBaseName() {
-        return $this->camelToDash($this->getAction()->getName());
+        return \ZfMetal\Generator\Generator\Util::camelToDash($this->getAction()->getName());
     }
 
     public function getBaseFileName() {
         return $this->getBaseName() . ".phtml";
     }
 
-    protected function camelToDash($name) {
-        $filter = new \Zend\Filter\Word\CamelCaseToDash();
-        return strtolower($filter->filter($name));
-    }
 
     public function getBaseNamespace() {
         return "";
@@ -76,7 +72,8 @@ class ViewActionGenerator extends AbstractFileGenerator {
 
     public function prepare() {
         if ($this->action->getTemplate()) {
-            $this->body = $this->action->getTemplate()->getViewContent();
+            $this->body = $this->getAction()->getTemplate()->getViewContent();
+            return $this->body;
         }
         $this->body = "";
     }
@@ -91,12 +88,11 @@ class ViewActionGenerator extends AbstractFileGenerator {
     }
 
     //Overrride
-    public function pushFile($overwrite = true) {
+    public function pushFile($overwrite = false) {
         $this->overwrite = $overwrite;
         try {
             $this->checkFileExist();
             if ($this->getOverwrite() == true || !$this->exists) {
-                echo $this->getAbsolutePath();
                 $this->makeDir();
                 file_put_contents($this->getFileName(), $this->getBody());
                 $this->setStatus(true);

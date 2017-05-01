@@ -47,17 +47,25 @@ class ModuleConfigGenerator extends AbstractConfigGenerator {
 
     public function generateContent() {
         $dir = scandir($this->getAbsolutePath());
-
-        $body = '$setting = array_merge('. PHP_EOL;
+        $cc = 0;
+        $body = '$setting = array_merge(' . PHP_EOL;
         foreach ($dir as $file) {
             if (preg_match("/config/", $file) && $file != "module.config.php") {
                 $body .= 'include "' . $file . '",' . PHP_EOL;
+                $cc++;
             }
         }
-        $body = trim($body,",". PHP_EOL). PHP_EOL;
-        $body .= ');' . PHP_EOL. PHP_EOL;
+        $body = trim($body, "," . PHP_EOL) . PHP_EOL;
+        $body .= ');' . PHP_EOL . PHP_EOL;
 
         $body .= 'return $setting;' . PHP_EOL;
+
+        if (!$cc) {
+            $body = "return array();";
+        }
+
+
+
         $this->body = $body;
     }
 

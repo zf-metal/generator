@@ -39,7 +39,7 @@ class Property extends \ZfMetal\Generator\Entity\AbstractEntity {
     /**
      * @var string
      * @Annotation\Type("Zend\Form\Element\Text")
-     * @Annotation\Options({"label":"Name:", "description": "Solo se admiten nombres alfanumericos, sin espacios"})
+     * @Annotation\Options({"label":"Name", "description": "Solo se admiten nombres alfanumericos, sin espacios"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":100}})
      * @Annotation\Validator({"name":"Zend\Validator\Regex", "options":{"pattern": "/^[a-zA-Z]*$/"}})
      * @Annotation\Filter({"name": "Zend\Filter\StringTrim"})
@@ -50,7 +50,7 @@ class Property extends \ZfMetal\Generator\Entity\AbstractEntity {
     /**
      * @ORM\Column(type="string", length=100, unique=false, nullable=false, name="type")
      * @Annotation\Type("Zend\Form\Element\Select")
-     * @Annotation\Options({"label":"Type:", "description": "string: Campo de tipo texto limitado|integer: campo numerico|text: campo de texto variable|boolean: true o false"})
+     * @Annotation\Options({"label":"Type (Table)", "description": "string: Campo de tipo texto limitado|integer: campo numerico|text: campo de texto variable|boolean: true o false"})
      * @Annotation\Attributes({"type":"select","options":{"":"type","string":"string","stringarea":"stringarea","date":"date","datetime":"datetime","time":"time","text":"text","integer":"integer","decimal":"decimal","boolean":"boolean","file":"file","oneToOne":"oneToOne","manyToOne":"manyToOne","oneToMany":"oneToMany","manyToMany":"manyToMany"}})
      * @Annotation\Attributes({"onchange":"changetype()"}) 
      */
@@ -59,7 +59,7 @@ class Property extends \ZfMetal\Generator\Entity\AbstractEntity {
     /**
      * @Annotation\Type("DoctrineModule\Form\Element\ObjectSelect")
      * @Annotation\Options({
-     * "label":"Related Entity:",
+     * "label":"Related Entity",
      * "empty_option": "",
      * "target_class":"ZfMetal\Generator\Entity\Entity"})
      * @ORM\ManyToOne(targetEntity="ZfMetal\Generator\Entity\Entity")
@@ -69,7 +69,7 @@ class Property extends \ZfMetal\Generator\Entity\AbstractEntity {
 
     /**
      * @var string
-     * @Annotation\Options({"label":"Length:", "description": "Cantidad de caracteres del campo"})
+     * @Annotation\Options({"label":"Length (Table)", "description": "Cantidad de caracteres del campo"})
      * @Annotation\Validator({"name":"Between", "options":{"min":0, "max":1000}})
      * @ORM\Column(type="integer", length=11, unique=false, nullable=true, name="length")
      */
@@ -77,7 +77,7 @@ class Property extends \ZfMetal\Generator\Entity\AbstractEntity {
 
     /**
      * @var string
-     * @Annotation\Options({"label":"Absolutepath:"})
+     * @Annotation\Options({"label":"Absolutepath:", "description":"Only for file."})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":200}})
      * @ORM\Column(type="string", length=200, unique=false, nullable=true, name="absolutepath")
      */
@@ -85,7 +85,7 @@ class Property extends \ZfMetal\Generator\Entity\AbstractEntity {
 
     /**
      * @var string
-     * @Annotation\Options({"label":"WebPath:"})
+     * @Annotation\Options({"label":"WebPath / RelativePath:", "description":"Only for file."})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":100}})
      * @ORM\Column(type="string", length=100, unique=false, nullable=true, name="webpath")
      */
@@ -96,7 +96,7 @@ class Property extends \ZfMetal\Generator\Entity\AbstractEntity {
      * @ORM\Column(type="boolean", unique=false, nullable=true, name="be_unique")
      * @Annotation\Type("Zend\Form\Element\Checkbox")
      * @Annotation\Attributes({"type":"checkbox"})
-     * @Annotation\Options({"label":"Unique:"})
+     * @Annotation\Options({"label":"Unique (Table)"})
      * @Annotation\AllowEmpty({"true"})
      */
     protected $beUnique;
@@ -105,7 +105,7 @@ class Property extends \ZfMetal\Generator\Entity\AbstractEntity {
      * @var string
      * @Annotation\Type("Zend\Form\Element\Checkbox") 
      * @Annotation\Attributes({"type":"checkbox", "value": "1"})
-     * @Annotation\Options({"label":"Nulleable:", "value": "1"})
+     * @Annotation\Options({"label":"Nulleable (Table)", "value": "1"})
      * @Annotation\AllowEmpty({"true"})
      * @ORM\Column(type="boolean", unique=false, nullable=true, name="be_nullable")
      */
@@ -114,7 +114,7 @@ class Property extends \ZfMetal\Generator\Entity\AbstractEntity {
     /**
      * @var string
      * @Annotation\Type("Zend\Form\Element\Text")
-     * @Annotation\Options({"label":"Label:", "description": ""})
+     * @Annotation\Options({"label":"Label (Form)", "description": ""})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":200}})
      * @ORM\Column(type="string", length=200, unique=false, nullable=true, name="label")
      */
@@ -123,7 +123,7 @@ class Property extends \ZfMetal\Generator\Entity\AbstractEntity {
     /**
      * @var string
      * @Annotation\Type("Zend\Form\Element\Textarea")
-     * @Annotation\Options({"label":"Description:", "description": ""})
+     * @Annotation\Options({"label":"Description (Form)", "description": ""})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":500}})
      * @ORM\Column(type="string", length=500, unique=false, nullable=true, name="description")
      */
@@ -133,7 +133,7 @@ class Property extends \ZfMetal\Generator\Entity\AbstractEntity {
      * @var string
      * @Annotation\Type("Zend\Form\Element\Checkbox") 
      * @Annotation\Attributes({"type":"checkbox", "value": "1"})
-     * @Annotation\Options({"label":"Exclude:", "value": "0"})
+     * @Annotation\Options({"label":"Exclude (FORM)", "value": "0"})
      * @Annotation\AllowEmpty({"true"})
      * @ORM\Column(type="boolean", unique=false, nullable=true, name="exclude")
      */
@@ -143,18 +143,28 @@ class Property extends \ZfMetal\Generator\Entity\AbstractEntity {
      * @var string
      * @Annotation\Type("Zend\Form\Element\Checkbox") 
      * @Annotation\Attributes({"type":"checkbox"})
-     * @Annotation\Options({"label":"Hidden:", "value": "0"})
+     * @Annotation\Options({"label":"Hidden (FORM)", "value": "0"})
      * @Annotation\AllowEmpty({"true"})
      * @ORM\Column(type="boolean", unique=false, nullable=true, name="hidden")
      */
     protected $hidden = false;
+    
+     /**
+     * @var string
+     * @Annotation\Type("Zend\Form\Element\Checkbox") 
+     * @Annotation\Attributes({"type":"checkbox"})
+     * @Annotation\Options({"label":"Hidden (Datagrid)", "value": "0"})
+     * @Annotation\AllowEmpty({"true"})
+     * @ORM\Column(type="boolean", unique=false, nullable=true, name="hidden_datagrid")
+     */
+    protected $hiddenDatagrid = false;
     
     
        /**
      * @var string
      * @Annotation\Type("Zend\Form\Element\Checkbox") 
      * @Annotation\Attributes({"type":"checkbox"})
-     * @Annotation\Options({"label":"Mandatory:", "value": "0"})
+     * @Annotation\Options({"label":"Mandatory (FORM)", "value": "0"})
      * @Annotation\AllowEmpty({"true"})
      * @ORM\Column(type="boolean", unique=false, nullable=true, name="mandatory")
      */
@@ -164,7 +174,7 @@ class Property extends \ZfMetal\Generator\Entity\AbstractEntity {
      * @var string
      * @Annotation\Type("Zend\Form\Element\Checkbox") 
      * @Annotation\Attributes({"type":"checkbox"})
-     * @Annotation\Options({"label":"Tostring:", "value": "0"})
+     * @Annotation\Options({"label":"Tostring. Concat this property in __toString Method.", "value": "0"})
      * @Annotation\AllowEmpty({"true"})
      * @ORM\Column(type="boolean", unique=false, nullable=true, name="tostring")
      */
@@ -174,7 +184,7 @@ class Property extends \ZfMetal\Generator\Entity\AbstractEntity {
      * @var string
      * @Annotation\Type("Zend\Form\Element\Checkbox") 
      * @Annotation\Attributes({"type":"checkbox"})
-     * @Annotation\Options({"label":"Primarykey:", "value": "0"})
+     * @Annotation\Options({"label":"Primarykey (Table)", "value": "0"})
      * @Annotation\AllowEmpty({"true"})
      * @ORM\Column(type="boolean", unique=false, nullable=true, name="primarykey")
      */
@@ -185,7 +195,7 @@ class Property extends \ZfMetal\Generator\Entity\AbstractEntity {
      * @var string
      * @Annotation\Type("Zend\Form\Element\Checkbox") 
      * @Annotation\Attributes({"type":"checkbox"})
-     * @Annotation\Options({"label":"AutoGeneratedValue:", "value": "0"})
+     * @Annotation\Options({"label":"AutoGeneratedValue / Autoincrement (Table)", "value": "0"})
      * @Annotation\AllowEmpty({"true"})
      * @ORM\Column(type="boolean", unique=false, nullable=true, name="auto_generated_value")
      */
@@ -355,6 +365,15 @@ class Property extends \ZfMetal\Generator\Entity\AbstractEntity {
         $this->autoGeneratedValue = $autoGeneratedValue;
     }
 
+
+    function getHiddenDatagrid() {
+        return $this->hiddenDatagrid;
+    }
+
+    function setHiddenDatagrid($hiddenDatagrid) {
+        $this->hiddenDatagrid = $hiddenDatagrid;
+        return $this;
+    }
 
 
 

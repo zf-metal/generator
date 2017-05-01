@@ -16,13 +16,18 @@ class Util {
         return $m;
     }
 
-    static function genSetter($name,$type) {
-         $parameter = new \Zend\Code\Generator\ParameterGenerator($name, $type);
+    static function genSetter($name, $type) {
+        $parameter = new \Zend\Code\Generator\ParameterGenerator($name, $type);
         $m = new \Zend\Code\Generator\MethodGenerator ( );
         $m->setName("set" . ucfirst($name));
         $m->setBody('$this->' . $name . " = $" . $name . ";");
         $m->setParameter($parameter);
         return $m;
+    }
+
+    static function camelToDash($name) {
+        $filter = new \Zend\Filter\Word\CamelCaseToDash();
+        return strtolower($filter->filter($name));
     }
 
 }

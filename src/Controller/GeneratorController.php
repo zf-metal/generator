@@ -114,7 +114,6 @@ class GeneratorController extends AbstractActionController {
         $module = $this->getEm()->getRepository("ZfMetal\Generator\Entity\Module")->find($moduleId);
 
         $routeCollection = $this->getEm()->getRepository("ZfMetal\Generator\Entity\Route")->findWhitoutParent($moduleId);
-
         $routeConfigGenerator = new \ZfMetal\Generator\Generator\Config\RouteConfigGenerator($module, $routeCollection);
         $routeConfigGenerator->prepare();
         $routeConfigGenerator->pushFile(true);
@@ -134,8 +133,13 @@ class GeneratorController extends AbstractActionController {
         $moduleId = $this->params("moduleId");
         $module = $this->getEm()->getRepository("ZfMetal\Generator\Entity\Module")->find($moduleId);
 
-        $navCollection = $this->getEm()->getRepository("ZfMetal\Generator\Entity\Navigation")->findWhitoutParent($moduleId);
+        //PREVENT ROUTE NOT FOUND..
+        $routeCollection = $this->getEm()->getRepository("ZfMetal\Generator\Entity\Route")->findWhitoutParent($moduleId);
+        $routeConfigGenerator = new \ZfMetal\Generator\Generator\Config\RouteConfigGenerator($module, $routeCollection);
+        $routeConfigGenerator->prepare();
+        $routeConfigGenerator->pushFile(true);
 
+        $navCollection = $this->getEm()->getRepository("ZfMetal\Generator\Entity\Navigation")->findWhitoutParent($moduleId);
         $navConfigGenerator = new \ZfMetal\Generator\Generator\Config\NavigationConfigGenerator($module, $navCollection);
         $navConfigGenerator->prepare();
         $navConfigGenerator->pushFile(true);
@@ -220,7 +224,7 @@ class GeneratorController extends AbstractActionController {
                     }
 
                     //3-Level: Action
-                    $routeModule3 = $this->getEm()->getRepository("ZfMetal\Generator\Entity\Route")->findRouteAction($module->getId(), $action->getName(), $routeModule2);
+                    $routeModule3 = $this->getEm()->getRepository("ZfMetal\Generator\Entity\Route")->findRouteAction($module->getId(), ucfirst($action->getName()), $routeModule2);
                     if (!$routeModule3) {
                         $routeModule3 = new \ZfMetal\Generator\Entity\Route();
                         $routeModule3->setModule($module);

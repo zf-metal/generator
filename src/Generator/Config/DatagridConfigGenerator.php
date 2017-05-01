@@ -100,7 +100,11 @@ class DatagridConfigGenerator extends AbstractConfigGenerator {
         $a = array();
         /* @var $property \ZfMetal\Generator\Entity\Property */
         foreach ($this->getEntity()->getProperties() as $property) {
-
+            
+            if($property->getLabel()){
+                  $a[$property->getName()] = ["displayName" => $property->getLabel()];
+            }
+            
             if ($property->getHiddenDatagrid()) {
                 $a[$property->getName()] = ["hidden" => true];
             } else {

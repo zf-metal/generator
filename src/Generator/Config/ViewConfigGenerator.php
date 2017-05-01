@@ -23,7 +23,7 @@ class ViewConfigGenerator extends AbstractConfigGenerator {
     }
 
     public function getBaseFileName() {
-        return "view.config.php";
+        return "view-helper.config.php";
     }
 
     function getFileName() {

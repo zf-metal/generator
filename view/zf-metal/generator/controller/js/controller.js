@@ -24,7 +24,10 @@
             });
         },
         actionsAction: function (controllerId, controllerName) {
-            this.modal.title("Edit actions Controller: " + controllerName);
+              var btn = $('<a class="btn btn-danger btn-xs glyphicon glyphicon-play" onclick="MetalControllers.generatorAction(' + controllerId + ',\''+controllerName+'\')"></a>');
+          
+            this.modal.title("Edit actions Controller: " + controllerName + " ");
+             this.modal.modalTitle.append(btn);
             this.modal.loading();
             this.modal.toggle();
             var that = this;
@@ -32,20 +35,10 @@
                 that.modal.box(data);
             });
         },
-        commonsAction: function (controllerId, controllerName) {
-            this.modal.title("Edit Commons Controller: " + controllerName);
-            this.modal.loading();
-            this.modal.toggle();
-            var that = this;
-            $.get("/generator/module/controller/commons/" + controllerId).done(function (data) {
-                that.modal.box(data);
-            });
-        },
         generatorAction: function (controllerId, controllerName) {
-            var modalLabel = "Generating Controller: " + controllerName;
-            this.modal.title("Generating Controller: " + controllerName);
+           this.modal.title("Generating Controller: " + controllerName);
             this.modal.loading();
-            this.modal.toggle();
+            this.modal.modal.modal("show");
             var that = this;
             $.get("/generator/module/controller/generator/" + controllerId).done(function (data) {
                 that.modal.box(data);

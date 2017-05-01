@@ -169,6 +169,61 @@ class GeneratorController extends AbstractActionController {
         $controllerConfigGenerator->prepare();
         $controllerConfigGenerator->pushFile(true);
 
+        //Action Route
+        if (count($controller->getActions())) {
+            foreach ($controller->getActions() as $action) {
+                if ($action->getRoute()) {
+                    //1-Level: MODULE
+                    $routeModule1 = $this->getEm()->getRepository("ZfMetal\Generator\Entity\Route")->findRouteModule($module->getId(), $module->getName());
+                    if (!$routeModule1) {
+                        $routeModule1 = new \ZfMetal\Generator\Entity\Route();
+                        $routeModule1->setModule($module);
+                        $routeModule1->setName($module->getName());
+                        $routeModule1->setMayTerminate(false);
+                        $routeModule1->setType("literal");
+                        $routeModule1->setController($controller);
+                        $routeModule1->setAction($action);
+                        $routeModule1->setRoute("/".\ZfMetal\Generator\Generator\Util::camelToDash($module->getName()));
+                        $this->getEm()->persist($routeModule1);
+                        $this->getEm()->flush();
+                    }
+
+                    //2-Level: Controller
+                    $routeModule2 = $this->getEm()->getRepository("ZfMetal\Generator\Entity\Route")->findRouteController($module->getId(), $controller->getName(), $routeModule1);
+                    if (!$routeModule2) {
+                        $routeModule2 = new \ZfMetal\Generator\Entity\Route();
+                        $routeModule2->setModule($module);
+                        $routeModule2->setName($controller->getName());
+                        $routeModule2->setMayTerminate(false);
+                        $routeModule2->setType("literal");
+                        $routeModule2->setController($controller);
+                        $routeModule2->setAction($action);
+                        $routeModule2->setRoute("/".\ZfMetal\Generator\Generator\Util::camelToDash($controller->getName()));
+                        $routeModule2->setParent($routeModule1);
+                        $this->getEm()->persist($routeModule2);
+                        $this->getEm()->flush();
+                    }
+
+                    //3-Level: Action
+                    $routeModule3 = $this->getEm()->getRepository("ZfMetal\Generator\Entity\Route")->findRouteAction($module->getId(), $action->getName(), $routeModule2);
+                    if (!$routeModule3) {
+                        $routeModule3 = new \ZfMetal\Generator\Entity\Route();
+                        $routeModule3->setModule($module);
+                        $routeModule3->setName($action->getName());
+                        $routeModule3->setMayTerminate(true);
+                        $routeModule3->setType("segment");
+                        $routeModule3->setAction($action);
+                        $routeModule3->setController($controller);
+                        $routeModule3->setRoute("/".\ZfMetal\Generator\Generator\Util::camelToDash($action->getName()));
+                        $routeModule3->setParent($routeModule2);
+                        $this->getEm()->persist($routeModule3);
+                        $this->getEm()->flush();
+                    }
+                }
+            }
+        }
+
+
         //REFRESH MODULE CONFIG
         $ModuleGenerator = new \ZfMetal\Generator\Generator\Config\ModuleConfigGenerator($module);
         $ModuleGenerator->prepare();

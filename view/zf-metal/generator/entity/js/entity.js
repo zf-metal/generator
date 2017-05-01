@@ -24,8 +24,9 @@
             });
         },
         propertiesAction: function (entityId, entityName) {
-
-            this.modal.title("Edit entity properties : " + entityName);
+            var btn = $('<a class="btn btn-danger btn-xs glyphicon glyphicon-play" onclick="MetalEntities.generatorAction(' + entityId + ',\''+entityName+'\')"></a>');
+            this.modal.title("Edit entity properties : " + entityName + " ");
+            this.modal.modalTitle.append(btn);
             this.modal.loading();
             this.modal.toggle();
             var that = this;
@@ -37,7 +38,7 @@
         generatorAction: function (entityId, entityName) {
             this.modal.title("Generating Entity : " + entityName);
             this.modal.loading();
-            this.modal.toggle();
+            this.modal.modal.modal("show");
             var that = this;
             $.get("/generator/module/entity/generator/" + entityId).done(function (data) {
                 that.modal.box(data);

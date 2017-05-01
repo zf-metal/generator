@@ -11,7 +11,7 @@ class RouteControllerFactory implements FactoryInterface {
 
 
         /* @var $grid \CdiDataGrid\Grid */
-        $grid = $container->build("zf-metal-datagrid-doctrine", ["customOptionsKey" => "ZfMetal_Generator_Entity_Route"]);
+        $grid = $container->build("zf-metal-datagrid-doctrine", ["customKey" => "ZfMetal\Generator\Entity\Route"]);
         $grid->setTemplate("ajax");
         $grid->setId("Grid_Route");
         $em = $container->get('doctrine.entitymanager.orm_zf_metal_generator');

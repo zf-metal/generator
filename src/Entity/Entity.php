@@ -99,7 +99,7 @@ class Entity extends \ZfMetal\Generator\Entity\AbstractEntity {
     }
 
     function getFullName() {
-        return $this->getModule()->getName() . "\Entity\\" . $this->name;
+        return "\\".$this->getModule()->getName() . "\Entity\\" . $this->name;
     }
 
     function getName() {

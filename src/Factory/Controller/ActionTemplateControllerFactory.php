@@ -19,7 +19,7 @@ class ActionTemplateControllerFactory implements \Zend\ServiceManager\Factory\Fa
         /* @var $em \Doctrine\ORM\EntityManager */
         $em = $container->get("doctrine.entitymanager.orm_default");
         /* @var $grid \ZfMetal\Datagrid\Grid */
-        $grid = $container->build("zf-metal-datagrid", ["customOptionsKey" => "ZfMetal_Generator_Entity_Action_Template"]);
+        $grid = $container->build("zf-metal-datagrid", ["customKey" => "ZfMetal\Generator\Entity\ActionTemplate"]);
         return new \ZfMetal\Generator\Controller\ActionTemplateController($em,$grid);
     }
 

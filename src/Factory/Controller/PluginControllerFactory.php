@@ -11,7 +11,7 @@ class PluginControllerFactory implements FactoryInterface {
 
 
         /* @var $grid \CdiDataGrid\Grid */
-        $grid = $container->build("zf-metal-datagrid-doctrine", ["customOptionsKey" => "ZfMetal_Generator_Entity_Plugin"]);
+        $grid = $container->build("zf-metal-datagrid-doctrine", ["customKey" => "ZfMetal\Generator\Entity\Plugin"]);
         $grid->setTemplate("ajax");
         $grid->setId("Grid_Plugin");
         $em = $container->get('doctrine.entitymanager.orm_zf_metal_generator');

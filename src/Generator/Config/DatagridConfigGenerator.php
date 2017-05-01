@@ -67,19 +67,19 @@ class DatagridConfigGenerator extends AbstractConfigGenerator {
     }
 
     protected function populateGeneratorConfig() {
-        $this->generatorDatagridConfig = array();
-        $key = str_replace("\\", "-", $this->getEntity()->getFullName());
-        $this->generatorDatagridConfig[$key]["sourceConfig"] = $this->genSourceConfig();
-        $this->generatorDatagridConfig[$key]["formConfig"] = $this->genFormConfig();
-        $this->generatorDatagridConfig[$key]["columnsConfig"] = $this->genColumnsConfig();
-        $this->generatorDatagridConfig[$key]["crudConfig"] = $this->genCrudConfig();
+        $this->generatorDatagridConfig['zf-metal-datagrid.custom'] = array();
+        $key =  $this->getEntity()->getFullName();
+        $this->generatorDatagridConfig['zf-metal-datagrid.custom'][$key]["sourceConfig"] = $this->genSourceConfig();
+        $this->generatorDatagridConfig['zf-metal-datagrid.custom'][$key]["formConfig"] = $this->genFormConfig();
+        $this->generatorDatagridConfig['zf-metal-datagrid.custom'][$key]["columnsConfig"] = $this->genColumnsConfig();
+        $this->generatorDatagridConfig['zf-metal-datagrid.custom'][$key]["crudConfig"] = $this->genCrudConfig();
     }
 
     protected function genSourceConfig() {
         return [
             "type" => "doctrine",
             "doctrineOptions" => [
-                "entityName" => $this->getEntity()->getFullName(),
+                "entityName" => new \Zend\Code\Generator\ValueGenerator($this->getEntity()->getFullName().'::class', \Zend\Code\Generator\ValueGenerator::TYPE_CONSTANT),
                 "entityManager" => "doctrine.entitymanager.orm_default"
             ]
         ];

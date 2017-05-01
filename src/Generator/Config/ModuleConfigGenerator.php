@@ -50,7 +50,7 @@ class ModuleConfigGenerator extends AbstractConfigGenerator {
         if (is_dir($this->getAbsolutePath())) {
             $dir = scandir($this->getAbsolutePath());
 
-            $body = '$setting = array_merge(' . PHP_EOL;
+            $body = '$setting = array_merge_recursive(' . PHP_EOL;
             foreach ($dir as $file) {
                 if (preg_match("/config/", $file) && $file != "module.config.php") {
                     $body .= 'include "' . $file . '",' . PHP_EOL;

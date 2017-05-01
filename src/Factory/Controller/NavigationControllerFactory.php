@@ -11,7 +11,7 @@ class NavigationControllerFactory implements FactoryInterface {
 
 
         /* @var $grid \CdiDataGrid\Grid */
-        $grid = $container->build("zf-metal-datagrid-doctrine", ["customOptionsKey" => "ZfMetal_Generator_Entity_Navigation"]);
+        $grid = $container->build("zf-metal-datagrid-doctrine", ["customKey" => "ZfMetal\Generator\Entity\Navigation"]);
         $grid->setTemplate("ajax");
         $grid->setId("Grid_Navigation");
         $em = $container->get('doctrine.entitymanager.orm_zf_metal_generator');

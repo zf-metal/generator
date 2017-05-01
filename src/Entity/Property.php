@@ -52,7 +52,7 @@ class Property extends \ZfMetal\Generator\Entity\AbstractEntity {
      * @Annotation\Type("Zend\Form\Element\Select")
      * @Annotation\Options({"label":"Type (Table)", "description": "string: Campo de tipo texto limitado|integer: campo numerico|text: campo de texto variable|boolean: true o false"})
      * @Annotation\Attributes({"type":"select","options":{"":"type","string":"string","stringarea":"stringarea","date":"date","datetime":"datetime","time":"time","text":"text","integer":"integer","decimal":"decimal","boolean":"boolean","file":"file","oneToOne":"oneToOne","manyToOne":"manyToOne","oneToMany":"oneToMany","manyToMany":"manyToMany"}})
-     * @Annotation\Attributes({"onchange":"changetype()"}) 
+     * @Annotation\Attributes({"onchange":"changetype(this)"}) 
      */
     protected $type;
 
@@ -77,7 +77,7 @@ class Property extends \ZfMetal\Generator\Entity\AbstractEntity {
 
     /**
      * @var string
-     * @Annotation\Options({"label":"Absolutepath:", "description":"Only for file."})
+     * @Annotation\Options({"label":"Absolutepath:", "description":""})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":200}})
      * @ORM\Column(type="string", length=200, unique=false, nullable=true, name="absolutepath")
      */
@@ -85,7 +85,7 @@ class Property extends \ZfMetal\Generator\Entity\AbstractEntity {
 
     /**
      * @var string
-     * @Annotation\Options({"label":"WebPath / RelativePath:", "description":"Only for file."})
+     * @Annotation\Options({"label":"WebPath / RelativePath:", "description":""})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":100}})
      * @ORM\Column(type="string", length=100, unique=false, nullable=true, name="webpath")
      */

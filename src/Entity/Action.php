@@ -9,7 +9,7 @@ use Zend\Form\Annotation;
  *
  * @ORM\Entity
  * @ORM\Table(name="action")
- *
+ * @ORM\Entity(repositoryClass="ZfMetal\Generator\Repository\ActionRepository")
  * @author Cristian Incarnato
  */
 class Action extends \ZfMetal\Generator\Entity\AbstractEntity {

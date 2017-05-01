@@ -14,3 +14,8 @@ You can move generator.db to the project data folder to keep the configuration i
 1. Move vendor/zf-metal/generator/data/zf-metal-generator/generator.db to data/zf-metal-generator/generator.db
 2. Move vendor/zf-metal/generator/data/config/autoload/doctrine-generator.global.php to config/autoload/doctrine-generator.global.php
 
+
+### Start
+
+1. Go to /generator/main
+2. Create a module "+"

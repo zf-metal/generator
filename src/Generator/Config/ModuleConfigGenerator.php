@@ -20,7 +20,7 @@ class ModuleConfigGenerator extends AbstractConfigGenerator {
     protected $toClass = true;
 
     public function getRelativePath() {
-        return $this->getModule()->getName() . "/" . $this::RELATIVE_PATH;
+        return $this->getModule()->getName() . $this::RELATIVE_PATH;
     }
 
     public function getBaseFileName() {
@@ -46,19 +46,24 @@ class ModuleConfigGenerator extends AbstractConfigGenerator {
     }
 
     public function generateContent() {
-        $dir = scandir($this->getAbsolutePath());
         $cc = 0;
-        $body = '$setting = array_merge(' . PHP_EOL;
-        foreach ($dir as $file) {
-            if (preg_match("/config/", $file) && $file != "module.config.php") {
-                $body .= 'include "' . $file . '",' . PHP_EOL;
-                $cc++;
-            }
-        }
-        $body = trim($body, "," . PHP_EOL) . PHP_EOL;
-        $body .= ');' . PHP_EOL . PHP_EOL;
+        if (is_dir($this->getAbsolutePath())) {
+            $dir = scandir($this->getAbsolutePath());
 
-        $body .= 'return $setting;' . PHP_EOL;
+            $body = '$setting = array_merge(' . PHP_EOL;
+            foreach ($dir as $file) {
+                if (preg_match("/config/", $file) && $file != "module.config.php") {
+                    $body .= 'include "' . $file . '",' . PHP_EOL;
+                    $cc++;
+                }
+            }
+            $body = trim($body, "," . PHP_EOL) . PHP_EOL;
+            $body .= ');' . PHP_EOL . PHP_EOL;
+
+            $body .= 'return $setting;' . PHP_EOL;
+        }
+
+
 
         if (!$cc) {
             $body = "return array();";

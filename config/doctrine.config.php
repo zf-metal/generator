@@ -1,9 +1,4 @@
 <?php
-namespace ZfMetal\Generator;
-
-/**
-* @author Cristian Incarnato <cristian.cdi@gmail.com>
-*/
 
 return [
     'doctrine' => array(
@@ -11,7 +6,7 @@ return [
             'orm_zf_metal_generator' => array(
                 'driverClass' => 'Doctrine\DBAL\Driver\PDOSqlite\Driver',
                 'params' => array(
-                    'path' => __DIR__.'/../data/zf-metal-generator/generator.db',
+                    'path' => __DIR__ . '/../data/zf-metal-generator/generator.db',
                 )
             )
         ),
@@ -28,7 +23,7 @@ return [
                 ),
             ),
         ),
-          'configuration' => array(
+        'configuration' => array(
             'conf_zf_metal_generator' => array(
                 'metadata_cache' => 'array',
                 'query_cache' => 'array',

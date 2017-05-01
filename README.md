@@ -19,6 +19,10 @@ Friendly and fast interface to generate Zend Framework 3 modules focused on Doct
 - Cristian Incarnato cristian.cdi@gmail.com
 - Alejandro Furgeri alesitoman@gmail.com
 
+### Docs/Wiki
+
+[Documentation](/docs/index.md)
+
 
 ### Preview
 

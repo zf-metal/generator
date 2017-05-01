@@ -2,7 +2,7 @@
     "name": "zf-metal/generator",
     "description": "Zend Framework 3 Module that provides code generator (Entity,Controllers,Menu,Routes,Forms)",
     "type": "library",
-    "license": "MIT",
+    "license": "BSD",
     "version": "1.0.0",
     "keywords": [
         "code",

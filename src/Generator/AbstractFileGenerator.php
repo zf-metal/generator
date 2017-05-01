@@ -63,7 +63,7 @@ abstract class AbstractFileGenerator implements \ZfMetal\Generator\Generator\Fil
     }
 
     public function getRelativePath() {
-        return $this->getModule()->getName() . "/" . $this::RELATIVE_PATH;
+        return $this->getModule()->getName() . $this::RELATIVE_PATH;
     }
 
     public function getAbsolutePath() {

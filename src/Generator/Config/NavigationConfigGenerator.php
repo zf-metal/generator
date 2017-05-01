@@ -66,8 +66,9 @@ class NavigationConfigGenerator extends AbstractConfigGenerator {
     }
 
     protected function populateGeneratorConfig() {
+        $this->generatorNavigationConfig['navigation']['default'] = array();
         foreach ($this->getNavigationCollection() as $navigation) {
-            array_push($this->generatorNavigationConfig['navigation']['default'], $this->addNavigation($navigation));
+            $this->generatorNavigationConfig['navigation']['default'][] = $this->addNavigation($navigation);
         }
     }
 
@@ -85,7 +86,7 @@ class NavigationConfigGenerator extends AbstractConfigGenerator {
 
         if ($navigation->hasChilds()) {
             foreach ($navigation->getChilds() as $child) {
-                array_push($a['pages'], $this->addNavigation($child));
+                $a['pages'][] = $this->addNavigation($child);
             }
         }
 

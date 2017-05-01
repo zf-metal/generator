@@ -11,7 +11,7 @@ class GridActionGenerator {
 
     static function applyGridinFactory(\ZfMetal\Generator\Generator\ControllerFactoryGenerator $cgf) {
         $cgf->addDependency("grid", "\ZfMetal\Datagrid\Grid");
-        $fullName = $cgf->getController()->getEntity()->getFullName();
+        $fullName = str_replace("\\", "-", $cgf->getController()->getEntity()->getFullName());
         $body = $cgf->getInvoke()->getBody();
         $body .= '/* @var $grid \ZfMetal\Datagrid\Grid */' . PHP_EOL;
         $body .= '$grid = $container->build("zf-metal-datagrid", ["customOptionsKey" => "' . $fullName . '"]);' . PHP_EOL;
@@ -21,7 +21,7 @@ class GridActionGenerator {
     static function applyGridAction(\ZfMetal\Generator\Generator\ControllerGenerator $controllerGenerator) {
         self::genGridProperty($controllerGenerator);
         self::genConstruct($controllerGenerator);
-        
+
         if (!$controllerGenerator->getCg()->hasMethod("gridAction")) {
             self::genGridAction($controllerGenerator);
         }
@@ -46,8 +46,8 @@ class GridActionGenerator {
 
         //BODY
         $body = $cm->getBody();
-        
-         //CHECK IF EM EXIST
+
+        //CHECK IF EM EXIST
         if (!preg_match("/grid/", $body)) {
             $body .= ' $this->grid = $grid;' . PHP_EOL;
             $cm->setBody($body);
@@ -86,7 +86,7 @@ class GridActionGenerator {
         $method->setName("gridAction");
 
         //BODY
-        
+
         $body = '$this->grid->prepare();' . PHP_EOL;
         $body .= 'return array("grid" => $this->grid);' . PHP_EOL;
         $method->setBody($body);

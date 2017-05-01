@@ -57,6 +57,17 @@ class Action extends \ZfMetal\Generator\Entity\AbstractEntity {
      */
     protected $template;
     
+      /**
+     * @var string
+     * @ORM\Column(type="boolean", unique=false, nullable=true, name="route")
+     * @Annotation\Type("Zend\Form\Element\Checkbox")
+     * @Annotation\Attributes({"type":"checkbox"})
+     * @Annotation\Options({"label":"Route"})
+     * @Annotation\AllowEmpty({"true"})
+     */
+    protected $route;
+
+    
 
 
     function getId() {
@@ -93,6 +104,16 @@ class Action extends \ZfMetal\Generator\Entity\AbstractEntity {
 
     public function __toString() {
         return $this->getController()->getClass()."->".$this->getName()."Action";
+    }
+
+
+    function getRoute() {
+        return $this->route;
+    }
+
+    function setRoute($route) {
+        $this->route = $route;
+        return $this;
     }
 
 

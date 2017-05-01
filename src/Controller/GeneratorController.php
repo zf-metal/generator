@@ -119,6 +119,11 @@ class GeneratorController extends AbstractActionController {
         $routeConfigGenerator->prepare();
         $routeConfigGenerator->pushFile(true);
 
+        //REFRESH MODULE CONFIG
+        $ModuleGenerator = new \ZfMetal\Generator\Generator\Config\ModuleConfigGenerator($module);
+        $ModuleGenerator->prepare();
+        $ModuleGenerator->pushFile(true);
+
         $view = new \Zend\View\Model\ViewModel([
             "routeConfigGenerator" => $routeConfigGenerator]);
         $view->setTerminal(true);
@@ -134,6 +139,11 @@ class GeneratorController extends AbstractActionController {
         $navConfigGenerator = new \ZfMetal\Generator\Generator\Config\NavigationConfigGenerator($module, $navCollection);
         $navConfigGenerator->prepare();
         $navConfigGenerator->pushFile(true);
+
+        //REFRESH MODULE CONFIG
+        $ModuleGenerator = new \ZfMetal\Generator\Generator\Config\ModuleConfigGenerator($module);
+        $ModuleGenerator->prepare();
+        $ModuleGenerator->pushFile(true);
 
         $view = new \Zend\View\Model\ViewModel([
             "navConfigGenerator" => $navConfigGenerator]);
@@ -158,6 +168,11 @@ class GeneratorController extends AbstractActionController {
         $controllerConfigGenerator = new \ZfMetal\Generator\Generator\Config\ControllerConfigGenerator($controller);
         $controllerConfigGenerator->prepare();
         $controllerConfigGenerator->pushFile(true);
+
+        //REFRESH MODULE CONFIG
+        $ModuleGenerator = new \ZfMetal\Generator\Generator\Config\ModuleConfigGenerator($module);
+        $ModuleGenerator->prepare();
+        $ModuleGenerator->pushFile(true);
 
         $view = new \Zend\View\Model\ViewModel([
             "controllerGenerator" => $controllerGenerator,
@@ -217,6 +232,12 @@ class GeneratorController extends AbstractActionController {
         $viewHelperConfigGenerator->prepare();
         $viewHelperConfigGenerator->pushFile(true);
 
+
+        //REFRESH MODULE CONFIG
+        $ModuleGenerator = new \ZfMetal\Generator\Generator\Config\ModuleConfigGenerator($module);
+        $ModuleGenerator->prepare();
+        $ModuleGenerator->pushFile(true);
+
         $view = new \Zend\View\Model\ViewModel([
             "optionGenerator" => $optionGenerator,
             'optionFactoryGenerator' => $optionFactoryGenerator
@@ -229,6 +250,8 @@ class GeneratorController extends AbstractActionController {
         $pluginId = $this->params("pluginId");
 
         $plugin = $this->getEm()->getRepository("ZfMetal\Generator\Entity\Plugin")->find($pluginId);
+
+        $module = $plugin->getModule();
 
         $pluginGenerator = new \ZfMetal\Generator\Generator\PluginGenerator($plugin);
         $pluginGenerator->prepare();
@@ -245,6 +268,11 @@ class GeneratorController extends AbstractActionController {
         $pluginsConfigGenerator->prepare();
         $pluginsConfigGenerator->pushFile(true);
 
+        //REFRESH MODULE CONFIG
+        $ModuleGenerator = new \ZfMetal\Generator\Generator\Config\ModuleConfigGenerator($module);
+        $ModuleGenerator->prepare();
+        $ModuleGenerator->pushFile(true);
+
         $view = new \Zend\View\Model\ViewModel([
             "pluginGenerator" => $pluginGenerator,
             "pluginFactoryGenerator" => $pluginFactoryGenerator,
@@ -257,6 +285,8 @@ class GeneratorController extends AbstractActionController {
         $viewHelperId = $this->params("viewHelperId");
 
         $viewHelper = $this->getEm()->getRepository("ZfMetal\Generator\Entity\ViewHelper")->find($viewHelperId);
+        $module = $viewHelper->getModule();
+
 
         $viewHelperGenerator = new \ZfMetal\Generator\Generator\ViewHelperGenerator($viewHelper);
         $viewHelperGenerator->prepare();
@@ -272,6 +302,12 @@ class GeneratorController extends AbstractActionController {
         $viewHelperConfigGenerator = new \ZfMetal\Generator\Generator\Config\ViewConfigGenerator($viewHelper);
         $viewHelperConfigGenerator->prepare();
         $viewHelperConfigGenerator->pushFile(true);
+
+
+        //REFRESH MODULE CONFIG
+        $ModuleGenerator = new \ZfMetal\Generator\Generator\Config\ModuleConfigGenerator($module);
+        $ModuleGenerator->prepare();
+        $ModuleGenerator->pushFile(true);
 
         $view = new \Zend\View\Model\ViewModel([
             "viewHelperGenerator" => $viewHelperGenerator,

@@ -44,8 +44,8 @@ class EntityGenerator extends AbstractClassGenerator {
 
     public function getClassUses() {
         return [
-            ["class" => "Doctrine\Common\Collections\ArrayCollection", "alias" => null],
-            ["class" => "Zend\Form\Annotation", "alias" => null],
+            ["class" => "Doctrine\Common\Collections\ArrayCollection", "alias" => "ArrayCollection"],
+            ["class" => "Zend\Form\Annotation", "alias" => "Annotation"],
             ["class" => "Doctrine\ORM\Mapping", "alias" => "ORM"],
             ["class" => "Doctrine\ORM\Mapping\UniqueConstraint", "alias" => "UniqueConstraint"],
         ];

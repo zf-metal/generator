@@ -16,7 +16,6 @@ abstract class AbstractClassGenerator extends AbstractFileGenerator implements \
      */
     protected $cg;
 
-
     /**
      *
      * @var array
@@ -49,7 +48,7 @@ abstract class AbstractClassGenerator extends AbstractFileGenerator implements \
     protected $isPrepared = false;
 
     public function prepare() {
- 
+
         if (file_exists($this->getFileName()) AND class_exists($this->getClassNamespaceAndName())) {
             $reflectionClass = new \Zend\Code\Reflection\ClassReflection($this->getClassNamespaceAndName());
             if ($reflectionClass->isInstantiable()) {
@@ -59,6 +58,7 @@ abstract class AbstractClassGenerator extends AbstractFileGenerator implements \
             }
         } else {
             $this->setCg(\Zend\Code\Generator\ClassGenerator::FromArray($this->getClassArray()));
+            $this->addUses();
         }
 
 
@@ -79,6 +79,19 @@ abstract class AbstractClassGenerator extends AbstractFileGenerator implements \
             'methods' => $this->getClassMethods(), //Optional
             'containingfile' => $this->getClassFileGenerator(), //Optional Overwrite
         ];
+    }
+
+    public function addUses() {
+        $uses = $this->getClassUses();
+        if (count($uses)) {
+            foreach ($uses as $use) {
+                if ($use["alias"]) {
+                    $this->getCg()->addUse($use["class"], $use["alias"]);
+                } else {
+                    $this->getCg()->addUse($use["class"]);
+                }
+            }
+        }
     }
 
     //CLASS METHODS
@@ -167,12 +180,9 @@ abstract class AbstractClassGenerator extends AbstractFileGenerator implements \
         return $this->cg;
     }
 
-
-
     function setCg(\Zend\Code\Generator\ClassGenerator $cg) {
         $this->cg = $cg;
     }
-
 
     public function setClassProperties($classProperties) {
         $this->classProperties = $classProperties;
@@ -182,7 +192,7 @@ abstract class AbstractClassGenerator extends AbstractFileGenerator implements \
         $this->classMethods = $classMethods;
     }
 
-    public function addClassProperties($classProperty){
+    public function addClassProperties($classProperty) {
         $this->classProperties[] = $classProperty;
     }
 

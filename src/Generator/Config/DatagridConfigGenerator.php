@@ -86,7 +86,7 @@ class DatagridConfigGenerator extends AbstractConfigGenerator {
     }
 
     protected function genFormConfig() {
-         return [
+        return [
             'columns' => new \Zend\Code\Generator\ValueGenerator('\ZfMetal\Commons\Consts::COLUMNS_ONE', \Zend\Code\Generator\ValueGenerator::TYPE_CONSTANT),
             'style' => new \Zend\Code\Generator\ValueGenerator('\ZfMetal\Commons\Consts::STYLE_VERTICAL', \Zend\Code\Generator\ValueGenerator::TYPE_CONSTANT),
             'vertical_groups' => [
@@ -114,12 +114,12 @@ class DatagridConfigGenerator extends AbstractConfigGenerator {
                         $a[$property->getName()] = ["type" => "relational"];
                         break;
                     case "date":
-                        $a[$property->getName()] = ["type" => "date"];
-                        $a[$property->getName()] = ["format" => "Y-m-d"];
+                        $a[$property->getName()]["type"] = "date";
+                        $a[$property->getName()]["format"] = "Y-m-d";
                         break;
                     case "datetime":
-                        $a[$property->getName()] = ["type" => "date"];
-                        $a[$property->getName()] = ["format" => "Y-m-d H:i:s"];
+                        $a[$property->getName()]["type"] = "date";
+                        $a[$property->getName()]["format"] = "Y-m-d H:i:s";
                         break;
                     default:
                         break;

@@ -48,6 +48,7 @@ class EntityGenerator extends AbstractClassGenerator {
             ["class" => "Zend\Form\Annotation", "alias" => "Annotation"],
             ["class" => "Doctrine\ORM\Mapping", "alias" => "ORM"],
             ["class" => "Doctrine\ORM\Mapping\UniqueConstraint", "alias" => "UniqueConstraint"],
+            ['class' => 'Gedmo\Mapping\Annotation', 'alias' => 'Gedmo']
         ];
     }
 

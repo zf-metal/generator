@@ -113,8 +113,8 @@ class PropertyGenerator {
         } else if ($this->getProperty()->getHidden()) {
             $tagForm = \ZfMetal\Generator\FormAnnotation::HIDDEN();
         }
-
-
+        
+     
 
         switch ($this->getProperty()->getType()) {
             case "string":

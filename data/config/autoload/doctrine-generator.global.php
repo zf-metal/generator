@@ -35,17 +35,5 @@ return [
                 'filters' => array()
             )
         ),
-        'driver' => array(
-            'zfmetal_generator_entity' => array(
-                'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
-                'paths' => array(__DIR__ . '/../src/Entity')
-            ),
-            'drv_zfmetal_generator' => array(
-                'class' => "Doctrine\ORM\Mapping\Driver\DriverChain",
-                'drivers' => array(
-                    'ZfMetal\Generator\Entity' => 'zfmetal_generator_entity',
-                ),
-            ),
-        ),
     ),
 ];

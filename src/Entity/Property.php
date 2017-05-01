@@ -110,6 +110,27 @@ class Property extends \ZfMetal\Generator\Entity\AbstractEntity {
      * @ORM\Column(type="boolean", unique=false, nullable=true, name="be_nullable")
      */
     protected $beNullable = true;
+    
+      /**
+     * @var boolean
+     * @Annotation\Type("Zend\Form\Element\Checkbox") 
+     * @Annotation\Attributes({"type":"checkbox"})
+     * @Annotation\Options({"label":"UpdatedAt (Table)"})
+     * @Annotation\AllowEmpty({"true"})
+     * @ORM\Column(type="boolean", unique=false, nullable=true, name="updated_at")
+     */
+    protected $updatedAt = true;
+    
+      /**
+     * @var boolean
+     * @Annotation\Type("Zend\Form\Element\Checkbox") 
+     * @Annotation\Attributes({"type":"checkbox"})
+     * @Annotation\Options({"label":"CreatedAt (Table)"})
+     * @Annotation\AllowEmpty({"true"})
+     * @ORM\Column(type="boolean", unique=false, nullable=true, name="created_at")
+     */
+    protected $createdAt = true;
+    
 
     /**
      * @var string
@@ -374,6 +395,26 @@ class Property extends \ZfMetal\Generator\Entity\AbstractEntity {
         $this->hiddenDatagrid = $hiddenDatagrid;
         return $this;
     }
+
+    function getUpdatedAt() {
+        return $this->updatedAt;
+    }
+
+    function getCreatedAt() {
+        return $this->createdAt;
+    }
+
+    function setUpdatedAt($updatedAt) {
+        $this->updatedAt = $updatedAt;
+        return $this;
+    }
+
+    function setCreatedAt($createdAt) {
+        $this->createdAt = $createdAt;
+        return $this;
+    }
+
+
 
 
 

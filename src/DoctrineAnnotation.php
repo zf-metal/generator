@@ -114,11 +114,20 @@ class DoctrineAnnotation {
      * @return Array
      */
     static function DATE($property) {
-        return [
-            [
-                "name" => 'ORM\Column(type="date", unique=' . self::booleanString($property->getBeUnique()) . ', nullable=' . self::booleanString($property->getBeNullable()) . ', name="' . self::camelToUnder($property->getName()) . '")'
-            ]
+        $a = array();
+        if ($property->getCreatedAt()) {
+            $a[] = ['name' => 'Gedmo\Timestampable(on="create")'];
+        }
+
+        if ($property->getUpdatedAt()) {
+            $a[] = ['name' => 'Gedmo\Timestampable(on="update")'];
+        }
+
+
+        $a[] = [
+            "name" => 'ORM\Column(type="date", unique=' . self::booleanString($property->getBeUnique()) . ', nullable=' . self::booleanString($property->getBeNullable()) . ', name="' . self::camelToUnder($property->getName()) . '")'
         ];
+        return $a;
     }
 
     /**
@@ -128,11 +137,20 @@ class DoctrineAnnotation {
      * @return Array
      */
     static function DATETIME($property) {
-        return [
-            [
-                "name" => 'ORM\Column(type="datetime", unique=' . self::booleanString($property->getBeUnique()) . ', nullable=' . self::booleanString($property->getBeNullable()) . ', name="' . self::camelToUnder($property->getName()) . '")'
-            ]
+        $a = array();
+        if ($property->getCreatedAt()) {
+            $a[] = ['name' => 'Gedmo\Timestampable(on="create")'];
+        }
+
+        if ($property->getUpdatedAt()) {
+            $a[] = ['name' => 'Gedmo\Timestampable(on="update")'];
+        }
+
+
+        $a[] = [
+            "name" => 'ORM\Column(type="datetime", unique=' . self::booleanString($property->getBeUnique()) . ', nullable=' . self::booleanString($property->getBeNullable()) . ', name="' . self::camelToUnder($property->getName()) . '")'
         ];
+        return $a;
     }
 
     /**
@@ -157,7 +175,6 @@ class DoctrineAnnotation {
      */
     static function ONETOONE($property) {
         return [
-
             ["name" => 'ORM\OneToOne(targetEntity="' . $property->getRelatedEntity()->getFullName() . '")'],
             ["name" => 'ORM\JoinColumn(name="' . self::camelToUnder($property->getName()) . '_id", referencedColumnName="id"' . ($property->getBeNullable() ? ', nullable=true' : ', nullable=false') . ')']
         ];
@@ -171,7 +188,6 @@ class DoctrineAnnotation {
      */
     static function MANYTOONE($property) {
         return [
-
             ["name" => 'ORM\ManyToOne(targetEntity="' . $property->getRelatedEntity()->getFullName() . '")'],
             ["name" => 'ORM\JoinColumn(name="' . self::camelToUnder($property->getName()) . '_id", referencedColumnName="id"' . ($property->getBeNullable() ? ', nullable=true' : ', nullable=false') . ')']
         ];
@@ -197,7 +213,6 @@ class DoctrineAnnotation {
      */
     static function MANYTOMANY($property) {
         return [
-
             ["name" => 'ORM\ManyToMany(targetEntity="' . $property->getRelatedEntity()->getFullName() . '")'],
         ];
     }

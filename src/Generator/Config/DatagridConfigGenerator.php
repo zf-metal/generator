@@ -68,7 +68,7 @@ class DatagridConfigGenerator extends AbstractConfigGenerator {
 
     protected function populateGeneratorConfig() {
         $this->generatorDatagridConfig['zf-metal-datagrid.custom'] = array();
-        $key =  $this->getEntity()->getFullName();
+        $key = $this->getEntity()->getFullName();
         $this->generatorDatagridConfig['zf-metal-datagrid.custom'][$key]["sourceConfig"] = $this->genSourceConfig();
         $this->generatorDatagridConfig['zf-metal-datagrid.custom'][$key]["formConfig"] = $this->genFormConfig();
         $this->generatorDatagridConfig['zf-metal-datagrid.custom'][$key]["columnsConfig"] = $this->genColumnsConfig();
@@ -79,7 +79,7 @@ class DatagridConfigGenerator extends AbstractConfigGenerator {
         return [
             "type" => "doctrine",
             "doctrineOptions" => [
-                "entityName" => new \Zend\Code\Generator\ValueGenerator($this->getEntity()->getFullName().'::class', \Zend\Code\Generator\ValueGenerator::TYPE_CONSTANT),
+                "entityName" => new \Zend\Code\Generator\ValueGenerator($this->getEntity()->getFullName() . '::class', \Zend\Code\Generator\ValueGenerator::TYPE_CONSTANT),
                 "entityManager" => "doctrine.entitymanager.orm_default"
             ]
         ];
@@ -100,22 +100,22 @@ class DatagridConfigGenerator extends AbstractConfigGenerator {
         $a = array();
         /* @var $property \ZfMetal\Generator\Entity\Property */
         foreach ($this->getEntity()->getProperties() as $property) {
-            
-            if($property->getLabel()){
-                  $a[$property->getName()] = ["displayName" => $property->getLabel()];
+
+            if ($property->getLabel()) {
+                $a[$property->getName()]["displayName"] = $property->getLabel();
             }
-            
+
             if ($property->getHiddenDatagrid()) {
-                $a[$property->getName()] = ["hidden" => true];
+                $a[$property->getName()]["hidden"] = true;
             } else {
                 switch ($property->getType()) {
                     case "oneToMany":
                     case "manyToMany":
-                        $a[$property->getName()] = ["hidden" => true];
+                        $a[$property->getName()]["hidden"] = true;
                         break;
                     case "oneToOne":
-                    case "ManyToOne":
-                        $a[$property->getName()] = ["type" => "relational"];
+                    case "manyToOne":
+                        $a[$property->getName()]["type"] = "relational";
                         break;
                     case "date":
                         $a[$property->getName()]["type"] = "date";

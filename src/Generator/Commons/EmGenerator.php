@@ -19,7 +19,16 @@ class EmGenerator {
 
     static function applyEm(\ZfMetal\Generator\Generator\ControllerGenerator $controllerGenerator) {
         self::genEmProperty($controllerGenerator);
+        self::genEntityConst($controllerGenerator);
         self::genConstruct($controllerGenerator);
+    }
+
+    static protected function genEntityConst($controllerGenerator) {
+        if (!$controllerGenerator->getCg()->hasConstant("ENTITY")) {
+            $entityClass = $controllerGenerator->getController()->getEntity()->getFullName();
+            $p = new \Zend\Code\Generator\PropertyGenerator("ENTITY", $entityClass, \Zend\Code\Generator\PropertyGenerator::FLAG_CONSTANT);
+            $controllerGenerator->getCg()->addPropertyFromGenerator($p);
+        }
     }
 
     static protected function genEmProperty($controllerGenerator) {
@@ -39,10 +48,10 @@ class EmGenerator {
     static protected function genConstruct($controllerGenerator) {
         $cm = $controllerGenerator->getConstruct();
 
-        
+
         //BODY
         $body = $cm->getBody();
-        
+
         //CHECK IF EM EXIST
         if (!preg_match("/em/", $body)) {
             $body .= ' $this->em = $em;' . PHP_EOL;

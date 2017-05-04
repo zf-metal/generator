@@ -124,7 +124,7 @@ class Property extends \ZfMetal\Generator\Entity\AbstractEntity {
       /**
      * @var boolean
      * @Annotation\Type("Zend\Form\Element\Checkbox") 
-     * @Annotation\Attributes({"type":"checkbox"})
+     * @Annotation\Attributes({"type":"checkbox", "value": "0"})
      * @Annotation\Options({"label":"CreatedAt (Table)"})
      * @Annotation\AllowEmpty({"true"})
      * @ORM\Column(type="boolean", unique=false, nullable=true, name="created_at")

@@ -81,8 +81,11 @@ class Route extends \ZfMetal\Generator\Entity\AbstractEntity {
     protected $controller;
 
     /**
-     * @Annotation\Type("Zend\Form\Element\Select")
-     * @Annotation\Options({"label":"Action:", "description": ""})
+     * @Annotation\Type("DoctrineModule\Form\Element\ObjectSelect")
+     * @Annotation\Options({
+     * "label":"Controller:",
+     * "empty_option": "",
+     * "target_class":"ZfMetal\Generator\Entity\Action"})
      * @Annotation\Required(true)
      * @Annotation\AllowEmpty({"false"})
      * @ORM\ManyToOne(targetEntity="ZfMetal\Generator\Entity\Action")

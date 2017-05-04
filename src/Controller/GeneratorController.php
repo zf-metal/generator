@@ -199,7 +199,7 @@ class GeneratorController extends AbstractActionController {
                         $routeModule1->setModule($module);
                         $routeModule1->setName($module->getName());
                         $routeModule1->setMayTerminate(false);
-                        $routeModule1->setType("literal");
+                        $routeModule1->setType("Literal");
                         $routeModule1->setController($controller);
                         $routeModule1->setAction($action);
                         $routeModule1->setRoute("/" . \ZfMetal\Generator\Generator\Util::camelToDash($module->getName()));
@@ -214,7 +214,7 @@ class GeneratorController extends AbstractActionController {
                         $routeModule2->setModule($module);
                         $routeModule2->setName($controller->getName());
                         $routeModule2->setMayTerminate(false);
-                        $routeModule2->setType("literal");
+                        $routeModule2->setType("Literal");
                         $routeModule2->setController($controller);
                         $routeModule2->setAction($action);
                         $routeModule2->setRoute("/" . \ZfMetal\Generator\Generator\Util::camelToDash($controller->getName()));
@@ -230,7 +230,7 @@ class GeneratorController extends AbstractActionController {
                         $routeModule3->setModule($module);
                         $routeModule3->setName(ucfirst($action->getName()));
                         $routeModule3->setMayTerminate(true);
-                        $routeModule3->setType("segment");
+                        $routeModule3->setType("Segment");
                         $routeModule3->setAction($action);
                         $routeModule3->setController($controller);
                         $routeModule3->setRoute("/" . \ZfMetal\Generator\Generator\Util::camelToDash($action->getName()));

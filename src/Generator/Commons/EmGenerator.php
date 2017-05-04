@@ -20,6 +20,7 @@ class EmGenerator {
     static function applyEm(\ZfMetal\Generator\Generator\ControllerGenerator $controllerGenerator) {
         self::genEmProperty($controllerGenerator);
         self::genEntityConst($controllerGenerator);
+        self::genGetEntityRepository($controllerGenerator);
         self::genConstruct($controllerGenerator);
     }
 
@@ -28,6 +29,18 @@ class EmGenerator {
             $entityClass = $controllerGenerator->getController()->getEntity()->getFullName();
             $p = new \Zend\Code\Generator\PropertyGenerator("ENTITY", $entityClass, \Zend\Code\Generator\PropertyGenerator::FLAG_CONSTANT);
             $controllerGenerator->getCg()->addPropertyFromGenerator($p);
+        }
+    }
+
+    static protected function genGetEntityRepository($controllerGenerator) {
+
+        if (!$controllerGenerator->getCg()->hasMethod("getEntityRepository")) {
+            $m = new \Zend\Code\Generator\MethodGenerator("getEntityRepository");
+
+            $body = 'return $this->getEm()->getRepository(self::ENTITY);';
+
+            $m->setBody($body);
+            $controllerGenerator->getCg()->addMethodFromGenerator($m);
         }
     }
 

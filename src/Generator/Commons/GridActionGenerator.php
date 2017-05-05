@@ -11,7 +11,8 @@ class GridActionGenerator {
 
     static function applyGridinFactory(\ZfMetal\Generator\Generator\ControllerFactoryGenerator $cgf) {
         $cgf->addDependency("grid", "\ZfMetal\Datagrid\Grid");
-        $fullName = $cgf->getController()->getEntity()->getFullName();
+        $fullName = trim(str_replace("\\", "-", strtolower($cgf->getController()->getEntity()->getFullName())), "-");
+        // $fullName = $cgf->getController()->getEntity()->getFullName();
         $body = $cgf->getInvoke()->getBody();
         $body .= '/* @var $grid \ZfMetal\Datagrid\Grid */' . PHP_EOL;
         $body .= '$grid = $container->build("zf-metal-datagrid", ["customKey" => "' . $fullName . '"]);' . PHP_EOL;

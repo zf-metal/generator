@@ -68,11 +68,16 @@ class DatagridConfigGenerator extends AbstractConfigGenerator {
 
     protected function populateGeneratorConfig() {
         $this->generatorDatagridConfig['zf-metal-datagrid.custom'] = array();
-        $key = $this->getEntity()->getFullName();
+        $key = trim(str_replace("\\", "-", strtolower($this->getEntity()->getFullName())), "-");
+        $this->generatorDatagridConfig['zf-metal-datagrid.custom'][$key]["gridId"] = $this->genGridId();
         $this->generatorDatagridConfig['zf-metal-datagrid.custom'][$key]["sourceConfig"] = $this->genSourceConfig();
         $this->generatorDatagridConfig['zf-metal-datagrid.custom'][$key]["formConfig"] = $this->genFormConfig();
         $this->generatorDatagridConfig['zf-metal-datagrid.custom'][$key]["columnsConfig"] = $this->genColumnsConfig();
         $this->generatorDatagridConfig['zf-metal-datagrid.custom'][$key]["crudConfig"] = $this->genCrudConfig();
+    }
+
+    protected function genGridId() {
+        return "zfmdg_" . $this->getEntity()->getName();
     }
 
     protected function genSourceConfig() {

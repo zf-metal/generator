@@ -76,7 +76,10 @@ class NavigationConfigGenerator extends AbstractConfigGenerator {
         $a["label"] = $navigation->getLabel();
         $a["detail"] = $navigation->getDetail();
         $a["icon"] = $navigation->getIcon();
-        $a["permission"] = $navigation->getPermission();
+        if (!$navigation->getPermission() && !empty($navigation->getPermission())) {
+            $a["permission"] = $navigation->getPermission();
+        }
+
         if ($navigation->getRoute()) {
             $a["route"] = $navigation->getRoute()->finalRouteName();
         } else {

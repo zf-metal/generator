@@ -33,7 +33,11 @@ class Navigation extends \ZfMetal\Generator\Entity\AbstractEntity {
     protected $module;
 
     /**
-     * @Annotation\Type("ZfMetal\Commons\DoctrineModule\Form\Element\ObjectHidden")
+     * @Annotation\Type("DoctrineModule\Form\Element\ObjectSelect")
+     * @Annotation\Options({
+     * "label":"Parent:",
+     * "empty_option": "",
+     * "target_class":"ZfMetal\Generator\Entity\Navigation"})
      * @ORM\ManyToOne(targetEntity="ZfMetal\Generator\Entity\Navigation")
      * @ORM\JoinColumn(name="menu_id", referencedColumnName="id",nullable=true)
      */
@@ -172,7 +176,7 @@ class Navigation extends \ZfMetal\Generator\Entity\AbstractEntity {
     function setParent($parent) {
         $this->parent = $parent;
     }
-    
+
     function getRoute() {
         return $this->route;
     }
@@ -181,9 +185,6 @@ class Navigation extends \ZfMetal\Generator\Entity\AbstractEntity {
         $this->route = $route;
         return $this;
     }
-
-            
-    
 
     function getChilds() {
         return $this->childs;

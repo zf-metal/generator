@@ -83,7 +83,7 @@ class Route extends \ZfMetal\Generator\Entity\AbstractEntity {
     /**
      * @Annotation\Type("DoctrineModule\Form\Element\ObjectSelect")
      * @Annotation\Options({
-     * "label":"Controller:",
+     * "label":"Action:",
      * "empty_option": "",
      * "target_class":"ZfMetal\Generator\Entity\Action"})
      * @Annotation\Required(true)

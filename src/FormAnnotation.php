@@ -69,7 +69,7 @@ class FormAnnotation {
         return [
             ["name" => 'Annotation\Type("Zend\Form\Element\Date")'],
             ["name" => 'Annotation\Attributes({"type":"date"})'],
-            ["name" => 'Annotation\Options({"label":"' . self::LABEL($property) . '", "description":"' . $property->getDescription() . '"})']
+            ["name" => 'Annotation\Options({"label":"' . self::LABEL($property) . '", "description":"' . $property->getDescription() . '", "addon":"' . $property->getAddon() . '"})']
         ];
     }
 
@@ -83,7 +83,7 @@ class FormAnnotation {
         return [
             ["name" => 'Annotation\Type("Zend\Form\Element\DateTime")'],
             ["name" => 'Annotation\Attributes({"type":"datetime"})'],
-            ["name" => 'Annotation\Options({"label":"' . self::LABEL($property) . '", "description":"' . $property->getDescription() . '"})']
+            ["name" => 'Annotation\Options({"label":"' . self::LABEL($property) . '", "description":"' . $property->getDescription() . '", "addon":"' . $property->getAddon() . '"})']
         ];
     }
 
@@ -97,7 +97,7 @@ class FormAnnotation {
         return [
             ["name" => 'Annotation\Type("Zend\Form\Element\Time")'],
             ["name" => 'Annotation\Attributes({"type":"time"})'],
-            ["name" => 'Annotation\Options({"label":"' . self::LABEL($property) . '", "description":"' . $property->getDescription() . '"})']
+            ["name" => 'Annotation\Options({"label":"' . self::LABEL($property) . '", "description":"' . $property->getDescription() . '", "addon":"' . $property->getAddon() . '"})']
         ];
     }
 

@@ -15,6 +15,13 @@ You can move generator.db to the project data folder to keep the configuration i
 2. Move vendor/zf-metal/generator/data/config/autoload/doctrine-generator.global.php to config/autoload/doctrine-generator.global.php
 
 
+### Update Schema
+
+'''
+vendor/bin/doctrine-module.bat orm:schema-tool:update --force --em=orm_zf_metal_generator
+
+'''
+
 ### Start
 
 1. Go to /generator/main

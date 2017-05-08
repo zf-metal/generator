@@ -17,7 +17,7 @@ class FormAnnotation {
     static function CUSTOM($property) {
         return [
             ["name" => 'Annotation\Type("' . $property->getElementType() . '")'],
-            ["name" => 'Annotation\Options({"label":"' . self::LABEL($property) . '", "description":"' . $property->getDescription() . '"})']
+            ["name" => 'Annotation\Options({"label":"' . self::LABEL($property) . '", "description":"' . $property->getDescription() . '", "addon":"' . $property->getAddon() . '"})']
         ];
     }
 
@@ -55,7 +55,7 @@ class FormAnnotation {
         return [
             ["name" => 'Annotation\Type("Zend\Form\Element\Text")'],
             ["name" => 'Annotation\Attributes({"type":"text"})'],
-            ["name" => 'Annotation\Options({"label":"' . self::LABEL($property) . '", "description":"' . $property->getDescription() . '"})']
+            ["name" => 'Annotation\Options({"label":"' . self::LABEL($property) . '", "description":"' . $property->getDescription() . '", "addon":"' . $property->getAddon() . '"})']
         ];
     }
 

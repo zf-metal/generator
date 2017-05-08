@@ -148,6 +148,15 @@ class Property extends \ZfMetal\Generator\Entity\AbstractEntity {
      * @ORM\Column(type="string", length=200, unique=false, nullable=true, name="label")
      */
     protected $label;
+    
+     /**
+     * @var string
+     * @Annotation\Type("Zend\Form\Element\Text")
+     * @Annotation\Options({"label":"Addon Icon (input-group-addon)", "description": ""})
+     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":200}})
+     * @ORM\Column(type="string", length=200, unique=false, nullable=true, name="addon")
+     */
+    protected $addon;
 
     /**
      * @var string
@@ -432,6 +441,15 @@ class Property extends \ZfMetal\Generator\Entity\AbstractEntity {
     }
 
 
+
+    function getAddon() {
+        return $this->addon;
+    }
+
+    function setAddon($addon) {
+        $this->addon = $addon;
+        return $this;
+    }
 
 
 

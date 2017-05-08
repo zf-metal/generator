@@ -35,6 +35,12 @@ return [
                 "updatedAt" => [
                     "hidden" => true,
                 ],
+                "elementType" => [
+                    "hidden" => true
+                ],
+                "addon" => [
+                    "hidden" => true
+                ],
                 "absolutepath" => [
                     "hidden" => true
                 ],

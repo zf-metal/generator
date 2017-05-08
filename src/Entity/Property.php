@@ -131,6 +131,14 @@ class Property extends \ZfMetal\Generator\Entity\AbstractEntity {
      */
     protected $createdAt = true;
     
+      /**
+     * @var string
+     * @Annotation\Type("Zend\Form\Element\Text")
+     * @Annotation\Options({"label":"Element Type", "description": "Only if need especific Element. Ex: \Zend\Form\Element\XXXX"})
+     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":200}})
+     * @ORM\Column(type="string", length=200, unique=false, nullable=true, name="element_type")
+     */
+    protected $elementType;
 
     /**
      * @var string
@@ -413,6 +421,16 @@ class Property extends \ZfMetal\Generator\Entity\AbstractEntity {
         $this->createdAt = $createdAt;
         return $this;
     }
+
+    function getElementType() {
+        return $this->elementType;
+    }
+
+    function setElementType($elementType) {
+        $this->elementType = $elementType;
+        return $this;
+    }
+
 
 
 

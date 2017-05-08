@@ -81,10 +81,10 @@ class PropertyGenerator {
         //Add PropertyGenerator to Entity Class Generator
         //CHECK IF EXIST (Reflection). Remove if Exist. ZfMetal\Generator Priority.
         if ($this->getClassGenerator()->hasProperty($this->getProperty()->getName())) {
-           $this->getClassGenerator()->removeProperty($this->getProperty()->getName());
+            $this->getClassGenerator()->removeProperty($this->getProperty()->getName());
         }
-        
-         $this->getClassGenerator()->addPropertyFromGenerator($this->getPropertyGenerator());
+
+        $this->getClassGenerator()->addPropertyFromGenerator($this->getPropertyGenerator());
 
         //Generate Getter Method of property and ADD to Entity Class
         $this->generateGetter();
@@ -112,9 +112,11 @@ class PropertyGenerator {
             //CHECK IF PROPERTY NEED HIDDEN    
         } else if ($this->getProperty()->getHidden()) {
             $tagForm = \ZfMetal\Generator\FormAnnotation::HIDDEN();
+        } else if ($this->getProperty()->getElementType()) {
+            $tagForm = \ZfMetal\Generator\FormAnnotation::CUSTOM($this->getProperty());
         }
-        
-     
+
+
 
         switch ($this->getProperty()->getType()) {
             case "string":

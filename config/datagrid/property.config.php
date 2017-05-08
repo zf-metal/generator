@@ -21,7 +21,7 @@ return [
                         'webpath', 'absolutepath'
                     ],
                     'Form' => [
-                        'label', 'description', 'exclude', 'hidden', 'mandatory', 'tostring'
+                        'elementType','label', 'description', 'exclude', 'hidden', 'mandatory', 'tostring'
                     ],
                     'Datagrid' => [
                         'hiddenDatagrid'

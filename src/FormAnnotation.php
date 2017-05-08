@@ -14,6 +14,18 @@ class FormAnnotation {
      * 
      * @return Array
      */
+    static function CUSTOM($property) {
+        return [
+            ["name" => 'Annotation\Type("' . $property->getElementType() . '")'],
+            ["name" => 'Annotation\Options({"label":"' . self::LABEL($property) . '", "description":"' . $property->getDescription() . '"})']
+        ];
+    }
+
+    /**
+     * Return Annotation for Exclude Property
+     * 
+     * @return Array
+     */
     static function EXCLUDE() {
         return [
             ["name" => 'Annotation\Exclude()']
@@ -27,6 +39,7 @@ class FormAnnotation {
      */
     static function HIDDEN() {
         return [
+            ["name" => 'Annotation\Type("Zend\Form\Element\Hidden")'],
             ["name" => 'Annotation\Attributes({"type":"hidden"})'],
             ["name" => 'Annotation\Type("Zend\Form\Element\Hidden")']
         ];
@@ -40,6 +53,7 @@ class FormAnnotation {
      */
     static function TEXT($property) {
         return [
+            ["name" => 'Annotation\Type("Zend\Form\Element\Text")'],
             ["name" => 'Annotation\Attributes({"type":"text"})'],
             ["name" => 'Annotation\Options({"label":"' . self::LABEL($property) . '", "description":"' . $property->getDescription() . '"})']
         ];
@@ -150,6 +164,7 @@ class FormAnnotation {
      */
     static function TEXTAREA($property) {
         return [
+            ["name" => 'Annotation\Type("Zend\Form\Element\Textarea")'],
             ["name" => 'Annotation\Attributes({"type":"textarea"})'],
             ["name" => 'Annotation\Options({"label":"' . self::LABEL($property) . '", "description":"' . $property->getDescription() . '"})']
         ];

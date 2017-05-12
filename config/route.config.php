@@ -54,9 +54,9 @@ return [
                             'ABM' => array(
                                 'type' => Segment::class,
                                 'options' => array(
-                                    'route' => '/abm/:id',
+                                    'route' => '/abm',
                                     'defaults' => array(
-                                        'controller' => Controller\AbmController::class,
+                                        'controller' => Controller\ModuleController::class,
                                         'action' => 'index',
                                     ),
                                 ),

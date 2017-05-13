@@ -46,8 +46,8 @@ return [
                 "generator" => [
                     "tdClass" => "text-center"
                 ],
-                "quick" => [
-                    "tdClass" => "text-center"
+                "generateId" => [
+                    "hidden" => true
                 ]
             ],
             "crudConfig" => [

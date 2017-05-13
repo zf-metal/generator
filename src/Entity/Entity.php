@@ -71,6 +71,17 @@ class Entity extends \ZfMetal\Generator\Entity\AbstractEntity {
      * @ORM\Column(type="string", length=1000, unique=false, nullable=true, name="custom_on_table")
      */
     protected $customOnTable;
+    
+        /**
+     * @var string
+     * @Annotation\Type("Zend\Form\Element\Checkbox") 
+     * @Annotation\Attributes({"type":"checkbox", "value": "1"})
+     * @Annotation\Options({"label":"Generate ID"})
+     * @Annotation\AllowEmpty({"true"})
+     * @ORM\Column(type="boolean", unique=false, nullable=true, name="generate_id")
+     */
+    protected $generateId = false;
+    
 
     /**
      * @var 
@@ -149,5 +160,16 @@ class Entity extends \ZfMetal\Generator\Entity\AbstractEntity {
     function setCustomOnTable($customOnTable) {
         $this->customOnTable = $customOnTable;
     }
+    
+    function getGenerateId() {
+        return $this->generateId;
+    }
+
+    function setGenerateId($generateId) {
+        $this->generateId = $generateId;
+        return $this;
+    }
+
+
 
 }

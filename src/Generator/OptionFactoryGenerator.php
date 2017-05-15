@@ -78,7 +78,7 @@ class OptionFactoryGenerator extends AbstractClassGenerator {
 
     function getInvokeReturn() {
         $body = '$config = $container->get(\'Config\');'. PHP_EOL;
-        $body.= ' return new \\'. $this->getClassNamespace() .'\Options\ModuleOptions(isset($config[\''.$this->getBaseNamespace().'.options\']) ? $config[\''.$this->getBaseNamespace().'.options\'] : array());';
+        $body.= ' return new \\'. $this->getBaseNamespace() .'\Options\ModuleOptions(isset($config[\''.$this->getBaseNamespace().'.options\']) ? $config[\''.$this->getBaseNamespace().'.options\'] : array());';
         return $body;
     }
 
@@ -105,7 +105,7 @@ class OptionFactoryGenerator extends AbstractClassGenerator {
     protected function getInvokeParameter() {
         $parameters[] = new \Zend\Code\Generator\ParameterGenerator("container", "\Interop\Container\ContainerInterface");
         $parameters[] = new \Zend\Code\Generator\ParameterGenerator("requestedName", null);
-        $parameters[] = new \Zend\Code\Generator\ParameterGenerator("options", "array", array());
+        $parameters[] = new \Zend\Code\Generator\ParameterGenerator("options", "array", null);
         return $parameters;
     }
 

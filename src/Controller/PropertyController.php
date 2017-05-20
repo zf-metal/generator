@@ -65,7 +65,7 @@ class PropertyController extends AbstractActionController {
 
         $this->grid->getFormFilters()->remove("entity");
 
-        if ($this->request->getPost("crudAction") == "edit" || $this->request->getPost("crudAction") == "add" || $this->request->getPost("crudAction") == "editSubmit" || $this->request->getPost("crudAction") == "addSubmit") {
+        if ($this->request->getPost(\ZfMetal\Datagrid\Crud::inputAction) == "edit" || $this->request->getPost(\ZfMetal\Datagrid\Crud::inputAction) == "add" || $this->request->getPost(\ZfMetal\Datagrid\Crud::inputAction) == "editSubmit" || $this->request->getPost(\ZfMetal\Datagrid\Crud::inputAction) == "addSubmit") {
             $this->grid->getCrudForm()->remove("entity");
             $hidden = new \Zend\Form\Element\Hidden("entity");
             $hidden->setValue($entityId);

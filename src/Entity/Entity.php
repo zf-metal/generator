@@ -80,7 +80,7 @@ class Entity extends \ZfMetal\Generator\Entity\AbstractEntity {
      * @Annotation\AllowEmpty({"true"})
      * @ORM\Column(type="boolean", unique=false, nullable=true, name="generate_id")
      */
-    protected $generateId = false;
+    protected $generateId = true;
     
 
     /**

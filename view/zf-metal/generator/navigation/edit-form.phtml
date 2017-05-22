@@ -3,12 +3,26 @@
 <div class="row">
     <div class="col-lg-offset-2 col-lg-8 col-md-offset-2 col-md-8 col-sm-12 col-xs-12">
         <?php
-        $verticalGroups = [
-            'Visual' => ['label', 'detail', 'icon'],
-            'Logic' => ['route', 'uri', 'permission'],
+         $groups = [
+            [
+                'type' => \ZfMetal\Commons\Options\FormGroupConfig::TYPE_VERTICAL,
+                'id' => 'Visual',
+                'title' => 'Visual',
+                'columns' => \ZfMetal\Commons\Consts::COLUMNS_TWO,
+                'style' => \ZfMetal\Commons\Consts::STYLE_VERTICAL,
+                'fields' => ['label', 'detail', 'icon']
+            ],
+            [
+                'type' => \ZfMetal\Commons\Options\FormGroupConfig::TYPE_VERTICAL,
+                'id' => 'Logic',
+                'title' => 'Logic',
+                'columns' => \ZfMetal\Commons\Consts::COLUMNS_TWO,
+                'style' => \ZfMetal\Commons\Consts::STYLE_VERTICAL,
+                'fields' => ['route', 'uri', 'permission']
+            ],
         ];
 
-        echo $this->renderForm($this->form, \ZfMetal\Commons\Consts::STYLE_VERTICAL, \ZfMetal\Commons\Consts::COLUMNS_TWO, null, $verticalGroups);
+        echo $this->renderForm($this->form, \ZfMetal\Commons\Consts::STYLE_VERTICAL, \ZfMetal\Commons\Consts::COLUMNS_TWO,$groups);
         ?>
     </div>
 </div>

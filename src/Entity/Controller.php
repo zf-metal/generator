@@ -41,7 +41,7 @@ class Controller extends \ZfMetal\Generator\Entity\AbstractEntity {
      * @Annotation\Type("Zend\Form\Element\Text")
      * @Annotation\Options({"label":"Name:"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":100}})
-     * @ORM\Column(type="string", length=100, unique=true, nullable=false, name="name")
+     * @ORM\Column(type="string", length=100, unique=false, nullable=false, name="name")
      */
     protected $name;
 

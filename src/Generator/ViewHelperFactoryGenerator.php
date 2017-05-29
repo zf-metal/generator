@@ -126,8 +126,8 @@ class ViewHelperFactoryGenerator extends AbstractClassGenerator {
 
     protected function getInvokeParameter() {
         $parameters[] = new \Zend\Code\Generator\ParameterGenerator("container", "\Interop\Container\ContainerInterface");
-        $parameters[] = new \Zend\Code\Generator\ParameterGenerator("requestedName", null);
-        $parameters[] = new \Zend\Code\Generator\ParameterGenerator("options", "array", null);
+        $parameters[] = new \Zend\Code\Generator\ParameterGenerator("requestedName", new \Zend\Code\Generator\ValueGenerator("null", \Zend\Code\Generator\ValueGenerator::TYPE_CONSTANT));
+        $parameters[] = new \Zend\Code\Generator\ParameterGenerator("options", "array", new \Zend\Code\Generator\ValueGenerator("null", \Zend\Code\Generator\ValueGenerator::TYPE_CONSTANT));
         return $parameters;
     }
 

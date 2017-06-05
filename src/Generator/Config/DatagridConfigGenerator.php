@@ -94,9 +94,7 @@ class DatagridConfigGenerator extends AbstractConfigGenerator {
         return [
             'columns' => new \Zend\Code\Generator\ValueGenerator('\ZfMetal\Commons\Consts::COLUMNS_ONE', \Zend\Code\Generator\ValueGenerator::TYPE_CONSTANT),
             'style' => new \Zend\Code\Generator\ValueGenerator('\ZfMetal\Commons\Consts::STYLE_VERTICAL', \Zend\Code\Generator\ValueGenerator::TYPE_CONSTANT),
-            'vertical_groups' => [
-            ],
-            'horizontal_groups' => [
+            'groups' => [
             ],
         ];
     }

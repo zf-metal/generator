@@ -174,10 +174,18 @@ class DoctrineAnnotation {
      * @return Array
      */
     static function ONETOONE($property) {
-        return [
+        if($property->getMappedBy()){
+             return [
+            ["name" => 'ORM\OneToOne(targetEntity="' . $property->getRelatedEntity()->getFullName() . '", mappedBy="'.$property->getMappedBy().'")'],
+           
+        ];
+        }else{
+            return [
             ["name" => 'ORM\OneToOne(targetEntity="' . $property->getRelatedEntity()->getFullName() . '")'],
             ["name" => 'ORM\JoinColumn(name="' . self::camelToUnder($property->getName()) . '_id", referencedColumnName="id"' . ($property->getBeNullable() ? ', nullable=true' : ', nullable=false') . ')']
-        ];
+        ]; 
+        }
+       
     }
 
     /**

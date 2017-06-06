@@ -66,6 +66,15 @@ class Property extends \ZfMetal\Generator\Entity\AbstractEntity {
      * @ORM\JoinColumn(name="related_entity_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $relatedEntity;
+    
+     /**
+     * @var string
+     * @Annotation\Type("Zend\Form\Element\Text")
+     * @Annotation\Options({"label":"MappedBy", "description": ""})
+     * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":30}})
+     * @ORM\Column(type="string", length=30, unique=false, nullable=true, name="mapped_by")
+     */
+    protected $mappedBy;
 
     /**
      * @var string
@@ -440,6 +449,16 @@ class Property extends \ZfMetal\Generator\Entity\AbstractEntity {
         $this->createdAt = $createdAt;
         return $this;
     }
+
+    function getMappedBy() {
+        return $this->mappedBy;
+    }
+
+    function setMappedBy($mappedBy) {
+        $this->mappedBy = $mappedBy;
+        return $this;
+    }
+
 
 
     

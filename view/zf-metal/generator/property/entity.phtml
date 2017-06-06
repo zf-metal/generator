@@ -16,15 +16,20 @@
             $("[name='webpath']").parent().hide();
         }
 
-        if (types == "boolean" || types == "date" || types == "datetime" || types == "time" || types == "text" ) {
+        if (types == "boolean" || types == "date" || types == "datetime" || types == "time" || types == "text") {
             $("[name='length']").parent().hide();
         } else if (types == "oneToOne" || types == "manyToOne" || types == "oneToMany" || types == "manyToMany") {
             $("[name='length']").parent().hide();
             $("[name='relatedEntity']").parent().show();
+            if (types == "oneToOne") {
+                $("[name='mappedBy']").parent().show();
+            }
+
         } else {
 
             $("[name='length']").parent().show();
             $("[name='relatedEntity']").parent().hide();
+            $("[name='mappedBy']").parent().hide();
         }
 
     }

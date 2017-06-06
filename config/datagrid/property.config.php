@@ -97,6 +97,9 @@ return [
                 "tostring" => [
                     "hidden" => true
                 ],
+                 "mappedBy" => [
+                    "hidden" => true
+                ],
                 "primarykey" => [
                     "hidden" => true
                 ], "autoincrement" => [

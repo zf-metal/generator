@@ -13,7 +13,7 @@ class ViewActionGenerator extends AbstractFileGenerator {
     const RELATIVE_PATH = "/view";
 
     public function getRelativePath() {
-        return "/module/" . \ZfMetal\Generator\Generator\Util::camelToDash($this->getModule()) . $this::RELATIVE_PATH . "/" . \ZfMetal\Generator\Generator\Util::camelToDash($this->getModule()->getName()) . "/" . \ZfMetal\Generator\Generator\Util::camelToDash($this->getAction()->getController()->getName()) . "/";
+        return "/module/" . $this->getModule()->getName() . $this::RELATIVE_PATH . "/" . \ZfMetal\Generator\Generator\Util::camelToDash($this->getModule()->getName()) . "/" . \ZfMetal\Generator\Generator\Util::camelToDash($this->getAction()->getController()->getName()) . "/";
     }
 
     //Override

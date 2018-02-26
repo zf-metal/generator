@@ -1,0 +1,33 @@
+<?php echo $this->doctype(); ?>
+
+<html lang="UTF-8">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+        <?php echo $this->headTitle($this->translate('TEMPLATE'))->setSeparator(' - ')->setAutoEscape(false) ?>
+
+        <?php
+        echo $this->headMeta()
+                ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+                ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+        ?>
+
+        <!-- Le styles -->
+        <?php echo $this->partial('zf-metal/generator/layout/css'); ?>
+        <?php echo $this->partial('zf-metal/generator/layout/js'); ?>
+
+    </head>
+    <body>
+
+
+        <div class="container main-content" >
+
+            <?php echo $this->content; ?>
+
+        </div> <!-- /container -->
+
+
+
+        <?php echo $this->inlineScript() ?>
+    </body>
+</html>

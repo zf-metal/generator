@@ -13,6 +13,9 @@ return [
         )
     ),
     'view_manager' => array(
+        'template_map' => [
+            'generator/layout' => __DIR__ . '/../view/zf-metal/generator/layout/layout.phtml',
+        ],
         'template_path_stack' => array(
             'ZfMetal\Generator' => __DIR__ . '/../view',
         ),

@@ -35,7 +35,7 @@ class MainController extends AbstractActionController {
     }
 
     public function indexAction() {
-
+        $this->layout()->setTemplate('generator/layout');
         $moduleId = $this->params("moduleId");
         if ($moduleId) {
             $module = $this->getEm()->getRepository("ZfMetal\Generator\Entity\Module")->find($moduleId);

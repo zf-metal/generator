@@ -57,7 +57,7 @@ class ModuleController extends AbstractActionController {
     }
 
     public function createAction() {
-
+        $this->layout()->setTemplate('generator/layout');
         $module = new \ZfMetal\Generator\Entity\Module();
 
         //Generate Form
@@ -79,6 +79,7 @@ class ModuleController extends AbstractActionController {
     }
 
     public function deleteAction() {
+        $this->layout()->setTemplate('generator/layout');
         $moduleId = $this->params("moduleId");
         $module = $this->getEm()->getRepository("ZfMetal\Generator\Entity\Module")->find($moduleId);
 
@@ -86,6 +87,7 @@ class ModuleController extends AbstractActionController {
     }
 
     public function deleteConfirmAction() {
+        $this->layout()->setTemplate('generator/layout');
         $moduleId = $this->params("moduleId");
         $module = $this->getEm()->getRepository("ZfMetal\Generator\Entity\Module")->find($moduleId);
         $this->getEm()->remove($module);

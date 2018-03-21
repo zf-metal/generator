@@ -139,6 +139,7 @@ class DatagridConfigGenerator extends AbstractConfigGenerator {
     protected function genCrudConfig() {
         return [
             "enable" => true,
+            "displayName" =>  null,
             "add" => [
                 "enable" => true,
                 'class' => " glyphicon glyphicon-plus cursor-pointer",

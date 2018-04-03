@@ -95,7 +95,7 @@ class EntityGenerator extends AbstractClassGenerator {
         }
 
         //BODY
-        $toString = "return ";
+        $toString = "return (string)";
         foreach ($this->getEntity()->getProperties() as $property) {
             if ($property->getTostring()) {
                 $toString .= ' $this->' . $property->getName() . '." ". ';

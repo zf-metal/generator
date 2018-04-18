@@ -41,7 +41,7 @@ class Entity extends \ZfMetal\Generator\Entity\AbstractEntity {
      * @Annotation\Type("Zend\Form\Element\Text")
      * @Annotation\Options({"label":"Name:"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":100}})
-     * @ORM\Column(type="string", length=100, unique=true, nullable=true, name="name")
+     * @ORM\Column(type="string", length=100, unique=false, nullable=false, name="name")
      */
     protected $name;
 
@@ -50,7 +50,7 @@ class Entity extends \ZfMetal\Generator\Entity\AbstractEntity {
      * @Annotation\Type("Zend\Form\Element\Text")
      * @Annotation\Options({"label":"TblName:"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":100}})
-     * @ORM\Column(type="string", length=100, unique=true, nullable=true, name="tbl_name")
+     * @ORM\Column(type="string", length=100, unique=false, nullable=true, name="tbl_name")
      */
     protected $tblName;
 

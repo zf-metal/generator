@@ -3,7 +3,7 @@
     "description": "Zend Framework 3 Module that provides code generator (Entity,Controllers,Menu,Routes,Forms)",
     "type": "library",
     "license": "MIT",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "keywords": [
         "code",
         "generator",

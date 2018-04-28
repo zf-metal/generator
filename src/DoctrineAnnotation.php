@@ -80,6 +80,20 @@ class DoctrineAnnotation {
     }
 
     /**
+     * FLOAT
+     *
+     * @param \ZfMetal\Generator\Entity\Property $property
+     * @return Array
+     */
+    static function FLOAT($property) {
+        return [
+            [
+                "name" => 'ORM\Column(type="float", length=' . $property->getLength() . ', unique=' . self::booleanString($property->getBeUnique()) . ', nullable=' . self::booleanString($property->getBeNullable()) . ', name="' . self::camelToUnder($property->getName()) . '")'
+            ]
+        ];
+    }
+
+    /**
      * BOOLEAN
      * 
      * @param \ZfMetal\Generator\Entity\Property $property

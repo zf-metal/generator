@@ -137,7 +137,10 @@ class PropertyGenerator {
                 $tagForm = ($tagForm) ? $tagForm : \ZfMetal\Generator\FormAnnotation::TEXT($this->getProperty());
                 $tagDoctrine = \ZfMetal\Generator\DoctrineAnnotation::INTEGER($this->getProperty());
                 break;
-
+            case "float":
+                $tagForm = ($tagForm) ? $tagForm : \ZfMetal\Generator\FormAnnotation::TEXT($this->getProperty());
+                $tagDoctrine = \ZfMetal\Generator\DoctrineAnnotation::FLOAT($this->getProperty());
+                break;
             case "decimal":
                 $tagForm = ($tagForm) ? $tagForm : \ZfMetal\Generator\FormAnnotation::TEXT($this->getProperty());
                 $tagDoctrine = \ZfMetal\Generator\DoctrineAnnotation::DECIMAL($this->getProperty());

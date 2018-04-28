@@ -41,7 +41,7 @@ class Property extends \ZfMetal\Generator\Entity\AbstractEntity {
      * @Annotation\Type("Zend\Form\Element\Text")
      * @Annotation\Options({"label":"Name", "description": "Solo se admiten nombres alfanumericos, sin espacios"})
      * @Annotation\Validator({"name":"StringLength", "options":{"min":1, "max":100}})
-     * @Annotation\Validator({"name":"Zend\Validator\Regex", "options":{"pattern": "/^[a-zA-Z]*$/"}})
+     * @Annotation\Validator({"name":"Zend\Validator\Regex", "options":{"pattern": "/^[a-zA-Z0-9]*$/"}})
      * @Annotation\Filter({"name": "Zend\Filter\StringTrim"})
      * @ORM\Column(type="string", length=100, unique=false, nullable=false, name="name")
      */

@@ -121,7 +121,11 @@ class EntityGenerator extends AbstractClassGenerator {
      * Generate Table Name
      */
     protected function genTableName() {
-        return $this->getEntity()->getModule()->getPrefix() . '_' . $this->getEntity()->getTblName();
+        if($this->getEntity()->getModule()->getPrefix()){
+            return $this->getEntity()->getModule()->getPrefix() . '_' . $this->getEntity()->getTblName();
+        }
+        return  $this->getEntity()->getTblName();
+
     }
 
     /**

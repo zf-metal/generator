@@ -88,13 +88,19 @@ class RouteConfigGenerator extends AbstractConfigGenerator
 
 
         $a = [
-            'type' => $route->getType(),
             'mayTerminate' => $route->getMayTerminate(),
             'options' => [
                 'route' => $route->getRoute(),
 
             ],
         ];
+
+        if($route->getType() == "literal" || $route->getType() == "segment"){
+            $a['type'] = $route->getType();
+        }else{
+            $a['verb'] = $route->getType();
+        }
+
 
         if ($route->getController() && $route->getAction()) {
             $controller = new \Zend\Code\Generator\ValueGenerator($route->getController()->getClass() . "::CLASS", \Zend\Code\Generator\ValueGenerator::TYPE_CONSTANT);

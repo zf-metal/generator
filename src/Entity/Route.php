@@ -55,7 +55,7 @@ class Route extends \ZfMetal\Generator\Entity\AbstractEntity {
 
     /**
      * @Annotation\Type("Zend\Form\Element\Radio")
-     * @Annotation\Attributes({"options":{"Literal":"Literal","Segment":"Segment"}})
+     * @Annotation\Attributes({"options":{"Literal":"Literal","Segment":"Segment","get":"get,"post":"post","put":"put","delete":"delete"}})
      * @ORM\Column(type="string", length=100, unique=false, nullable=false, name="type")
      */
     protected $type;

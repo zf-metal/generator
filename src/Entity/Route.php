@@ -86,8 +86,6 @@ class Route extends \ZfMetal\Generator\Entity\AbstractEntity {
      * "label":"Action:",
      * "empty_option": "",
      * "target_class":"ZfMetal\Generator\Entity\Action"})
-     * @Annotation\Required(true)
-     * @Annotation\AllowEmpty({"false"})
      * @ORM\ManyToOne(targetEntity="ZfMetal\Generator\Entity\Action")
      * @ORM\JoinColumn(name="action_id", referencedColumnName="id", nullable=true, onDelete="CASCADE")
      */

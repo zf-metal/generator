@@ -95,7 +95,7 @@ class RouteConfigGenerator extends AbstractConfigGenerator
             ],
         ];
 
-        if($route->getType() == "literal" || $route->getType() == "segment"){
+        if($route->getType() == "Literal" || $route->getType() == "Segment"){
             $a['type'] = $route->getType();
         }else{
             $a['verb'] = $route->getType();

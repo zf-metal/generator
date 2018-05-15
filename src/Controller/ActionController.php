@@ -83,6 +83,7 @@ class ActionController extends AbstractActionController {
         $controllerId = $this->getRequest()->getQuery("id");
         $col = $this->getEm()->getRepository("ZfMetal\Generator\Entity\Action")->findByController($controllerId);
         $a = array();
+        $a[""] = "";
         foreach ($col as $item) {
             $a[$item->getId()] = $item->__toString();
         }

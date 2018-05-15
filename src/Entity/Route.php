@@ -76,7 +76,7 @@ class Route extends \ZfMetal\Generator\Entity\AbstractEntity {
      * "target_class":"ZfMetal\Generator\Entity\Controller",
      * "property": "name"})
      * @ORM\ManyToOne(targetEntity="ZfMetal\Generator\Entity\Controller")
-     * @ORM\JoinColumn(name="controller_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
+     * @ORM\JoinColumn(name="controller_id", referencedColumnName="id", nullable=true, onDelete="CASCADE")
      */
     protected $controller;
 
@@ -89,7 +89,7 @@ class Route extends \ZfMetal\Generator\Entity\AbstractEntity {
      * @Annotation\Required(true)
      * @Annotation\AllowEmpty({"false"})
      * @ORM\ManyToOne(targetEntity="ZfMetal\Generator\Entity\Action")
-     * @ORM\JoinColumn(name="action_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
+     * @ORM\JoinColumn(name="action_id", referencedColumnName="id", nullable=true, onDelete="CASCADE")
      */
     protected $action;
 

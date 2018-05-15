@@ -101,16 +101,17 @@ class RouteConfigGenerator extends AbstractConfigGenerator
             $a['verb'] = $route->getType();
         }
 
-
-        if ($route->getController() && $route->getAction()) {
+        if ($route->getController()){
             $controller = new \Zend\Code\Generator\ValueGenerator($route->getController()->getClass() . "::CLASS", \Zend\Code\Generator\ValueGenerator::TYPE_CONSTANT);
+            $a['options']["defaults"]["controller"] = $controller;
 
-            $a['options'] = ['defaults' => [
-                'controller' => $controller,
-                'action' => $route->getAction()->getName()
-            ]
-            ];
+            if ($route->getAction()) {
+                $a['options']["defaults"]["action"] = $route->getAction()->getName();
+            }
         }
+
+
+
 
         if ($route->hasChilds()) {
 

@@ -28,8 +28,9 @@ class EmGenerator {
         if (!$controllerGenerator->getCg()->hasConstant("ENTITY")) {
             $entityClass = $controllerGenerator->getController()->getEntity()->getFullName();
 
-            $entityName = new \Zend\Code\Generator\ValueGenerator($entityClass."::class",\Zend\Code\Generator\ValueGenerator::TYPE_CONSTANT);
+            $entityName = new \Zend\Code\Generator\PropertyValueGenerator($entityClass."::class",\Zend\Code\Generator\ValueGenerator::TYPE_CONSTANT);
             $p = new \Zend\Code\Generator\PropertyGenerator("ENTITY", $entityName, \Zend\Code\Generator\PropertyGenerator::FLAG_CONSTANT);
+            // $p->setDefaultValue($entityName);
             $controllerGenerator->getCg()->addPropertyFromGenerator($p);
         }
     }

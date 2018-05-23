@@ -83,7 +83,7 @@ class FieldsetGenerator extends AbstractClassGenerator
     public function prepare()
     {
         parent::prepare();
-        $this->getConstruct();
+        $this->genConstruct();
         $this->genInit();
         $this->genGetInputFilterSpecification();
         $this->genObjectManager();
@@ -104,7 +104,7 @@ class FieldsetGenerator extends AbstractClassGenerator
 
             //Object
 
-            $body .= '$this->setObject(new '.$this->getEntity()->getFullName().'())';
+            $body .= '$this->setObject(new '.$this->getEntity()->getFullName().'());'.PHP_EOL.PHP_EOL;
 
             foreach ($this->getEntity()->getProperties() as $property) {
 
@@ -182,7 +182,7 @@ class FieldsetGenerator extends AbstractClassGenerator
                             default:
                         }
                     }
-                    $body .= ");" . PHP_EOL;
+                    $body .= ");" . PHP_EOL.PHP_EOL;
                 }
 
             }

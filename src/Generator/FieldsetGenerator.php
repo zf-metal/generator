@@ -83,9 +83,16 @@ class FieldsetGenerator extends AbstractClassGenerator
     public function prepare()
     {
         parent::prepare();
+        $this->getConstruct();
         $this->genInit();
         $this->genGetInputFilterSpecification();
         $this->genObjectManager();
+    }
+
+    public function genConstruct(){
+        $method = new \Zend\Code\Generator\MethodGenerator("__construct");
+        $method->setBody("parent::__construct('".$this->getEntity()->getName()."');");
+        $this->cg->addMethodFromGenerator($method);
     }
 
     public function genInit()
@@ -94,6 +101,10 @@ class FieldsetGenerator extends AbstractClassGenerator
             $this->initMethod = new \Zend\Code\Generator\MethodGenerator("init");
 
             $body = "";
+
+            //Object
+
+            $body .= '$this->setObject(new '.$this->getEntity()->getFullName().'())';
 
             foreach ($this->getEntity()->getProperties() as $property) {
 

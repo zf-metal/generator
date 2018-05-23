@@ -27,7 +27,9 @@ class EmGenerator {
     static protected function genEntityConst($controllerGenerator) {
         if (!$controllerGenerator->getCg()->hasConstant("ENTITY")) {
             $entityClass = $controllerGenerator->getController()->getEntity()->getFullName();
-            $p = new \Zend\Code\Generator\PropertyGenerator("ENTITY", $entityClass, \Zend\Code\Generator\PropertyGenerator::FLAG_CONSTANT);
+
+            $entityName = new \Zend\Code\Generator\ValueGenerator($entityClass."::class",\Zend\Code\Generator\ValueGenerator::TYPE_CONSTANT);
+            $p = new \Zend\Code\Generator\PropertyGenerator("ENTITY", $entityName, \Zend\Code\Generator\PropertyGenerator::FLAG_CONSTANT);
             $controllerGenerator->getCg()->addPropertyFromGenerator($p);
         }
     }
@@ -42,6 +44,20 @@ class EmGenerator {
             $m->setBody($body);
             $controllerGenerator->getCg()->addMethodFromGenerator($m);
         }
+
+        //Repo with Entity Name
+        $entityName = $controllerGenerator->getController()->getEntity()->getName();
+        $repoName = "get".$entityName."Repository";
+
+        if (!$controllerGenerator->getCg()->hasMethod($repoName)) {
+            $m = new \Zend\Code\Generator\MethodGenerator($repoName);
+
+            $body = 'return $this->getEm()->getRepository(self::ENTITY);';
+
+            $m->setBody($body);
+            $controllerGenerator->getCg()->addMethodFromGenerator($m);
+        }
+
     }
 
     static protected function genEmProperty($controllerGenerator) {

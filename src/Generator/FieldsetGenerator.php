@@ -27,8 +27,8 @@ class FieldsetGenerator extends AbstractClassGenerator
     const CLASS_PREFIX = "";
     const CLASS_SUBFFIX = "Fieldset";
     const NAMESPACE_PREFIX = "";
-    const NAMESPACE_SUBFFIX = "\Form";
-    const RELATIVE_PATH = "/src/Form/";
+    const NAMESPACE_SUBFFIX = "\Fieldset";
+    const RELATIVE_PATH = "/src/Fieldset/";
 
     //BASE NAMES
     public function getBaseName()

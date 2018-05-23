@@ -62,7 +62,7 @@ class EntityController extends AbstractActionController {
 
         $this->grid->addExtraColumn("property-list", "<a class='btn btn-warning btn-xs glyphicon glyphicon-th-list' onclick='MetalEntities.propertiesAction({{id}},\"{{name}}\")' ></a>", "right", false);
         // $this->grid->addExtraColumn("quick", "<a class='btn btn-primary btn-xs glyphicon glyphicon-fast-forward' onclick='MetalEntities.xxxx({{id}},\"{{name}}\")' ></a>", "right", false);
-        $this->grid->addExtraColumn("Fieldset", "<a class='btn btn-danger btn-xs glyphicon glyphicon-th-list' onclick='MetalEntities.generatorFieldsetAction({{id}},\"{{name}}\")' ></a>", "right", false);
+        $this->grid->addExtraColumn("Fieldset", "<a class='btn btn-danger btn-xs glyphicon glyphicon-th' onclick='MetalEntities.generatorFieldsetAction({{id}},\"{{name}}\")' ></a>", "right", false);
         $this->grid->addExtraColumn("generator", "<a class='btn btn-danger btn-xs glyphicon glyphicon-play' onclick='MetalEntities.generatorAction({{id}},\"{{name}}\")' ></a>", "right", false);
 
         $this->grid->setRecordsPerPage(100);

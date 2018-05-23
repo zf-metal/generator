@@ -25,7 +25,7 @@ class FieldsetGenerator extends AbstractClassGenerator
 
     //CONSTS
     const CLASS_PREFIX = "";
-    const CLASS_SUBFFIX = "";
+    const CLASS_SUBFFIX = "Fieldset";
     const NAMESPACE_PREFIX = "";
     const NAMESPACE_SUBFFIX = "\Form";
     const RELATIVE_PATH = "/src/Form/";
@@ -63,6 +63,11 @@ class FieldsetGenerator extends AbstractClassGenerator
         ];
     }
 
+    public function getClassTags()
+    {
+        return [];
+    }
+
     //MODULE
     public function getModule()
     {
@@ -79,81 +84,92 @@ class FieldsetGenerator extends AbstractClassGenerator
     {
         parent::prepare();
         $this->genInit();
+        $this->genGetInputFilterSpecification();
+        $this->genObjectManager();
     }
 
     public function genInit()
     {
         if (!$this->getCg()->hasMethod("init")) {
-            $this->initMethod = new \Zend\Code\Generator\MethodGenerator();
+            $this->initMethod = new \Zend\Code\Generator\MethodGenerator("init");
 
             $body = "";
 
             foreach ($this->getEntity()->getProperties() as $property) {
 
+
                 if (!$property->getExclude()) {
-                    $body .= "$this->add(";
-                    switch ($this->getProperty()->getType()) {
-                        case "string":
-                            $vf = new \ZfMetal\Generator\Generator\ValueGenerator(\ZfMetal\Generator\FormField::TEXT($this->getProperty()), \Zend\Code\Generator\ValueGenerator::TYPE_ARRAY_SHORT);
-                            $body .= $vf->generate();
-                            break;
-                        case "stringarea":
-                            $vf = new \ZfMetal\Generator\Generator\ValueGenerator(\ZfMetal\Generator\FormField::TEXTAREA($this->getProperty()), \Zend\Code\Generator\ValueGenerator::TYPE_ARRAY_SHORT);
-                            $body .= $vf->generate();
-                            break;
-                        case "text":
-                            $vf = new \ZfMetal\Generator\Generator\ValueGenerator(\ZfMetal\Generator\FormField::TEXTAREA($this->getProperty()), \Zend\Code\Generator\ValueGenerator::TYPE_ARRAY_SHORT);
-                            $body .= $vf->generate();
-                            break;
-                        case "integer":
-                            $vf = new \ZfMetal\Generator\Generator\ValueGenerator(\ZfMetal\Generator\FormField::TEXT($this->getProperty()), \Zend\Code\Generator\ValueGenerator::TYPE_ARRAY_SHORT);
-                            $body .= $vf->generate();
-                            break;
-                        case "float":
-                            $vf = new \ZfMetal\Generator\Generator\ValueGenerator(\ZfMetal\Generator\FormField::TEXT($this->getProperty()), \Zend\Code\Generator\ValueGenerator::TYPE_ARRAY_SHORT);
-                            $body .= $vf->generate();
-                            break;
-                        case "decimal":
-                            $vf = new \ZfMetal\Generator\Generator\ValueGenerator(\ZfMetal\Generator\FormField::TEXT($this->getProperty()), \Zend\Code\Generator\ValueGenerator::TYPE_ARRAY_SHORT);
-                            $body .= $vf->generate();
-                            break;
-                        case "date":
-                            $vf = new \ZfMetal\Generator\Generator\ValueGenerator(\ZfMetal\Generator\FormField::DATE($this->getProperty()), \Zend\Code\Generator\ValueGenerator::TYPE_ARRAY_SHORT);
-                            $body .= $vf->generate();
-                            break;
-                        case "datetime":
-                            $vf = new \ZfMetal\Generator\Generator\ValueGenerator(\ZfMetal\Generator\FormField::DATETIME($this->getProperty()), \Zend\Code\Generator\ValueGenerator::TYPE_ARRAY_SHORT);
-                            $body .= $vf->generate();
-                            break;
-                        case "time":
-                            $vf = new \ZfMetal\Generator\Generator\ValueGenerator(\ZfMetal\Generator\FormField::TIME($this->getProperty()), \Zend\Code\Generator\ValueGenerator::TYPE_ARRAY_SHORT);
-                            $body .= $vf->generate();
-                            break;
-                        case "boolean":
-                            $vf = new \ZfMetal\Generator\Generator\ValueGenerator(\ZfMetal\Generator\FormField::CHECKBOX($this->getProperty()), \Zend\Code\Generator\ValueGenerator::TYPE_ARRAY_SHORT);
-                            $body .= $vf->generate();
-                            break;
-                        case "file":
-                            $vf = new \ZfMetal\Generator\Generator\ValueGenerator(\ZfMetal\Generator\FormField::FILE($this->getProperty()), \Zend\Code\Generator\ValueGenerator::TYPE_ARRAY_SHORT);
-                            $body .= $vf->generate();
-                            break;
-                        case "oneToOne":
-                            $vf = new \ZfMetal\Generator\Generator\ValueGenerator(\ZfMetal\Generator\FormField::OBJECTSELECT($this->getProperty()), \Zend\Code\Generator\ValueGenerator::TYPE_ARRAY_SHORT);
-                            $body .= $vf->generate();
-                            break;
-                        case "manyToOne":
-                            $vf = new \ZfMetal\Generator\Generator\ValueGenerator(\ZfMetal\Generator\FormField::OBJECTSELECT($this->getProperty()), \Zend\Code\Generator\ValueGenerator::TYPE_ARRAY_SHORT);
-                            $body .= $vf->generate();
-                            break;
-                        case "oneToMany":
-                            $vf = new \ZfMetal\Generator\Generator\ValueGenerator(\ZfMetal\Generator\FormField::OBJECTMULTICHECKBOX($this->getProperty()), \Zend\Code\Generator\ValueGenerator::TYPE_ARRAY_SHORT);
-                            $body .= $vf->generate();
-                            break;
-                        case "manyToMany":
-                            $vf = new \ZfMetal\Generator\Generator\ValueGenerator(\ZfMetal\Generator\FormField::OBJECTMULTICHECKBOX($this->getProperty()), \Zend\Code\Generator\ValueGenerator::TYPE_ARRAY_SHORT);
-                            $body .= $vf->generate();
-                            break;
-                        default:
+                    $body .= '$this->add(';
+
+                    if ($property->getName() == "id") {
+                        $vf = new \ZfMetal\Generator\Generator\ValueGenerator(\ZfMetal\Generator\FormField::HIDDEN($property), \Zend\Code\Generator\ValueGenerator::TYPE_ARRAY_SHORT);
+                        $body .= $vf->generate();
+                    } else {
+
+
+                        switch ($property->getType()) {
+                            case "string":
+                                $vf = new \ZfMetal\Generator\Generator\ValueGenerator(\ZfMetal\Generator\FormField::TEXT($property), \Zend\Code\Generator\ValueGenerator::TYPE_ARRAY_SHORT);
+                                $body .= $vf->generate();
+                                break;
+                            case "stringarea":
+                                $vf = new \ZfMetal\Generator\Generator\ValueGenerator(\ZfMetal\Generator\FormField::TEXTAREA($property), \Zend\Code\Generator\ValueGenerator::TYPE_ARRAY_SHORT);
+                                $body .= $vf->generate();
+                                break;
+                            case "text":
+                                $vf = new \ZfMetal\Generator\Generator\ValueGenerator(\ZfMetal\Generator\FormField::TEXTAREA($property), \Zend\Code\Generator\ValueGenerator::TYPE_ARRAY_SHORT);
+                                $body .= $vf->generate();
+                                break;
+                            case "integer":
+                                $vf = new \ZfMetal\Generator\Generator\ValueGenerator(\ZfMetal\Generator\FormField::TEXT($property), \Zend\Code\Generator\ValueGenerator::TYPE_ARRAY_SHORT);
+                                $body .= $vf->generate();
+                                break;
+                            case "float":
+                                $vf = new \ZfMetal\Generator\Generator\ValueGenerator(\ZfMetal\Generator\FormField::TEXT($property), \Zend\Code\Generator\ValueGenerator::TYPE_ARRAY_SHORT);
+                                $body .= $vf->generate();
+                                break;
+                            case "decimal":
+                                $vf = new \ZfMetal\Generator\Generator\ValueGenerator(\ZfMetal\Generator\FormField::TEXT($property), \Zend\Code\Generator\ValueGenerator::TYPE_ARRAY_SHORT);
+                                $body .= $vf->generate();
+                                break;
+                            case "date":
+                                $vf = new \ZfMetal\Generator\Generator\ValueGenerator(\ZfMetal\Generator\FormField::DATE($property), \Zend\Code\Generator\ValueGenerator::TYPE_ARRAY_SHORT);
+                                $body .= $vf->generate();
+                                break;
+                            case "datetime":
+                                $vf = new \ZfMetal\Generator\Generator\ValueGenerator(\ZfMetal\Generator\FormField::DATETIME($property), \Zend\Code\Generator\ValueGenerator::TYPE_ARRAY_SHORT);
+                                $body .= $vf->generate();
+                                break;
+                            case "time":
+                                $vf = new \ZfMetal\Generator\Generator\ValueGenerator(\ZfMetal\Generator\FormField::TIME($property), \Zend\Code\Generator\ValueGenerator::TYPE_ARRAY_SHORT);
+                                $body .= $vf->generate();
+                                break;
+                            case "boolean":
+                                $vf = new \ZfMetal\Generator\Generator\ValueGenerator(\ZfMetal\Generator\FormField::CHECKBOX($property), \Zend\Code\Generator\ValueGenerator::TYPE_ARRAY_SHORT);
+                                $body .= $vf->generate();
+                                break;
+                            case "file":
+                                $vf = new \ZfMetal\Generator\Generator\ValueGenerator(\ZfMetal\Generator\FormField::FILE($property), \Zend\Code\Generator\ValueGenerator::TYPE_ARRAY_SHORT);
+                                $body .= $vf->generate();
+                                break;
+                            case "oneToOne":
+                                $vf = new \ZfMetal\Generator\Generator\ValueGenerator(\ZfMetal\Generator\FormField::OBJECTSELECT($property), \Zend\Code\Generator\ValueGenerator::TYPE_ARRAY_SHORT);
+                                $body .= $vf->generate();
+                                break;
+                            case "manyToOne":
+                                $vf = new \ZfMetal\Generator\Generator\ValueGenerator(\ZfMetal\Generator\FormField::OBJECTSELECT($property), \Zend\Code\Generator\ValueGenerator::TYPE_ARRAY_SHORT);
+                                $body .= $vf->generate();
+                                break;
+                            case "oneToMany":
+                                $vf = new \ZfMetal\Generator\Generator\ValueGenerator(\ZfMetal\Generator\FormField::OBJECTMULTICHECKBOX($property), \Zend\Code\Generator\ValueGenerator::TYPE_ARRAY_SHORT);
+                                $body .= $vf->generate();
+                                break;
+                            case "manyToMany":
+                                $vf = new \ZfMetal\Generator\Generator\ValueGenerator(\ZfMetal\Generator\FormField::OBJECTMULTICHECKBOX($property), \Zend\Code\Generator\ValueGenerator::TYPE_ARRAY_SHORT);
+                                $body .= $vf->generate();
+                                break;
+                            default:
+                        }
                     }
                     $body .= ");" . PHP_EOL;
                 }
@@ -161,7 +177,35 @@ class FieldsetGenerator extends AbstractClassGenerator
             }
 
             $this->initMethod->setBody($body);
-            $this->cg->addMethod($this->initMethod);
+            $this->cg->addMethodFromGenerator($this->initMethod);
+        }
+
+    }
+
+    function genGetInputFilterSpecification()
+    {
+        if (!$this->getCg()->hasMethod("getInputFilterSpecification")) {
+            $m = new \Zend\Code\Generator\MethodGenerator("getInputFilterSpecification");
+            $body = "return [];";
+            $m->setBody($body);
+            $this->cg->addMethodFromGenerator($m);
+        }
+    }
+
+    function genObjectManager()
+    {
+
+        if (!$this->getCg()->hasProperty("objectManager")) {
+            $this->cg->addProperty("objectManager");
+        }
+
+
+        if (!$this->getCg()->hasMethod("getObjectManager")) {
+            $this->cg->addMethodFromGenerator(Util::genGetter("objectManager"));
+        }
+
+        if (!$this->getCg()->hasMethod("setObjectManager")) {
+            $this->cg->addMethodFromGenerator(Util::genSetter("objectManager", \Doctrine\Common\Persistence\ObjectManager::class));
         }
 
     }

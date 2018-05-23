@@ -179,7 +179,7 @@ class PropertyGenerator {
             case "manyToOne":
                 $tagForm = ($tagForm) ? $tagForm : \ZfMetal\Generator\FormAnnotation::OBJECTSELECT($this->getProperty());
                 $tagDoctrine = \ZfMetal\Generator\DoctrineAnnotation::MANYTOONE($this->getProperty());
-                var_dump($tagDoctrine);
+                //var_dump($tagDoctrine);
                 break;
 
             case "oneToMany":

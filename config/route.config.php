@@ -178,6 +178,16 @@ return [
                                             ),
                                         ),
                                     ),
+                                    'GeneratorForm' => array(
+                                        'type' => Segment::class,
+                                        'options' => array(
+                                            'route' => '/generator/fieldset/:entityId',
+                                            'defaults' => array(
+                                                'controller' => Controller\GeneratorController::class,
+                                                'action' => 'fieldset',
+                                            ),
+                                        ),
+                                    ),
                                 ]
                             ),
                             'Route' => array(

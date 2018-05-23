@@ -109,6 +109,22 @@ class GeneratorController extends AbstractActionController {
         return $view;
     }
 
+    public function fieldsetAction() {
+        $entityId = $this->params("entityId");
+        $entity = $this->getEm()->getRepository("ZfMetal\Generator\Entity\Entity")->find($entityId);
+
+        $formGenerator = new \ZfMetal\Generator\Generator\FieldsetGenerator($entity);
+        $formGenerator->prepare();
+        $formGenerator->pushFile(true);
+
+
+        $view = new \Zend\View\Model\ViewModel([
+            "formGenerator" => $formGenerator,
+            "entity" => $entity]);
+        $view->setTerminal(true);
+        return $view;
+    }
+
     public function routeAction() {
         $moduleId = $this->params("moduleId");
         $module = $this->getEm()->getRepository("ZfMetal\Generator\Entity\Module")->find($moduleId);

@@ -43,6 +43,15 @@
             $.get("/generator/module/entity/generator/" + entityId).done(function (data) {
                 that.modal.box(data);
             });
+        },
+        generatorFieldsetAction: function (entityId, entityName) {
+            this.modal.title("Generating Entity : " + entityName);
+            this.modal.loading();
+            this.modal.modal.modal("show");
+            var that = this;
+            $.get("/generator/module/entity/generator/fieldset/" + entityId).done(function (data) {
+                that.modal.box(data);
+            });
         }
 
     };

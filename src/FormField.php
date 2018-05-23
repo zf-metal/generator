@@ -29,6 +29,7 @@ class FormField
     static function CUSTOM($property)
     {
         return [
+            "name" => $property->getName(),
             "type" => $property->getElementType(),
             "options" => self::getOptions($property)
         ];
@@ -45,6 +46,7 @@ class FormField
     {
 
         return [
+            "name" => $property->getName(),
             "type" => new \Zend\Code\Generator\ValueGenerator("\Zend\Form\Element\Hidden::class",\Zend\Code\Generator\ValueGenerator::TYPE_CONSTANT),
             "attributes" => ["type" => "hidden"]
         ];
@@ -60,6 +62,7 @@ class FormField
     {
 
         return [
+            "name" => $property->getName(),
             "type" => new \Zend\Code\Generator\ValueGenerator("\Zend\Form\Element\Text::class",\Zend\Code\Generator\ValueGenerator::TYPE_CONSTANT),
             "options" => self::getOptions($property),
             "attributes" => ["type" => "text"]
@@ -76,6 +79,7 @@ class FormField
     static function DATE($property)
     {
         return [
+            "name" => $property->getName(),
             "type" => new \Zend\Code\Generator\ValueGenerator("\Zend\Form\Element\Date::class",\Zend\Code\Generator\ValueGenerator::TYPE_CONSTANT),
             "options" => self::getOptions($property),
             "attributes" => ["type" => "date"]
@@ -91,6 +95,7 @@ class FormField
     static function DATETIME($property)
     {
         return [
+            "name" => $property->getName(),
             "type" => new \Zend\Code\Generator\ValueGenerator("\Zend\Form\Element\DateTime::class",\Zend\Code\Generator\ValueGenerator::TYPE_CONSTANT),
             "options" => self::getOptions($property),
             "attributes" => ["type" => "datetime"]
@@ -106,6 +111,7 @@ class FormField
     static function TIME($property)
     {
         return [
+            "name" => $property->getName(),
             "type" => new \Zend\Code\Generator\ValueGenerator("\Zend\Form\Element\Time::class",\Zend\Code\Generator\ValueGenerator::TYPE_CONSTANT),
             "options" => self::getOptions($property),
             "attributes" => ["type" => "time"]
@@ -122,6 +128,7 @@ class FormField
     {
 
         return [
+            "name" => $property->getName(),
             "type" => new \Zend\Code\Generator\ValueGenerator("\Zend\Form\Element\File::class",\Zend\Code\Generator\ValueGenerator::TYPE_CONSTANT),
             "options" => self::getOptions($property),
             "attributes" => ["type" => "file"],
@@ -139,6 +146,7 @@ class FormField
     {
 
         return [
+            "name" => $property->getName(),
             "type" => new \Zend\Code\Generator\ValueGenerator("\Zend\Form\Element\Checkbox::class",\Zend\Code\Generator\ValueGenerator::TYPE_CONSTANT),
             "options" => self::getOptions($property),
             "attributes" => ["type" => "checkbox"],
@@ -155,6 +163,7 @@ class FormField
     {
 
         return [
+            "name" => $property->getName(),
             "type" => new \Zend\Code\Generator\ValueGenerator("\DoctrineModule\Form\Element\ObjectSelect::class",\Zend\Code\Generator\ValueGenerator::TYPE_CONSTANT),
             "options" => [
                 "label" => self::LABEL($property),
@@ -177,6 +186,7 @@ class FormField
     {
 
         return [
+            "name" => $property->getName(),
             "type" =>  new \Zend\Code\Generator\ValueGenerator("\DoctrineModule\Form\Element\ObjectMultiCheckbox::class",\Zend\Code\Generator\ValueGenerator::TYPE_CONSTANT),
             "options" => [
                 "label" => self::LABEL($property),
@@ -198,6 +208,7 @@ class FormField
     {
 
         return [
+            "name" => $property->getName(),
             "type" =>  new \Zend\Code\Generator\ValueGenerator("\Zend\Form\Element\Textarea::class",\Zend\Code\Generator\ValueGenerator::TYPE_CONSTANT),
             "options" => self::getOptions($property),
             "attributes" => ["type" => "textarea"],

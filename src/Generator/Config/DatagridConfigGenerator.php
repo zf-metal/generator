@@ -9,7 +9,8 @@ use ZfMetal\Generator\Generator\AbstractConfigGenerator;
  *
  * @author Cristian Incarnato <cristian.cdi@gmail.com>
  */
-class DatagridConfigGenerator extends AbstractConfigGenerator {
+class DatagridConfigGenerator extends AbstractConfigGenerator
+{
 
     //CONSTS
     const RELATIVE_PATH = "/config/";
@@ -18,45 +19,49 @@ class DatagridConfigGenerator extends AbstractConfigGenerator {
     protected $generatorDatagridConfig = array();
     protected $datagridConfig = array();
     protected $entity;
+    protected $key;
 
-    public function getRelativePath() {
+    public function getRelativePath()
+    {
         return $this->getModule()->getName() . "/" . $this::RELATIVE_PATH;
     }
 
-    public function getBaseFileName() {
+    public function getBaseFileName()
+    {
         return "zfm-datagrid." . \ZfMetal\Generator\Generator\Util::camelToDash($this->getEntity()->getName()) . ".config.php";
     }
 
-    function getFileName() {
+    function getFileName()
+    {
         return $this->getAbsolutePath() . $this->getBaseFileName();
     }
 
-    function getEntity() {
+    function getEntity()
+    {
         return $this->entity;
     }
 
-    function __construct(\ZfMetal\Generator\Entity\Entity $entity) {
+    function __construct(\ZfMetal\Generator\Entity\Entity $entity)
+    {
         $this->entity = $entity;
     }
 
-    public function getModule() {
+    public function getModule()
+    {
         return $this->getEntity()->getModule();
     }
 
-    public function prepare() {
+    public function prepare()
+    {
         $this->populateActualConfig();
         $this->populateGeneratorConfig();
         $this->mergeConfig();
         $this->pushFileContent();
     }
 
-    protected function mergeConfig() {
-        $this->datagridConfig = \Zend\Stdlib\ArrayUtils::merge($this->actualDatagridConfig, $this->generatorDatagridConfig, true);
 
-        return $this->datagridConfig;
-    }
-
-    protected function populateActualConfig() {
+    protected function populateActualConfig()
+    {
         if (file_exists($this->getFileName())) {
             $config = include $this->getFileName();
             if (is_array($config)) {
@@ -66,21 +71,43 @@ class DatagridConfigGenerator extends AbstractConfigGenerator {
         return $this->actualDatagridConfig;
     }
 
-    protected function populateGeneratorConfig() {
-        $this->generatorDatagridConfig['zf-metal-datagrid.custom'] = array();
-        $key = trim(str_replace("\\", "-", strtolower($this->getEntity()->getFullName())), "-");
-        $this->generatorDatagridConfig['zf-metal-datagrid.custom'][$key]["gridId"] = $this->genGridId();
-        $this->generatorDatagridConfig['zf-metal-datagrid.custom'][$key]["sourceConfig"] = $this->genSourceConfig();
-        $this->generatorDatagridConfig['zf-metal-datagrid.custom'][$key]["formConfig"] = $this->genFormConfig();
-        $this->generatorDatagridConfig['zf-metal-datagrid.custom'][$key]["columnsConfig"] = $this->genColumnsConfig();
-        $this->generatorDatagridConfig['zf-metal-datagrid.custom'][$key]["crudConfig"] = $this->genCrudConfig();
+    protected function getKey()
+    {
+        if (!$this->key) {
+            $this->key = trim(str_replace("\\", "-", strtolower($this->getEntity()->getFullName())), "-");
+        }
+        return $this->key;
     }
 
-    protected function genGridId() {
+    protected function populateGeneratorConfig()
+    {
+        $this->generatorDatagridConfig['zf-metal-datagrid.custom'] = array();
+        $this->generatorDatagridConfig['zf-metal-datagrid.custom'][$this->getKey()]["gridId"] = $this->genGridId();
+        $this->generatorDatagridConfig['zf-metal-datagrid.custom'][$this->getKey()]["sourceConfig"] = $this->genSourceConfig();
+        $this->generatorDatagridConfig['zf-metal-datagrid.custom'][$this->getKey()]["multi_filter_config"] = $this->genMultiFilterConfig();
+        $this->generatorDatagridConfig['zf-metal-datagrid.custom'][$this->getKey()]["multi_search_config"] = $this->genSearchConfig();
+        $this->generatorDatagridConfig['zf-metal-datagrid.custom'][$this->getKey()]["formConfig"] = $this->genFormConfig();
+        $this->generatorDatagridConfig['zf-metal-datagrid.custom'][$this->getKey()]["columnsConfig"] = $this->genColumnsConfig();
+        $this->generatorDatagridConfig['zf-metal-datagrid.custom'][$this->getKey()]["crudConfig"] = $this->genCrudConfig();
+    }
+
+    protected function mergeConfig()
+    {
+
+        $this->datagridConfig = \Zend\Stdlib\ArrayUtils::merge($this->generatorDatagridConfig, $this->actualDatagridConfig, true);
+        //Preserve getSourceConfig for constant
+        $this->datagridConfig['zf-metal-datagrid.custom'][$this->getKey()]["sourceConfig"] = $this->genSourceConfig();
+
+        return $this->datagridConfig;
+    }
+
+    protected function genGridId()
+    {
         return "zfmdg_" . $this->getEntity()->getName();
     }
 
-    protected function genSourceConfig() {
+    protected function genSourceConfig()
+    {
         return [
             "type" => "doctrine",
             "doctrineOptions" => [
@@ -90,7 +117,8 @@ class DatagridConfigGenerator extends AbstractConfigGenerator {
         ];
     }
 
-    protected function genFormConfig() {
+    protected function genFormConfig()
+    {
         return [
             'columns' => new \Zend\Code\Generator\ValueGenerator('\ZfMetal\Commons\Consts::COLUMNS_ONE', \Zend\Code\Generator\ValueGenerator::TYPE_CONSTANT),
             'style' => new \Zend\Code\Generator\ValueGenerator('\ZfMetal\Commons\Consts::STYLE_VERTICAL', \Zend\Code\Generator\ValueGenerator::TYPE_CONSTANT),
@@ -99,7 +127,24 @@ class DatagridConfigGenerator extends AbstractConfigGenerator {
         ];
     }
 
-    protected function genColumnsConfig() {
+    protected function genSearchConfig()
+    {
+        return ['enable' => false,
+            'properties_enabled' => [
+            ]
+        ];
+    }
+
+    protected function genMultiFilterConfig()
+    {
+        return ['enable' => true,
+            'properties_disabled' => [
+            ]
+        ];
+    }
+
+    protected function genColumnsConfig()
+    {
         $a = array();
         /* @var $property \ZfMetal\Generator\Entity\Property */
         foreach ($this->getEntity()->getProperties() as $property) {
@@ -136,10 +181,11 @@ class DatagridConfigGenerator extends AbstractConfigGenerator {
         return $a;
     }
 
-    protected function genCrudConfig() {
+    protected function genCrudConfig()
+    {
         return [
             "enable" => true,
-            "displayName" =>  null,
+            "displayName" => null,
             "add" => [
                 "enable" => true,
                 'class' => " glyphicon glyphicon-plus cursor-pointer",
@@ -163,12 +209,14 @@ class DatagridConfigGenerator extends AbstractConfigGenerator {
         ];
     }
 
-    public function pushFileContent() {
+    public function pushFileContent()
+    {
         $this->getFg()->setFilename($this->getBaseFileName());
         $this->getFg()->setBody($this->getBody());
     }
 
-    protected function getBody() {
+    protected function getBody()
+    {
         $vg = new \ZfMetal\Generator\Generator\ValueGenerator($this->getDatagridConfig(), \Zend\Code\Generator\ValueGenerator::TYPE_ARRAY_SHORT);
         $body = "return ";
         $body .= $vg->generate();
@@ -176,7 +224,8 @@ class DatagridConfigGenerator extends AbstractConfigGenerator {
         return $body;
     }
 
-    function getDatagridConfig() {
+    function getDatagridConfig()
+    {
         return $this->datagridConfig;
     }
 

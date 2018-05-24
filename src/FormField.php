@@ -166,7 +166,7 @@ class FormField
             "name" => $property->getName(),
             "type" => new \Zend\Code\Generator\ValueGenerator("\DoctrineModule\Form\Element\ObjectSelect::class",\Zend\Code\Generator\ValueGenerator::TYPE_CONSTANT),
             "options" => [
-                'object_manager' => '$this->getObjectManager()',
+                'object_manager' => new \Zend\Code\Generator\ValueGenerator('$this->getObjectManager()', \Zend\Code\Generator\ValueGenerator::TYPE_CONSTANT),
                 "label" => self::LABEL($property),
                 "description" => $property->getDescription(),
                 "addon" => $property->getAddon(),
@@ -190,7 +190,7 @@ class FormField
             "name" => $property->getName(),
             "type" =>  new \Zend\Code\Generator\ValueGenerator("\DoctrineModule\Form\Element\ObjectMultiCheckbox::class",\Zend\Code\Generator\ValueGenerator::TYPE_CONSTANT),
             "options" => [
-                'object_manager' => '$this->getObjectManager()',
+                'object_manager' => new \Zend\Code\Generator\ValueGenerator('$this->getObjectManager()', \Zend\Code\Generator\ValueGenerator::TYPE_CONSTANT),
                 "label" => self::LABEL($property),
                 "description" => $property->getDescription(),
                 "addon" => $property->getAddon(),

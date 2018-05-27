@@ -13,7 +13,8 @@ use Zend\Form\Annotation;
  * @ORM\Entity(repositoryClass="ZfMetal\Generator\Repository\RouteRepository")
  * @author Cristian Incarnato
  */
-class Route extends \ZfMetal\Generator\Entity\AbstractEntity {
+class Route extends \ZfMetal\Generator\Entity\AbstractEntity
+{
 
     /**
      * @var int
@@ -40,7 +41,7 @@ class Route extends \ZfMetal\Generator\Entity\AbstractEntity {
 
     /**
      * @Annotation\Exclude()
-     * @ORM\OneToMany(targetEntity="ZfMetal\Generator\Entity\Route", mappedBy="parent")
+     * @ORM\OneToMany(targetEntity="ZfMetal\Generator\Entity\Route", mappedBy="parent", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     protected $childs;
 
@@ -100,138 +101,185 @@ class Route extends \ZfMetal\Generator\Entity\AbstractEntity {
      */
     protected $route;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->childs = new ArrayCollection();
     }
 
-    function getId() {
+    function getId()
+    {
         return $this->id;
     }
 
-    function getModule() {
+    function getModule()
+    {
         return $this->module;
     }
 
-    function getParent() {
+    function getParent()
+    {
         return $this->parent;
     }
 
-    function getChilds() {
+    function getChilds()
+    {
         return $this->childs;
     }
 
-    function getName() {
+    function getName()
+    {
         return $this->name;
     }
 
-    function getType() {
+    function getType()
+    {
         return $this->type;
     }
 
-    function getController() {
+    function getController()
+    {
         return $this->controller;
     }
 
-    function getAction() {
+    function getAction()
+    {
         return $this->action;
     }
 
-    function getRoute() {
+    function getRoute()
+    {
         return $this->route;
     }
 
-    function setId($id) {
+    function setId($id)
+    {
         $this->id = $id;
     }
 
-    function setModule($module) {
+    function setModule($module)
+    {
         $this->module = $module;
     }
 
-    function setParent($parent) {
+    function setParent($parent)
+    {
         $this->parent = $parent;
     }
 
-    function setChilds($childs) {
+    function setChilds($childs)
+    {
         $this->childs = $childs;
     }
 
-    function setName($name) {
+    function setName($name)
+    {
         $this->name = $name;
     }
 
-    function setType($type) {
+    function setType($type)
+    {
         $this->type = $type;
     }
 
-    function setController($controller) {
+    function setController($controller)
+    {
         $this->controller = $controller;
     }
 
-    function setAction($action) {
+    function setAction($action)
+    {
         $this->action = $action;
     }
 
-    function setRoute($route) {
+    function setRoute($route)
+    {
         $this->route = $route;
     }
 
-    function getMayTerminate() {
+    function getMayTerminate()
+    {
         return $this->mayTerminate;
     }
 
-    function setMayTerminate($mayTerminate) {
+    function setMayTerminate($mayTerminate)
+    {
         $this->mayTerminate = $mayTerminate;
     }
 
-    public function hasChilds() {
+    public function hasChilds()
+    {
         return count($this->childs) ? true : false;
     }
 
-    public function hasParent() {
+    public function hasParent()
+    {
         return isset($this->parent) ? true : false;
     }
 
-    public function addChild(\ZfMetal\Generator\Entity\Route $route) {
-        if ($this->childs->contains($route)) {
-            return;
-        }
-        $this->childs[] = $route;
-        $route->setParent($this);
-    }
 
-    public function removeChild() {
-        if (!$this->childs->contains($route)) {
-            return;
-        }
-        $this->childs->removeElement($route);
-        $route->setParent(null);
-    }
-
-    public function __toString() {
+    public function __toString()
+    {
         return $this->finalRouteName();
     }
 
-    public function finalRouteName() {
+    public function finalRouteName()
+    {
         if ($this->getParent()) {
             return $this->parentRouteName() . "/" . $this->getName();
         }
         return $this->getName();
     }
 
-    public function parentRouteName() {
+    public function parentRouteName()
+    {
         return $this->getParent()->finalRouteName();
     }
 
-    public function finalRouteUrl() {
+    public function finalRouteUrl()
+    {
         if ($this->getParent()) {
             return $this->parentRouteUrl() . $this->getRoute();
         }
         return $this->getRoute();
     }
 
-    public function parentRouteUrl() {
+    public function parentRouteUrl()
+    {
         return $this->getParent()->finalRouteUrl();
     }
+
+
+    public function addChilds(\Doctrine\Common\Collections\ArrayCollection $childs)
+    {
+        foreach ($childs as $child) {
+            $this->addChild($child);
+        }
+    }
+
+    public function removeChilds(\Doctrine\Common\Collections\ArrayCollection $childs)
+    {
+        foreach ($childs as $child) {
+            $this->removeChild($child);
+        }
+    }
+
+    public function addChild(Route $child)
+    {
+        if ($this->childs->contains($child)) {
+            return;
+        }
+        $child->setParent($this);
+        $this->childs[] = $child;
+    }
+
+    public function removeChild(Route $child)
+    {
+        if (!$this->childs->contains($child)) {
+            return;
+        }
+        $child->setParent(null);
+        $this->childs->removeElement($child);
+    }
+
 
 }

@@ -45,7 +45,7 @@ class Navigation extends \ZfMetal\Generator\Entity\AbstractEntity {
 
     /**
      * @Annotation\Exclude()
-     * @ORM\OneToMany(targetEntity="ZfMetal\Generator\Entity\Navigation", mappedBy="parent")
+     * @ORM\OneToMany(targetEntity="ZfMetal\Generator\Entity\Navigation", mappedBy="parent", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     protected $childs;
 
@@ -202,20 +202,36 @@ class Navigation extends \ZfMetal\Generator\Entity\AbstractEntity {
         return isset($this->parent) ? true : false;
     }
 
-    public function addChild(\ZfMetal\Generator\Entity\Route $route) {
-        if ($this->childs->contains($route)) {
-            return;
+    public function addChilds(\Doctrine\Common\Collections\ArrayCollection $childs)
+    {
+        foreach ($childs as $child) {
+            $this->addChild($child);
         }
-        $this->childs[] = $route;
-        $route->setParent($this);
     }
 
-    public function removeChild() {
-        if (!$this->childs->contains($route)) {
+    public function removeChilds(\Doctrine\Common\Collections\ArrayCollection $childs)
+    {
+        foreach ($childs as $child) {
+            $this->removeChild($child);
+        }
+    }
+
+    public function addChild(Route $child)
+    {
+        if ($this->childs->contains($child)) {
             return;
         }
-        $this->childs->removeElement($route);
-        $route->setParent(null);
+        $child->setParent($this);
+        $this->childs[] = $child;
+    }
+
+    public function removeChild(Route $child)
+    {
+        if (!$this->childs->contains($child)) {
+            return;
+        }
+        $child->setParent(null);
+        $this->childs->removeElement($child);
     }
 
 }

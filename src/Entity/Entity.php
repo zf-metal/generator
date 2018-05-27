@@ -85,9 +85,10 @@ class Entity extends \ZfMetal\Generator\Entity\AbstractEntity {
 
     /**
      * @var 
-     * @ORM\OneToMany(targetEntity="ZfMetal\Generator\Entity\Property", mappedBy="entity")
+     * @ORM\OneToMany(targetEntity="ZfMetal\Generator\Entity\Property", mappedBy="entity", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     protected $properties;
+
 
     public function __construct() {
         $this->properties = new ArrayCollection();
@@ -173,8 +174,42 @@ class Entity extends \ZfMetal\Generator\Entity\AbstractEntity {
     function setGenerateId($generateId) {
         $this->generateId = $generateId;
         return $this;
+
+
+
     }
 
+    public function addProperties(\Doctrine\Common\Collections\ArrayCollection $properties)
+        {
+            foreach ($properties as $property) {
+                $this->addProperty($property);
+            }
+        }
+
+        public function removeProperties(\Doctrine\Common\Collections\ArrayCollection $properties)
+        {
+            foreach ($properties as $property) {
+                $this->removeProperty($property);
+            }
+        }
+
+        public function addProperty(Property $property)
+        {
+            if ($this->properties->contains($property)) {
+                return;
+            }
+            $property->setEntity($this);
+            $this->properties[] = $property;
+        }
+
+        public function removeProperty(Property $property)
+        {
+            if (!$this->properties->contains($property)) {
+                return;
+            }
+            $property->setEntity(null);
+            $this->properties->removeElement($property);
+        }
 
 
 }

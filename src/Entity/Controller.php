@@ -13,7 +13,8 @@ use Zend\Form\Annotation;
  *
  * @author Cristian Incarnato
  */
-class Controller extends \ZfMetal\Generator\Entity\AbstractEntity {
+class Controller extends \ZfMetal\Generator\Entity\AbstractEntity
+{
 
     /**
      * @var int
@@ -78,88 +79,138 @@ class Controller extends \ZfMetal\Generator\Entity\AbstractEntity {
     protected $gridAction;
 
     /**
-     * @var 
-     * @ORM\OneToMany(targetEntity="ZfMetal\Generator\Entity\Action", mappedBy="controller")
+     * @var
+     * @ORM\OneToMany(targetEntity="ZfMetal\Generator\Entity\Action", mappedBy="controller", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     protected $actions;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->actions = new ArrayCollection();
     }
 
-    function getClass() {
+    function getClass()
+    {
         return "\\" . $this->getModule()->getName() . "\Controller\\" . $this->name . "Controller";
     }
 
-    function getCommons() {
+    function getCommons()
+    {
         return $this->commons;
     }
 
-    function setCommons($commons) {
+    function setCommons($commons)
+    {
         $this->commons = $commons;
     }
 
-    function getEntity() {
+    function getEntity()
+    {
         return $this->entity;
     }
 
-    function setEntity($entity) {
+    function setEntity($entity)
+    {
         $this->entity = $entity;
     }
 
-    function getActions() {
+    function getActions()
+    {
         return $this->actions;
     }
 
-    function setActions($actions) {
+    function setActions($actions)
+    {
         $this->actions = $actions;
     }
 
-    function getId() {
+    function getId()
+    {
         return $this->id;
     }
 
-    function getModule() {
+    function getModule()
+    {
         return $this->module;
     }
 
-    function getName() {
+    function getName()
+    {
         return $this->name;
     }
 
-    function setId($id) {
+    function setId($id)
+    {
         $this->id = $id;
     }
 
-    function setModule($module) {
+    function setModule($module)
+    {
         $this->module = $module;
     }
 
-    function setName($name) {
+    function setName($name)
+    {
         $this->name = $name;
     }
 
-    function getDescription() {
+    function getDescription()
+    {
         return $this->description;
     }
 
-    function setDescription($description) {
+    function setDescription($description)
+    {
         $this->description = $description;
     }
 
-    public function __toString() {
+    public function __toString()
+    {
         return $this->getClass();
     }
 
-    
-    function getGridAction() {
+
+    function getGridAction()
+    {
         return $this->gridAction;
     }
 
-    function setGridAction($gridAction) {
+    function setGridAction($gridAction)
+    {
         $this->gridAction = $gridAction;
         return $this;
     }
 
+    public function addActions(\Doctrine\Common\Collections\ArrayCollection $actions)
+    {
+        foreach ($actions as $action) {
+            $this->addAction($action);
+        }
+    }
+
+    public function removeActions(\Doctrine\Common\Collections\ArrayCollection $actions)
+    {
+        foreach ($actions as $action) {
+            $this->removeAction($action);
+        }
+    }
+
+    public function addAction(Action $action)
+    {
+        if ($this->actions->contains($action)) {
+            return;
+        }
+        $action->setController($this);
+        $this->actions[] = $action;
+    }
+
+    public function removeAction(Action $action)
+    {
+        if (!$this->actions->contains($action)) {
+            return;
+        }
+        $action->setController(null);
+        $this->actions->removeElement($action);
+    }
 
 }

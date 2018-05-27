@@ -14,7 +14,8 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @author Cristian Incarnato
  */
-class Module extends \ZfMetal\Generator\Entity\AbstractEntity {
+class Module extends \ZfMetal\Generator\Entity\AbstractEntity
+{
 
     /**
      * @var int
@@ -60,9 +61,9 @@ class Module extends \ZfMetal\Generator\Entity\AbstractEntity {
      * @ORM\Column(type="string", length=300, unique=false, nullable=true, name="description")
      */
     protected $description;
-    
-    
-     /**
+
+
+    /**
      * @var string
      * @Annotation\Type("Zend\Form\Element\Text")
      * @Annotation\Options({"label":"Author:"})
@@ -70,8 +71,8 @@ class Module extends \ZfMetal\Generator\Entity\AbstractEntity {
      * @ORM\Column(type="string", length=100, unique=false, nullable=true, name="author")
      */
     protected $author;
-    
-     /**
+
+    /**
      * @var string
      * @Annotation\Type("Zend\Form\Element\Text")
      * @Annotation\Options({"label":"License:"})
@@ -80,7 +81,7 @@ class Module extends \ZfMetal\Generator\Entity\AbstractEntity {
      */
     protected $license;
 
-      /**
+    /**
      * @var string
      * @Annotation\Type("Zend\Form\Element\Text")
      * @Annotation\Options({"label":"Link:"})
@@ -88,7 +89,7 @@ class Module extends \ZfMetal\Generator\Entity\AbstractEntity {
      * @ORM\Column(type="string", length=150, unique=false, nullable=true, name="link")
      */
     protected $link;
-    
+
 
     /**
      * @var \DateTime createdAt
@@ -109,124 +110,211 @@ class Module extends \ZfMetal\Generator\Entity\AbstractEntity {
     protected $updatedAt;
 
     /**
-     * @var 
-     * @ORM\OneToMany(targetEntity="ZfMetal\Generator\Entity\Entity", mappedBy="module")
+     * @var
+     * @ORM\OneToMany(targetEntity="ZfMetal\Generator\Entity\Entity", mappedBy="module", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     protected $entities;
 
     /**
-     * @var 
-     * @ORM\OneToMany(targetEntity="ZfMetal\Generator\Entity\Controller", mappedBy="module")
+     * @var
+     * @ORM\OneToMany(targetEntity="ZfMetal\Generator\Entity\Controller", mappedBy="module", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     protected $controllers;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->entities = new ArrayCollection();
         $this->controllers = new ArrayCollection();
     }
 
-    function getControllers() {
+    function getControllers()
+    {
         return $this->controllers;
     }
 
-    function setControllers($controllers) {
+    function setControllers($controllers)
+    {
         $this->controllers = $controllers;
     }
 
-    function getId() {
+    function getId()
+    {
         return $this->id;
     }
 
-    function getName() {
+    function getName()
+    {
         return $this->name;
     }
 
-    function getPath() {
+    function getPath()
+    {
         return $this->path;
     }
 
-    function getEntities() {
+    function getEntities()
+    {
         return $this->entities;
     }
 
-    function setId($id) {
+    function setId($id)
+    {
         $this->id = $id;
     }
 
-    function setName($name) {
+    function setName($name)
+    {
         $this->name = $name;
     }
 
-    function setPath($path) {
+    function setPath($path)
+    {
         $this->path = $path;
     }
 
-    function setEntities($entities) {
+    function setEntities($entities)
+    {
         $this->entities = $entities;
     }
 
-    public function __toString() {
+    public function __toString()
+    {
         return $this->name;
     }
 
-    function getPrefix() {
+    function getPrefix()
+    {
         return $this->prefix;
     }
 
-    function setPrefix($prefix) {
+    function setPrefix($prefix)
+    {
         $this->prefix = $prefix;
     }
 
-    function getDescription() {
+    function getDescription()
+    {
         return $this->description;
     }
 
-    function setDescription($description) {
+    function setDescription($description)
+    {
         $this->description = $description;
     }
 
-    function getCreatedAt() {
+    function getCreatedAt()
+    {
         return $this->createdAt;
     }
 
-    function getUpdatedAt() {
+    function getUpdatedAt()
+    {
         return $this->updatedAt;
     }
 
-    function setCreatedAt(\DateTime $createdAt) {
+    function setCreatedAt(\DateTime $createdAt)
+    {
         $this->createdAt = $createdAt;
     }
 
-    function setUpdatedAt(\DateTime $updatedAt) {
+    function setUpdatedAt(\DateTime $updatedAt)
+    {
         $this->updatedAt = $updatedAt;
     }
-    
-    function getAuthor() {
+
+    function getAuthor()
+    {
         return $this->author;
     }
 
-    function getLicense() {
+    function getLicense()
+    {
         return $this->license;
     }
 
-    function setAuthor($author) {
+    function setAuthor($author)
+    {
         $this->author = $author;
     }
 
-    function setLicense($license) {
+    function setLicense($license)
+    {
         $this->license = $license;
     }
-    
-    function getLink() {
+
+    function getLink()
+    {
         return $this->link;
     }
 
-    function setLink($link) {
+    function setLink($link)
+    {
         $this->link = $link;
     }
 
+    public function addEntities(\Doctrine\Common\Collections\ArrayCollection $entities)
+    {
+        foreach ($entities as $entity) {
+            $this->addEntity($entity);
+        }
+    }
 
+    public function removeEntities(\Doctrine\Common\Collections\ArrayCollection $entities)
+    {
+        foreach ($entities as $entity) {
+            $this->removeEntity($entity);
+        }
+    }
 
+    public function addEntity(Entity $entity)
+    {
+        if ($this->entities->contains($entity)) {
+            return;
+        }
+        $entity->setModule($this);
+        $this->entities[] = $entity;
+    }
+
+    public function removeEntity(Entity $entity)
+    {
+        if (!$this->entities->contains($entity)) {
+            return;
+        }
+        $entity->setModule(null);
+        $this->entities->removeElement($entity);
+    }
+
+    public function addControllers(\Doctrine\Common\Collections\ArrayCollection $controllers)
+    {
+        foreach ($controllers as $controller) {
+            $this->addController($controller);
+        }
+    }
+
+    public function removeControllers(\Doctrine\Common\Collections\ArrayCollection $controllers)
+    {
+        foreach ($controllers as $controller) {
+            $this->removeController($controller);
+        }
+    }
+
+    public function addController(Controller $controller)
+    {
+        if ($this->controllers->contains($controller)) {
+            return;
+        }
+        $controller->setModule($this);
+        $this->controllers[] = $controller;
+    }
+
+    public function removeController(Controller $controller)
+    {
+        if (!$this->controllers->contains($controller)) {
+            return;
+        }
+        $controller->setModule(null);
+        $this->controllers->removeElement($controller);
+    }
 
 
 }

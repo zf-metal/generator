@@ -23,6 +23,23 @@ Friendly and fast interface to generate Zend Framework 3 modules focused on Doct
 
 [Documentation](/docs/index.md)
 
+### Modules Dependency (Important!)
+
+Add the following modules to modules.config.php, at least in developer mode for use ZfMetal Generator
+
+    'Zend\Router',
+    'Zend\Validator',
+    'Zend\I18n',
+    "DoctrineModule",
+    'DoctrineORMModule',
+    'SwissEngine\Tools\Doctrine\Extension',
+    'ZfMetal\Commons',
+    'ZfMetal\Datagrid',
+    'ZfMetal\Generator'
+
+### CSS Dependency
+
+Bootstrap 3
 
 ### Preview
 

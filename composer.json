@@ -3,7 +3,7 @@
     "description": "Zend Framework 3 Module that provides code generator (Entity,Controllers,Menu,Routes,Forms)",
     "type": "library",
     "license": "MIT",
-    "version": "1.1.10",
+    "version": "1.2.0",
     "keywords": [
         "code",
         "generator",
@@ -32,10 +32,11 @@
         "process-timeout": 5000
     },
     "require": {
-        "php": ">=5.5",
+        "php": ">=5.6",
         "zf-metal/commons": "^1.0.0",
         "zf-metal/datagrid": "^1.0.0",
         "zendframework/zend-code": "^3.0",
+        "zendframework/zend-i18n": "^2.7",
         "doctrine/doctrine-orm-module": "^1.0",
         "gedmo/doctrine-extensions": "^2.4.24",
         "swissengine/doctrine-module-extension": "dev-master"
